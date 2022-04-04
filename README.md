@@ -13,6 +13,8 @@ Blog update posted 2022/02/21 and can be found at https://theforensicscooter.com
 
 2022/03/26 Some queries were deleted in preparation of updates.
 
+2022/4/3 Queries were updated and beautified.
+
 References:
 
 See blog postings at https://theforensicscooter.com/ for updated list of references.
