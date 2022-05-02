@@ -6,7 +6,11 @@ CASE
 		WHEN 1 THEN
 		'Yes-1' 
 	END AS 'zAsset Complete',
-	zAsset.ZUUID AS 'zAsset-UUID',
+	zAsset.ZUUID AS 'zAsset-UUID = store.cloudphotodb',
+	zAsset.ZCLOUDASSETGUID AS 'zAsset-Cloud_Asset_GUID = store.cloudphotodb',
+	zCldMast.ZCLOUDMASTERGUID AS 'zCldMast-Cloud_Master_GUID = store.cloudphotodb',
+	zGenAlbum.ZCLOUDGUID AS 'zGenAlbum-Cloud_GUID = store.cloudphotodb',
+	zShare.ZSCOPEIDENTIFIER AS 'zShare-Scope ID = store.cloudphotodb',
 	AAAzCldMastMedData.ZDATA AS 'AAAzCldMastMedData-Data',
 	CMzCldMastMedData.ZDATA AS 'CMzCldMastMedData-Data',
 	zExtAttr.ZCAMERAMAKE AS 'zExtAttr-Camera Make',
@@ -20,15 +24,15 @@ CASE
 		'1-Unknown' ELSE zExtAttr.ZFLASHFIRED 
 	END AS 'zExtAttr-Flash Fired',
 	zAsset.Z_PK AS 'zAsset-zPK',
-	zAsset.Z_ENT AS 'zAsset-zENT',
-	zAsset.Z_OPT AS 'zAsset-zOPT',
+--zAsset.Z_ENT AS 'zAsset-zENT',
+--zAsset.Z_OPT AS 'zAsset-zOPT',
 	zAddAssetAttr.Z34_ASSET AS 'zAddAssetAttr-34Asset',
 	zIntResou.zAsset AS 'zIntResou-Asset Key=zAsset.zPK',
 	zAddAssetAttr.zAsset AS 'zAddAssetAttr-Asset Key',
 	z26Assets.Z_34ASSETS AS 'z26Asset.z34Assets = zAsset.zPK',
 	zAddAssetAttr.Z_PK AS 'zAddAssetAttr-zPK',
-	zAddAssetAttr.Z_ENT AS 'zAddAssetAttr-zENT',
-	zAddAssetAttr.Z_OPT AS 'zAddAssetAttr-zOPT',
+--zAddAssetAttr.Z_ENT AS 'zAddAssetAttr-zENT',
+--zAddAssetAttr.Z_OPT AS 'zAddAssetAttr-zOPT',
 	zAsset.ZADDITIONALATTRIBUTES AS 'zAsset-Additional Attributes Key',
 	AAAzCldMastMedData.ZADDITIONALASSETATTRIBUTES AS 'zCldMastMedData-AddAssetAttr=zAddAssetAttr-zPK',
 CASE
@@ -70,7 +74,7 @@ CASE
 		'7-Unknown' 
 		WHEN 8 THEN
 		'CMMAssets-8' ELSE zAsset.ZSAVEDASSETTYPE 
-	END AS 'zAsset-Saved Asset Type-Main',
+	END AS 'zAsset-Saved Asset Type',
 CASE
 		zAsset.ZVISIBILITYSTATE 
 		WHEN 0 THEN
@@ -80,25 +84,24 @@ CASE
 	END AS 'zAsset-Visibility State',
 	zAsset.ZFILENAME AS 'zAsset-Filename',
 	zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Org Filename',
-	zAsset.ZCLOUDASSETGUID AS 'zAsset-Cloud Asset GUID',
 	DateTime( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Date Created',
 	zAddAssetAttr.ZTIMEZONENAME AS 'zAddAssetAttr-Time Zone Name',
 	zAddAssetAttr.ZTIMEZONEOFFSET AS 'zAddAssetAttr-Time Zone Offset',
 	zAddAssetAttr.ZINFERREDTIMEZONEOFFSET AS 'zAddAssetAttr-Inferred Time Zone Offset',
 	DateTime( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH', 'localtime' ) AS 'zAsset-Local Date Created',
-	zAddAssetAttr.ZEXIFTIMESTAMPSTRING AS 'zAddAssetAttr-EXIF Timestamp',
+	zAddAssetAttr.ZEXIFTIMESTAMPSTRING AS 'zAddAssetAttr-EXIF Timestamp String',
 	DateTime( zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Add Date',
 	zCldMast.ZORIGINALFILENAME AS 'zCldMast-Org Filename',
 	DateTime( zAsset.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Modification Date',
 	DateTime( zCldMast.ZCREATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldMast-Creation Date',
 	DateTime( zIntResou.ZCLOUDMASTERDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zIntResou-Cloud Master Date Created',
 	DateTime( zCldMast.ZIMPORTDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldMast-Import Date',
-	DateTime( zIntResou.ZCLOUDLASTONDEMANDDOWNLOADDATE + 978307200, 'UNIXEPOCH' ) AS 'zIntResou-Last OnDemand Download Date',
 CASE
 		zIntResou.ZCLOUDLASTPREFETCHDATE 
 		WHEN 0 THEN
 		'NA-0' ELSE DateTime( zIntResou.ZCLOUDLASTPREFETCHDATE + 978307200, 'UNIXEPOCH' ) 
 	END AS 'zIntResou-Cloud Last Prefetch Date',
+	DateTime( zIntResou.ZCLOUDLASTONDEMANDDOWNLOADDATE + 978307200, 'UNIXEPOCH' ) AS 'zIntResou-Last OnDemand Download Date',
 	zIntResou.ZCLOUDPREFETCHCOUNT AS 'zIntResou-Cloud Prefetch Count',
 	DateTime( zAsset.ZLASTSHAREDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Last Shared Date',
 	zAddAssetAttr.ZSHAREORIGINATOR AS 'zAddAssetAttr-Share Originator',
@@ -182,7 +185,7 @@ CASE
 		'11-Unknown' 
 		WHEN 12 THEN
 		'12-Unknown' ELSE zAddAssetAttr.ZIMPORTEDBY 
-	END AS 'zAddAssetAttr-ImportedBy',
+	END AS 'zAddAssetAttr-Imported by',
 CASE
 		zAsset.ZORIENTATION 
 		WHEN 1 THEN
@@ -224,7 +227,7 @@ CASE
 CASE
 		zAddAssetAttr.ZCAMERACAPTUREDEVICE 
 		WHEN 0 THEN
-		'BackCamera-Other-Screenshot-Cloud-Downloaded0' 
+		'BackCamera-Other-Screenshot-Cloud-Downloaded-0' 
 		WHEN 1 THEN
 		'Front-Camera-1' ELSE zAddAssetAttr.ZCAMERACAPTUREDEVICE 
 	END AS 'zAddAssetAttr-Camera Capture Device',
@@ -251,6 +254,10 @@ CASE
 		WHEN 102 THEN
 		'Time-lapse-Video-102' ELSE zAsset.ZKINDSUBTYPE 
 	END AS 'zAsset-Kind Sub Type',
+	zExtAttr.ZDURATION AS 'zExtAttr-Duration',
+	zAsset.ZDURATION AS 'zAsset-Video Duration',
+	zAsset.ZVIDEOCPDURATIONVALUE AS 'zAsset-Video CP Duration',
+	zAddAssetAttr.ZVIDEOCPDISPLAYVALUE AS 'zAddAssetAttr-Video CP Display Value',
 	zAsset.ZUNIFORMTYPEIDENTIFIER AS 'zAsset-Uniform Type ID',
 CASE
 		zAsset.ZPLAYBACKSTYLE 
@@ -298,6 +305,7 @@ CASE
 	zAddAssetAttr.ZSHIFTEDLOCATIONDATA AS 'zAddAssetAttr-Shifted Location Data',
 	zAddAssetAttr.ZLOCATIONHASH AS 'zAddAssetAttr-Location Hash',
 -----------View-Play-Share-Counts---------------------------------------------------------------
+	DateTime( zMedAnlyAstAttr.ZMEDIAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zMedAnlyAstAttr-Media Analysis Timestamp',
 	zAddAssetAttr.ZPENDINGVIEWCOUNT AS 'zAddAssetAttr-Pending View Count',
 	zAddAssetAttr.ZVIEWCOUNT AS 'zAddAssetAttr-View Count',
 	zAddAssetAttr.ZPENDINGPLAYCOUNT AS 'zAddAssetAttr-Pending Play Count',
@@ -502,19 +510,21 @@ CASE
 		WHEN 1 THEN
 		'zIntResou-MetaData-1' 
 		WHEN 2 THEN
-		'2-Main-Asset-Live-Photo-Local-Device-2' 
+		'Main-Asset-Live-Photo-Local-Device-2' 
 		WHEN 3 THEN
-		'3-MPEG4-Asset-via-Cloud-3' 
+		'MPEG4-Asset-via-Cloud-3' 
 		WHEN 4 THEN
-		'4-Main-Asset-HEIC-Local-Device-4' 
+		'Main-Asset-HEIC-Local-Device-4' 
 		WHEN 5 THEN
-		'5-Main-Asset-PNG-Local-Device-5' 
+		'Main-Asset-PNG-Local-Device-5' 
 		WHEN 6 THEN
-		'6-HEIC-6' 
+		'HEIC-6' 
 		WHEN 7 THEN
-		'7-Live-Photo-Video-Info' 
+		'Live-Photo-Video-Info-7' 
 		WHEN 8 THEN
-		'8-HEIC-Adjustments-Filter' ELSE zIntResou.ZUNIFORMTYPEIDENTIFIER 
+		'HEIC-Adjustments-Filter-8' 
+		WHEN 9 THEN
+		'GIF-9' ELSE zIntResou.ZUNIFORMTYPEIDENTIFIER 
 	END AS 'zIntResou-Uniform Type ID',
 	zUniID.ZIDENTIFIER AS 'zUniID-Identifier',
 	zCodec.Z_PK AS 'zCodec-zPK',
@@ -580,7 +590,6 @@ CASE
 	CMzCldMastMedData.Z_PK AS 'CMzCldMastMedData-zPK=zAddAssetAttr&zCldMast-MediaMetaData Key',
 	CMzCldMastMedData.Z_ENT AS 'CMzCldMastMedData-zENT',
 	CMzCldMastMedData.Z_OPT AS 'CMzCldMastMedData-zOPT',
-	DateTime( zMedAnlyAstAttr.ZMEDIAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zMedAnlyAstAttr-Media Analysis Timestamp',
 CASE
 		zAsset.ZCLOUDPLACEHOLDERKIND 
 		WHEN 0 THEN
@@ -594,7 +603,7 @@ CASE
 		WHEN 4 THEN
 		'Local Asset JPEG-Cloud Asset HEIC-JPG-JPEG-MOV-PNG-4' 
 		WHEN 5 THEN
-		'Cloud Shared JPG Asset-5' 
+		'Asset_synced_via_iCloud_Photos_2_Device-5' 
 		WHEN 6 THEN
 		'6-Unknown' 
 		WHEN 7 THEN
@@ -683,7 +692,7 @@ CASE
 CASE
 		zCldMast.ZFULLSIZEJPEGSOURCE 
 		WHEN 0 THEN
-		'CldMast-Asset Video-0' 
+		'CldMast-Asset via iCloud Photos-0' 
 		WHEN 1 THEN
 		'CldMast-Asset Full Size JPEG-1' ELSE zCldMast.ZFULLSIZEJPEGSOURCE 
 	END AS 'zCldMast-Full Size JPEG Source',
@@ -802,33 +811,6 @@ CASE
 	zAsset.ZFACEADJUSTMENTVERSION AS 'zAsset-Face Adjustment Version',
 	zAddAssetAttr.ZFACEREGIONS AS 'zAddAssetAttr-Face Regions HEX',
 -----Include---Everything---Above--in--all--queries----------------------------------------------------------------------------
-----------Asset_Analysis_State_Information-------------------------------------------------------------------
-	zAssetAnalyState.Z_PK AS 'zAssetAnalyState-zPK',
-	zAssetAnalyState.Z34_ASSET AS 'zAssetAnalyState-34 Asset',
-	zAssetAnalyState.ZANALYSISSTATE AS 'zAssetAnalyState-Analyisis State',
-	zAssetAnalyState.ZWORKERFLAGS AS 'zAssetAnalyState-Worker Flags',
-	zAssetAnalyState.ZWORKERTYPE AS 'zAssetAnalyState-Worker Type',
-	zAssetAnalyState.zAsset AS 'zAssetAnalyState-Asset=zAsset-zPK',
-	DateTime( zAssetAnalyState.ZIGNOREUNTILDATE + 978307200, 'UNIXEPOCH' ) AS 'zAssetAnalyState-Ignore Until Date',
-	DateTime( zAssetAnalyState.ZLASTIGNOREDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAssetAnalyState-Last Ignored Date',
-	zAssetAnalyState.ZSORTTOKEN AS 'zAssetAnalyState-Sort Token',
-	zAssetAnalyState.ZASSETUUID AS 'zAssetAnalyState-Asset UUID',
-----------FileHeight_FileWidth----------------------------------------------------------
-	zAsset.ZHEIGHT AS 'zAsset-Height',
-	zAddAssetAttr.ZORIGINALHEIGHT AS 'zAddAssetAttr-Original Height',
-	zDetFace.ZSOURCEHEIGHT AS 'zDetFace-Source Height',
-	zIntResou.ZUNORIENTEDHEIGHT AS 'zIntResou-Unoriented Height',
-	zAsset.ZWIDTH AS 'zAsset-Width',
-	zAddAssetAttr.ZORIGINALWIDTH AS 'zAddAssetAttr-Original Width',
-	zDetFace.ZSOURCEWIDTH AS 'zDetFace-Source Width',
-	zIntResou.ZUNORIENTEDWIDTH AS 'zIntResou-Unoriented Width',
----------------Thumbnail_Information----------------------------------------------------------------------
-	zAsset.ZTHUMBNAILINDEX AS 'zAsset-Thumbnail Index',
-	zAddAssetAttr.ZEMBEDDEDTHUMBNAILHEIGHT AS 'zAddAssetAttr-Embedded Thumbnail Height',
-	zAddAssetAttr.ZEMBEDDEDTHUMBNAILLENGTH AS 'zAddAssetAttr-Embedded Thumbnail Length',
-	zAddAssetAttr.ZEMBEDDEDTHUMBNAILOFFSET AS 'zAddAssetAttr-Embedded Thumbnail Offset',
-	zAddAssetAttr.ZEMBEDDEDTHUMBNAILWIDTH AS 'zAddAssetAttr-Embedded Thumbnail Width',
-	zShare.ZTHUMBNAILIMAGEDATA AS 'zShare-Thumbnail Image Data',
 ----Media_Analysis-------Extended_Attributes--No-Data-During-Testing-iOS-12-13-14-iOS15-had-Data------------------------------
 	zAsset.ZEXTENDEDATTRIBUTES AS 'zAsset-Extended Attributes=zExtAttr-zPK',
 	zExtAttr.Z_PK AS 'zExtAttr-zPK=zAsset-zExtendedAttributes',
@@ -866,18 +848,41 @@ CASE
 	zExtAttr.zAsset AS 'zExtAttr-Asset Key',
 	zExtAttr.ZAPERTURE AS 'zExtAttr-Aperture',
 	zExtAttr.ZBITRATE AS 'zExtAttr-BitRate',
-	zExtAttr.ZDURATION AS 'zExtAttr-Duration',
-	zAsset.ZDURATION AS 'zAsset-Video Duration',
-	zAsset.ZVIDEOCPDURATIONVALUE AS 'zAsset-Video CP Duration',
 	zAddAssetAttr.ZVIDEOCPDISPLAYTIMESCALE AS 'zAddAssetAttr-Video CP Display Time Scale',
 	zAddAssetAttr.ZVIDEOCPDURATIONTIMESCALE AS 'zAddAssetAttr-Video CP Duration Time Scale',
-	zAddAssetAttr.ZVIDEOCPDISPLAYVALUE AS 'zAddAssetAttr-Video CP Display Value',
 	zAsset.ZVIDEOCPVISIBILITYSTATE AS 'zAsset-Video CP Visibility State',
 	zAsset.ZPLAYBACKVARIATION AS 'zAsset-Playback Variation',
 	zExtAttr.ZEXPOSUREBIAS AS 'zExtAttr-Exposure Bias',
 	zExtAttr.ZFOCALLENGTH AS 'zExtAttr-Focal Lenght',
 	zExtAttr.ZFPS AS 'zExtAttr-Frames Per Second',
 	zExtAttr.ZSHUTTERSPEED AS 'zExtAttr-Shutter Speed',
+----------Asset_Analysis_State_Information-------------------------------------------------------------------
+	zAssetAnalyState.Z_PK AS 'zAssetAnalyState-zPK',
+	zAssetAnalyState.Z34_ASSET AS 'zAssetAnalyState-34 Asset',
+	zAssetAnalyState.ZANALYSISSTATE AS 'zAssetAnalyState-Analyisis State',
+	zAssetAnalyState.ZWORKERFLAGS AS 'zAssetAnalyState-Worker Flags',
+	zAssetAnalyState.ZWORKERTYPE AS 'zAssetAnalyState-Worker Type',
+	zAssetAnalyState.zAsset AS 'zAssetAnalyState-Asset=zAsset-zPK',
+	DateTime( zAssetAnalyState.ZIGNOREUNTILDATE + 978307200, 'UNIXEPOCH' ) AS 'zAssetAnalyState-Ignore Until Date',
+	DateTime( zAssetAnalyState.ZLASTIGNOREDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAssetAnalyState-Last Ignored Date',
+	zAssetAnalyState.ZSORTTOKEN AS 'zAssetAnalyState-Sort Token',
+	zAssetAnalyState.ZASSETUUID AS 'zAssetAnalyState-Asset UUID',
+----------FileHeight_FileWidth----------------------------------------------------------
+	zAsset.ZHEIGHT AS 'zAsset-Height',
+	zAddAssetAttr.ZORIGINALHEIGHT AS 'zAddAssetAttr-Original Height',
+	zDetFace.ZSOURCEHEIGHT AS 'zDetFace-Source Height',
+	zIntResou.ZUNORIENTEDHEIGHT AS 'zIntResou-Unoriented Height',
+	zAsset.ZWIDTH AS 'zAsset-Width',
+	zAddAssetAttr.ZORIGINALWIDTH AS 'zAddAssetAttr-Original Width',
+	zDetFace.ZSOURCEWIDTH AS 'zDetFace-Source Width',
+	zIntResou.ZUNORIENTEDWIDTH AS 'zIntResou-Unoriented Width',
+---------------Thumbnail_Information----------------------------------------------------------------------
+	zAsset.ZTHUMBNAILINDEX AS 'zAsset-Thumbnail Index',
+	zAddAssetAttr.ZEMBEDDEDTHUMBNAILHEIGHT AS 'zAddAssetAttr-Embedded Thumbnail Height',
+	zAddAssetAttr.ZEMBEDDEDTHUMBNAILLENGTH AS 'zAddAssetAttr-Embedded Thumbnail Length',
+	zAddAssetAttr.ZEMBEDDEDTHUMBNAILOFFSET AS 'zAddAssetAttr-Embedded Thumbnail Offset',
+	zAddAssetAttr.ZEMBEDDEDTHUMBNAILWIDTH AS 'zAddAssetAttr-Embedded Thumbnail Width',
+	zShare.ZTHUMBNAILIMAGEDATA AS 'zShare-Thumbnail Image Data',
 --------------Computed_Asset_Attributes--------------------------------------------------------------------
 	zCompAssetAttr.zAsset AS 'zCompAssetAttr-Asset Key',
 	zCompAssetAttr.Z_PK AS 'zCompAssetAttr-zPK',
@@ -1174,6 +1179,7 @@ CASE
 	END AS 'zGenAlbum-Cloud Local State for Parent',
 	ParentzGenAlbum.ZUUID AS 'ParentzGenAlbum-UUID',
 	ParentzGenAlbum.ZCLOUDGUID AS 'ParentzGenAlbum-Cloud GUID',
+	ParentzGenAlbum.ZTITLE AS 'ParentzGenAlbum-Title',
 	DateTime( ParentzGenAlbum.ZCREATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'ParentzGenAlbum-Creation Date',
 	ParentzGenAlbum.Z_PK AS 'ParentzGenAlbum-zPK',
 CASE
@@ -1181,7 +1187,7 @@ CASE
 		WHEN 2 THEN
 		'Local Device-iCloud Photos Album-2' 
 		WHEN 1505 THEN
-		'Cloud Shared Album-1505' 
+		'Shared Album-1505' 
 		WHEN 1506 THEN
 		'1506' 
 		WHEN 1552 THEN
@@ -1249,7 +1255,9 @@ CASE
 		WHEN 3998 THEN
 		'3998-Project Root Folder-3998' 
 		WHEN 3999 THEN
-		'3999-Parent Folder for Generic Album-3999' 
+		'Parent Folder for Generic Album-3999' 
+		WHEN 4000 THEN
+		'Parent is Folder on Local Device-4000' 
 		WHEN 4001 THEN
 		'4001' 
 		WHEN 4002 THEN
@@ -1268,7 +1276,7 @@ CASE
 CASE
 		ParentzGenAlbum.ZPENDINGITEMSTYPE 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'No-1' 
 		WHEN 24 THEN
 		'24-Unknown' ELSE ParentzGenAlbum.ZPENDINGITEMSTYPE 
 	END AS 'ParentzGenAlbum-Pending Items Type',
@@ -1329,7 +1337,7 @@ CASE
 		WHEN 2 THEN
 		'Local Device-iCloud Photos Album-2' 
 		WHEN 1505 THEN
-		'Cloud Shared Album-1505' 
+		'Shared Album-1505' 
 		WHEN 1506 THEN
 		'1506' 
 		WHEN 1552 THEN
@@ -1397,13 +1405,15 @@ CASE
 		WHEN 3998 THEN
 		'3998-Project Root Folder-3998' 
 		WHEN 3999 THEN
-		'3999-Parent Folder for Generic Album-3999' 
+		'Parent is Root containing Generic_Album on Local Device-3999' 
+		WHEN 4000 THEN
+		'Parent is Sub-Folder containing Generic_Album on Local Device-4000' 
 		WHEN 4001 THEN
 		'4001' 
 		WHEN 4002 THEN
 		'4002' 
 		WHEN 4003 THEN
-		'4003' ELSE ParentzGenAlbum.ZKIND 
+		'4003' ELSE zGenAlbum.ZKIND 
 	END AS 'zGenAlbum-Album Kind',
 	zGenAlbum.ZTITLE AS 'zGenAlbum-Title',
 	zGenAlbum.ZPARENTFOLDER AS 'zGenAlbum-Parent Folder Key=zGenAlbum-zPK',
@@ -1418,7 +1428,7 @@ CASE
 CASE
 		zGenAlbum.ZPENDINGITEMSTYPE 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'No-1' 
 		WHEN 24 THEN
 		'24-Unknown' ELSE zGenAlbum.ZPENDINGITEMSTYPE 
 	END AS 'zGenAlbum-Pending Items Type',
@@ -1456,17 +1466,17 @@ CASE
 CASE
 		zGenAlbum.ZCLOUDRELATIONSHIPSTATELOCAL 
 		WHEN 0 THEN
-		'zGenAlbum-Cloud Shared Album Accessible Local Device-0' 
+		'zGenAlbum-Shared Album Accessible Local Device-0' 
 		WHEN 1 THEN
 		'1-Unknown' ELSE zGenAlbum.ZCLOUDRELATIONSHIPSTATELOCAL 
 	END AS 'zGenAlbum-Cloud Relationship State Local',
+	zGenAlbum.ZCLOUDOWNEREMAILKEY AS 'zGenAlbum-Cloud Owner Mail Key',
 	zGenAlbum.ZCLOUDOWNERFIRSTNAME AS 'zGenAlbum-Cloud Owner Frist Name',
 	zGenAlbum.ZCLOUDOWNERLASTNAME AS 'zGenAlbum-Cloud Owner Last Name',
 	zGenAlbum.ZCLOUDOWNERFULLNAME AS 'zGenAlbum-Cloud Owner Full Name',
 	zGenAlbum.ZCLOUDPERSONID AS 'zGenAlbum-Cloud Person ID',
 	zGenAlbum.ZCLOUDOWNERHASHEDPERSONID AS 'zGenAlbum-Cloud Owner Hashed Person ID',
 	zAsset.ZCLOUDOWNERHASHEDPERSONID AS 'zAsset-Cloud Owner Hashed Person ID',
-	zGenAlbum.ZCLOUDOWNEREMAILKEY AS 'zGenAlbum-Cloud Owner Mail Key',
 CASE
 		zGenAlbum.ZCLOUDMULTIPLECONTRIBUTORSENABLEDLOCAL 
 		WHEN 0 THEN
@@ -1486,8 +1496,8 @@ CASE
 		WHEN 0 THEN
 		'zGenAlbum Multi-Contributor-0' ELSE zGenAlbum.ZCLOUDALBUMSUBTYPE 
 	END AS 'zGenAlbum-Cloud Album Sub Type',
-	DateTime( zGenAlbum.ZCLOUDLASTCONTRIBUTIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zGenAlbum-Cloud Contrib Date',
-	DateTime( zGenAlbum.ZCLOUDLASTINTERESTINGCHANGEDATE + 978307200, 'UNIXEPOCH' ) AS 'zGenAlbum-Cloud LastInteresChange Date',
+	DateTime( zGenAlbum.ZCLOUDLASTCONTRIBUTIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zGenAlbum-Cloud Contribution Date',
+	DateTime( zGenAlbum.ZCLOUDLASTINTERESTINGCHANGEDATE + 978307200, 'UNIXEPOCH' ) AS 'zGenAlbum-Cloud Last Interesting Change Date',
 CASE
 		zGenAlbum.ZCLOUDNOTIFICATIONSENABLED 
 		WHEN 0 THEN
@@ -1595,9 +1605,9 @@ CASE
 CASE
 		zCldShareAlbumInvRec.ZINVITATIONSTATELOCAL 
 		WHEN 0 THEN
-		'0-Invite Handled-0' 
+		'0-Unknown-0' 
 		WHEN 1 THEN
-		'1-Invite Pending-1' ELSE zCldShareAlbumInvRec.ZINVITATIONSTATELOCAL 
+		'1-Unknown-1' ELSE zCldShareAlbumInvRec.ZINVITATIONSTATELOCAL 
 	END AS 'zCldShareAlbumInvRec-Invitation State Local',
 CASE
 		zCldShareAlbumInvRec.ZINVITATIONSTATE 
@@ -2056,6 +2066,8 @@ CASE
 		zFaceCrop.ZCLOUDTYPE 
 		WHEN 0 THEN
 		'Has Name-0' 
+		WHEN 5 THEN
+		'Has Face Key-5' 
 		WHEN 12 THEN
 		'12-Unknown' ELSE zFaceCrop.ZCLOUDTYPE 
 	END AS 'zFaceCrop-Cloud Type',
@@ -2254,7 +2266,7 @@ CASE
 CASE
 		YearzMomentList.ZGRANULARITYLEVEL 
 		WHEN 10 THEN
-		'Year and Month Moment-10' 
+		'Year&Month Moment-10' 
 		WHEN 20 THEN
 		'Year Moment-20' ELSE YearzMomentList.ZGRANULARITYLEVEL 
 	END AS 'YearzMomentList-Granularity Level',
@@ -2310,6 +2322,8 @@ CASE
 		zMoment.ZPROCESSEDLOCATION 
 		WHEN 2 THEN
 		'No-2' 
+		WHEN 3 THEN
+		'Yes-3' 
 		WHEN 6 THEN
 		'Yes-6' ELSE zMoment.ZPROCESSEDLOCATION 
 	END AS 'zMoment-Processed Location',
@@ -4018,8 +4032,7 @@ CASE
 		'Suggestion Not Deleted-0' 
 		WHEN 1 THEN
 		'Suggestion Deleted-1' ELSE SBRAzSugg.ZCLOUDDELETESTATE 
-	END AS 'SBRAzSugg-Cloud Delete State'
---------iOS_13_ScenePrint-Classification_Photossqlite_WC-----------------------------------------------  
+	END AS 'SBRAzSugg-Cloud Delete State' --------iOS_13_ScenePrint-Classification_Photossqlite_WC-----------------------------------------------  
 -----------------------ScenePrint---------------------------------------------------
 --zSceneP.Z_PK AS 'zSceneP-zPK',
 --zAddAssetAttr.ZSCENEPRINT AS 'Screne Print Key zAddAssetAttr',
@@ -4085,8 +4098,7 @@ FROM
 	ZGENERICASSET zAsset
 	LEFT JOIN ZADDITIONALASSETATTRIBUTES zAddAssetAttr ON zAddAssetAttr.Z_PK = zAsset.ZADDITIONALATTRIBUTES
 	LEFT JOIN ZEXTENDEDATTRIBUTES zExtAttr ON zExtAttr.Z_PK = zAsset.ZEXTENDEDATTRIBUTES
-	LEFT JOIN ZINTERNALRESOURCE zIntResou ON zIntResou.zAsset = zAsset.Z_PK
---LEFT JOIN ZSCENEPRINT zSceneP ON zSceneP.Z_PK = zAddAssetAttr.ZSCENEPRINT
+	LEFT JOIN ZINTERNALRESOURCE zIntResou ON zIntResou.zAsset = zAsset.Z_PK --LEFT JOIN ZSCENEPRINT zSceneP ON zSceneP.Z_PK = zAddAssetAttr.ZSCENEPRINT
 --LEFT JOIN ZSCENECLASSIFICATION zSceneClass ON zSceneClass.ZASSETATTRIBUTES = zAsset.Z_PK
 --LEFT JOIN ACHANGE aChange ON aCHANGE.ZENTITYPK = zIntResou.Z_PK
 --LEFT JOIN ATRANSACTION aTRANS ON aTRANS.Z_PK = aCHANGE.ZTRANSACTIONID
@@ -4106,8 +4118,7 @@ FROM
 	LEFT JOIN ZCLOUDMASTERMEDIAMETADATA CMzCldMastMedData ON CMzCldMastMedData.Z_PK = zCldMast.ZMEDIAMETADATA
 	LEFT JOIN ZASSETANALYSISSTATE zAssetAnalyState ON zAssetAnalyState.zAsset = zAsset.Z_PK
 	LEFT JOIN ZMEDIAANALYSISASSETATTRIBUTES zMedAnlyAstAttr ON zAsset.ZMEDIAANALYSISATTRIBUTES = zMedAnlyAstAttr.Z_PK
-	LEFT JOIN ZCOMPUTEDASSETATTRIBUTES zCompAssetAttr ON zCompAssetAttr.Z_PK = zAsset.ZCOMPUTEDATTRIBUTES
---LEFT JOIN ZFILESYSTEMBOOKMARK zFileSysBM ON zFileSysBM.Z_PK = zIntResou.ZFILESYSTEMBOOKMARK
+	LEFT JOIN ZCOMPUTEDASSETATTRIBUTES zCompAssetAttr ON zCompAssetAttr.Z_PK = zAsset.ZCOMPUTEDATTRIBUTES --LEFT JOIN ZFILESYSTEMBOOKMARK zFileSysBM ON zFileSysBM.Z_PK = zIntResou.ZFILESYSTEMBOOKMARK
 --LEFT JOIN ZFILESYSTEMVOLUME zFileSysVol ON zFileSysVol.Z_PK = zIntResou.ZFILESYSTEMVOLUME
 --LEFT JOIN Z_1KEYWORDS z1Keywords ON z1Keywords.Z_1ASSETATTRIBUTES = zAsset.ZADDITIONALATTRIBUTES
 --LEFT JOIN ZKEYWORD zKeyWord ON zKeyWord.Z_PK = z1Keywords.Z_37KEYWORDS
@@ -4124,8 +4135,7 @@ FROM
 	LEFT JOIN ZPERSON zPerson ON zPerson.Z_PK = zDetFace.ZPERSON
 	LEFT JOIN ZDETECTEDFACEPRINT zDetFacePrint ON zDetFacePrint.ZFACE = zDetFace.Z_PK
 	LEFT JOIN ZFACECROP zFaceCrop ON zPerson.Z_PK = zFaceCrop.ZPERSON
-	LEFT JOIN ZDETECTEDFACEGROUP zDetFaceGroup ON zDetFaceGroup.Z_PK = zDetFace.ZFACEGROUP
---LEFT JOIN ZDEFERREDREBUILDFACE zDefRebuildFace ON zDefRebuildFace.z_PK = zDetFace.Z_PK
+	LEFT JOIN ZDETECTEDFACEGROUP zDetFaceGroup ON zDetFaceGroup.Z_PK = zDetFace.ZFACEGROUP --LEFT JOIN ZDEFERREDREBUILDFACE zDefRebuildFace ON zDefRebuildFace.z_PK = zDetFace.Z_PK
 --LEFT JOIN ZPERSONREFERENCE zPerReference ON zPerson.Z_PK = zPerReference.ZPERSON
 --LEFT JOIN ZLEGACYFACE zLegacyFace ON zLegacyFace.ZASSET = zAsset.Z_PK
 	LEFT JOIN Z_34MEMORIESBEINGCURATEDASSETS z34MemoryBCAs ON ZASSET.Z_PK = z34MemoryBCAs.Z_34CURATEDASSETS
@@ -4166,6 +4176,8 @@ FROM
 --WHERE zAsset.ZLASTSHAREDDATE > 0 --AssetHasLastShareDate
 --WHERE zAsset.ZLATITUDE > 0 or zExtAttr.ZLATITUDE > 0 --AssetHasLocation
 --WHERE zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE IN (1, 2)  --AssetHasACopy
+--WHERE zGenAlbum.ZKIND = 1505 --zGenAlbum-Kind-Cloud_Shared_Album-1505
+--WHERE zGenAlbum.ZKIND = 2 --zGenAlbum-Kind-Local_Device-iCloud_Photos_Album-2
 --WHERE zGenAlbum.ZCLOUDLOCALSTATE = 0 --iCldPhotos ON=Asset Share Album/iCldPhotos OFF=Asset in GenAlbum
 --WHERE zGenAlbum.ZCLOUDLOCALSTATE = 1 --iCldPhotos ON=Asset In Generic Album
 --WHERE zGenAlbum.ZTRASHEDSTATE = 1 --GenericAlbumInTrashRecentlyDeleted
@@ -4187,6 +4199,7 @@ FROM
 --WHERE zCldShareAlbumInvRec.ZISMINE = 1 --CloudSharedAlbumInviteRecordisMyInvitetoAlbum
 --WHERE zAsset.ZCLOUDISMYASSET = 1 --AssetInCloudSharedIsMyAsset
 --WHERE zIntResou.ZCLOUDPREFETCHCOUNT > 0 --AssetSyncedBetweeniCloudandDevice
+--WHERE zIntResou.ZCLOUDLOCALSTATE = 0 --InternalResourceNotAvailinCloud-0 
 --WHERE zAsset.ZFACEAREAPOINTS > 0 --AssetHasDetectedFace
 --WHERE zFaceCrop.ZRESOURCEDATA > 0 --AssetHasFaceCrop
 	
