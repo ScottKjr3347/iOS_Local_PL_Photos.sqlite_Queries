@@ -1,0 +1,31 @@
+SELECT
+	zMoment.Z_PK AS 'zMoment-zPK',
+	zMoment.ZTITLE AS 'zMoment-Title',
+	zMoment.ZSUBTITLE AS 'zMoment-SubTitle',
+	DateTime ( zMoment.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'zMoment-Start Date',
+	DateTime ( zMoment.ZREPRESENTATIVEDATE + 978307200, 'UNIXEPOCH' ) AS 'zMoment-Representative Date',
+	zMoment.ZTIMEZONEOFFSET AS 'zMoment-Timezone Offset',
+	DateTime ( zMoment.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zMoment-Modification Date',
+	DateTime ( zMoment.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'zMoment-End Date',
+	zMoment.ZLOCALIZEDLOCATIONNAMES AS 'zMoment-Localized Location Names',
+CASE
+		zMoment.ZPROCESSEDLOCATION 
+		WHEN 2 THEN
+		'No-2' 
+		WHEN 3 THEN
+		'Yes-3' 
+		WHEN 6 THEN
+		'Yes-6' ELSE zMoment.ZPROCESSEDLOCATION 
+	END AS 'zMoment-Processed Location',
+	zMoment.ZAPPROXIMATELATITUDE AS 'zMoment-Approx Latitude',
+	zMoment.ZAPPROXIMATELONGITUDE AS 'zMoment-Approx Longitude',
+CASE
+		zMoment.ZGPSHORIZONTALACCURACY 
+		WHEN - 1.0 THEN
+		'-1.0' ELSE zMoment.ZGPSHORIZONTALACCURACY 
+	END AS 'zMoment-GPS Horizontal Accuracy',
+	zMoment.ZCACHEDCOUNT AS 'zMoment-Cache Count',
+	zMoment.ZCACHEDPHOTOSCOUNT AS 'zMoment-Cached Photos Count',
+	zMoment.ZCACHEDVIDEOSCOUNT AS 'zMoment-Cached Videos Count' 
+FROM
+	ZMOMENT zMoment
