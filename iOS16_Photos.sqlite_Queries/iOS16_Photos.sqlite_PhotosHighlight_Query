@@ -1,0 +1,3871 @@
+SELECT
+	zAsset.ZUUID AS 'zAsset-UUID = store.cloudphotodb',
+	zAddAssetAttr.ZORIGINALASSETSUUID AS 'zAddAssetAttr-Original Assets UUID',
+	zAddAssetAttr.ZPUBLICGLOBALUUID AS 'zAddAssetAttr-Public Global UUID',
+	zExtAttr.ZCAMERAMAKE AS 'zExtAttr-Camera Make',
+	zExtAttr.ZCAMERAMODEL AS 'zExtAttr-Camera Model',
+	zExtAttr.ZLENSMODEL AS 'zExtAttr-Lens Model',
+CASE
+		zExtAttr.ZFLASHFIRED 
+		WHEN 0 THEN
+		'No Flash-0' 
+		WHEN 1 THEN
+		'Flash Fired-1' ELSE zExtAttr.ZFLASHFIRED 
+	END AS 'zExtAttr-Flash Fired',
+	zAsset.Z_PK AS 'zAsset-zPK',
+	zAddAssetAttr.zAsset AS 'zAddAssetAttr-Asset Key',
+	zAsset.ZADDITIONALATTRIBUTES AS 'zAsset-Additional Attributes Key',
+CASE
+		zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE 
+		WHEN 0 THEN
+		'No Copy-0' 
+		WHEN 1 THEN
+		'Has A Copy-1' 
+		WHEN 2 THEN
+		'Has A Copy-2' ELSE zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE 
+	END AS 'zAddAssetAttr-Destination Asset Copy State',
+CASE
+		zAsset.ZCLOUDLOCALSTATE 
+		WHEN 0 THEN
+		'iCldPhotos ON=Asset in Shared Album/iCldPhotos OFF=Not Synced-0' 
+		WHEN 1 THEN
+		'iCldPhotos ON=Asset Synced with iCloud-1' ELSE zAsset.ZCLOUDLOCALSTATE 
+	END AS 'zAsset-Cloud Local State',
+CASE
+		zAsset.ZSAVEDASSETTYPE 
+		WHEN 0 THEN
+		'Saved-via-other-source-0' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'DCIM-APPLE-3' 
+		WHEN 4 THEN
+		'PhotoCloudSharingData-4' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'CPLAssets-6' 
+		WHEN 7 THEN
+		'7-Unknown' 
+		WHEN 8 THEN
+		'CMMAssets-8' ELSE zAsset.ZSAVEDASSETTYPE 
+	END AS 'zAsset-Saved Asset Type',
+CASE
+		zAsset.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'Visible-Photo-Library-0' 
+		WHEN 2 THEN
+		'Not-Visible-Photo-Library-2' ELSE zAsset.ZVISIBILITYSTATE 
+	END AS 'zAsset-Visibility State',
+	zAsset.ZFILENAME AS 'zAsset-Filename',
+	zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
+	DateTime ( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Date Created',
+	DateTime ( zExtAttr.ZDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zExtAttr-Date Created',
+	DateTime ( zAddAssetAttr.ZDATECREATEDSOURCE + 978307200, 'UNIXEPOCH' ) AS 'zAddAssetAttr-Date Created Source',
+	zAddAssetAttr.ZTIMEZONENAME AS 'zAddAssetAttr-Time Zone Name',
+	zExtAttr.ZTIMEZONENAME AS 'zExtAttr-Time Zone Name',
+	zAddAssetAttr.ZTIMEZONEOFFSET AS 'zAddAssetAttr-Time Zone Offset',
+	zExtAttr.ZTIMEZONEOFFSET AS 'zExtAttr-Time Zone Offset',
+	zAddAssetAttr.ZINFERREDTIMEZONEOFFSET AS 'zAddAssetAttr-Inferred Time Zone Offset',
+	DateTime ( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH', 'localtime' ) AS 'zAsset-Date Created Localtime',
+	DateTime ( zExtAttr.ZDATECREATED + 978307200, 'UNIXEPOCH', 'localtime' ) AS 'zExtAttr-Date Created Localtime',
+	zAddAssetAttr.ZEXIFTIMESTAMPSTRING AS 'zAddAssetAttr-EXIF Timestamp String',
+	DateTime ( zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Add Date',
+	DateTime ( zAsset.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Modification Date',
+	DateTime ( zAsset.ZLASTSHAREDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Last Shared Date',
+	zAddAssetAttr.ZSHAREORIGINATOR AS 'zAddAssetAttr-Share Originator',
+CASE
+		zAsset.ZCLOUDISMYASSET 
+		WHEN 0 THEN
+		'Not My Asset in Shared Album-0' 
+		WHEN 1 THEN
+		'My Asset in Shared Album-1' ELSE zAsset.ZCLOUDISMYASSET 
+	END AS 'zAsset-Cloud is My Asset/Cloud Shared',
+	zAsset.ZDIRECTORY AS 'zAsset-Directory/Path',
+CASE
+		zAsset.ZSAVEDASSETTYPE 
+		WHEN 0 THEN
+		'Saved-via-other-source-0' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'DCIM-APPLE-3' 
+		WHEN 4 THEN
+		'PhotoCloudSharingData-4' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'CPLAssets-6' 
+		WHEN 7 THEN
+		'7-Unknown' 
+		WHEN 8 THEN
+		'CMMAssets-8' ELSE zAsset.ZSAVEDASSETTYPE 
+	END AS 'zAsset-Saved Asset Type',
+	zAddAssetAttr.ZIMPORTEDBYBUNDLEIDENTIFIER AS 'zAddAssetAttr.Imported by Bundle Identifier',
+	zAddAssetAttr.ZIMPORTEDBYDISPLAYNAME AS 'zAddAssetAttr-Imported By Display Name',
+CASE
+		zAsset.ZBUNDLESCOPE 
+		WHEN 0 THEN
+		'Not in Cloud Shared Album-0' 
+		WHEN 2 THEN
+		'In Cloud Shared Album-2' ELSE zAsset.ZBUNDLESCOPE 
+	END AS 'zAsset-Bundle Scope',
+CASE
+		zAddAssetAttr.ZIMPORTEDBY 
+		WHEN 0 THEN
+		'Cloud-Other-0' 
+		WHEN 1 THEN
+		'Native-Back-Camera-1' 
+		WHEN 2 THEN
+		'Native-Front-Camera-2' 
+		WHEN 3 THEN
+		'Third-Party-App-3' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'Third-Party-App-6' 
+		WHEN 7 THEN
+		'7-Unknown' 
+		WHEN 8 THEN
+		'Native-App-8' 
+		WHEN 9 THEN
+		'Native-App-9' 
+		WHEN 10 THEN
+		'10-Unknown' 
+		WHEN 11 THEN
+		'11-Unknown' 
+		WHEN 12 THEN
+		'12-Unknown' ELSE zAddAssetAttr.ZIMPORTEDBY 
+	END AS 'zAddAssetAttr-Imported by',
+CASE
+		zAsset.ZKIND 
+		WHEN 0 THEN
+		'Photo-0' 
+		WHEN 1 THEN
+		'Video-1' 
+	END AS 'zAsset-Kind',
+CASE
+		zAsset.ZKINDSUBTYPE 
+		WHEN 0 THEN
+		'Still-Photo-0' 
+		WHEN 2 THEN
+		'Live-Photo-2' 
+		WHEN 10 THEN
+		'SpringBoard-Screenshot-10' 
+		WHEN 100 THEN
+		'Video-100' 
+		WHEN 101 THEN
+		'Slow-Mo-Video-101' 
+		WHEN 102 THEN
+		'Time-lapse-Video-102' ELSE zAsset.ZKINDSUBTYPE 
+	END AS 'zAsset-Kind Sub Type',
+	zAsset.ZLOCATIONDATA AS 'zAsset-Location Data/HEX',
+CASE
+		zAsset.ZLATITUDE 
+		WHEN - 180.0 THEN
+		'0' ELSE zAsset.ZLATITUDE 
+	END AS 'zAsset-Latitude',
+	zExtAttr.ZLATITUDE AS 'zExtAttr-Latitude',
+CASE
+		zAsset.ZLONGITUDE 
+		WHEN - 180.0 THEN
+		'0' ELSE zAsset.ZLONGITUDE 
+	END AS 'zAsset-Longitude',
+	zExtAttr.ZLONGITUDE AS 'zExtAttr-Longitude',
+CASE
+		zAddAssetAttr.ZGPSHORIZONTALACCURACY 
+		WHEN - 1.0 THEN
+		'Not Valid' ELSE zAddAssetAttr.ZGPSHORIZONTALACCURACY 
+	END AS 'zAddAssetAttr-Horizontal Accuracy',
+CASE
+		zAddAssetAttr.ZREVERSELOCATIONDATAISVALID 
+		WHEN 0 THEN
+		'Data Not Valid-0' 
+		WHEN 1 THEN
+		'Data Valid-1' 
+	END AS 'zAddAssetAttr-Reverse Location Data Valid',
+	zAddAssetAttr.ZREVERSELOCATIONDATA AS 'zAddAssetAttr-Reverse Location Data/Orig-Asset/HEX NSKeyed Plist ',
+CASE
+		zAddAssetAttr.ZSHIFTEDLOCATIONISVALID 
+		WHEN 0 THEN
+		'Shifted Location Not Valid-0' 
+		WHEN 1 THEN
+		'Shifted Location Valid-1' 
+	END AS 'zAddAssetAttr-Shifted Location Valid',
+	zAddAssetAttr.ZSHIFTEDLOCATIONDATA AS 'zAddAssetAttr-Shifted Location Data',
+	zAddAssetAttr.ZLOCATIONHASH AS 'zAddAssetAttr-Location Hash',
+	zAsset.ZHIGHLIGHTVISIBILITYSCORE AS 'zAsset-Highlight Visibility Score',
+	YearParzPhotosHighPriv.ZUUID AS 'YearParzPhotosHighPriv-UUID',
+	YearParzPhotosHighPriv.Z_PK AS 'YearParzPhotosHighPriv-zPK',
+	YearParzPhotosHighPriv.Z_ENT AS 'YearParzPhotosHighPriv-zENT',
+	YearParzPhotosHighPriv.Z_OPT AS 'YearParzPhotosHighPriv-zOPT',
+	YearParzPhotosHighPriv.ZPROMOTIONSCORE AS 'YearParzPhotosHighPriv-Promotion Score',
+	YearParzPhotosHighPriv.ZTITLE AS 'YearParzPhotosHighPriv-Title',
+	YearParzPhotosHighPriv.ZTITLEMIXED AS 'YearParzPhotosHighPriv-Title Mixed',
+	YearParzPhotosHighPriv.ZTITLESHARED AS 'YearParzPhotosHighPriv-Title Shared',
+	YearParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTION AS 'YearParzPhotosHighPriv-Verbose Smart Description',
+	YearParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONMIXED AS 'YearParzPhotosHighPriv-Verbose Smart Description Mixed',
+	YearParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONSHARED AS 'YearParzPhotosHighPriv-Verbose Smart Description Shared',
+	DateTime ( YearParzPhotosHighPriv.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'YearParzPhotosHighPriv-Start Date',
+	DateTime ( YearParzPhotosHighPriv.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'YearParzPhotosHighPriv-End Date',
+	YearParzPhotosHighPriv.ZYEARKEYASSETPRIVATE AS 'YearParzPhotosHighPriv-Year Key Asset Private',
+	YearParzPhotosHighPriv.ZYEARKEYASSETSHARED AS 'YearParzPhotosHighPriv-Year Key Asset Shared',
+CASE
+		YearParzPhotosHighPriv.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE YearParzPhotosHighPriv.ZKIND 
+	END AS 'YearParzPhotosHighPriv-Kind',
+CASE
+		YearParzPhotosHighPriv.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE YearParzPhotosHighPriv.ZCATEGORY 
+	END AS 'YearParzPhotosHighPriv-Category',
+CASE
+		YearParzPhotosHighPriv.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YearParzPhotosHighPriv.ZVISIBILITYSTATE 
+	END AS 'YearParzPhotosHighPriv-Visibility State',
+CASE
+		YearParzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YearParzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+	END AS 'YearParzPhotosHighPriv-Visibility State Mixed',
+CASE
+		YearParzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YearParzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+	END AS 'YearParzPhotosHighPriv-Visibility State Shared',
+CASE
+		YearParzPhotosHighPriv.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YearParzPhotosHighPriv.ZENRICHMENTSTATE 
+	END AS 'YearParzPhotosHighPriv-Enrichment State',
+	YearParzPhotosHighPriv.ZENRICHMENTVERSION AS 'YearParzPhotosHighPriv-Enrichment Version',
+	YearParzPhotosHighPriv.ZHIGHLIGHTVERSION AS 'YearParzPhotosHighPriv-Highlight Version',
+CASE
+		YearParzPhotosHighPriv.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE YearParzPhotosHighPriv.ZSHARINGCOMPOSITION 
+	END AS 'YearParzPhotosHighPriv-Sharing Composition',
+CASE
+		YearParzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YearParzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'YearParzPhotosHighPriv-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		YearParzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YearParzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'YearParzPhotosHighPriv-Search Index Rebuild State',
+	zAsset.ZYEARHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Year Highlight Being Key Asset Private',
+	zAsset.ZYEARHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Year Highlight Being Key Asset Shared',
+	YHBKAzPhotosHighPriv.ZUUID AS 'YHBKAzPhotosHighPriv-UUID',
+	YHBKAzPhotosHighPriv.Z_PK AS 'YHBKAzPhotosHighPriv-zPK',
+	YHBKAzPhotosHighPriv.Z_ENT AS 'YHBKAzPhotosHighPriv-zENT',
+	YHBKAzPhotosHighPriv.Z_OPT AS 'YHBKAzPhotosHighPriv-zOPT',
+	YHBKAzPhotosHighPriv.ZPROMOTIONSCORE AS 'YHBKAzPhotosHighPriv-Promotion Score',
+	YHBKAzPhotosHighPriv.ZTITLE AS 'YHBKAzPhotosHighPriv-Title',
+	YHBKAzPhotosHighPriv.ZTITLEMIXED AS 'YHBKAzPhotosHighPriv-Title Mixed',
+	YHBKAzPhotosHighPriv.ZTITLESHARED AS 'YHBKAzPhotosHighPriv-Title Shared',
+	YHBKAzPhotosHighPriv.ZSUBTITLE AS 'YHBKAzPhotosHighPriv-Subtitle',
+	YHBKAzPhotosHighPriv.ZSUBTITLEMIXED AS 'YHBKAzPhotosHighPriv-Subtitle Mixed',
+	YHBKAzPhotosHighPriv.ZSUBTITLESHARED AS 'YHBKAzPhotosHighPriv-Subtitle Shared',
+	YHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTION AS 'YHBKAzPhotosHighPriv-Verbose Smart Description',
+	YHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONMIXED AS 'YHBKAzPhotosHighPriv-Verbose Smart Description Mixed',
+	YHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONSHARED AS 'YHBKAzPhotosHighPriv-Verbose Smart Description Shared',
+	DateTime ( YHBKAzPhotosHighPriv.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'YHBKAzPhotosHighPriv-Start Date',
+	YHBKAzPhotosHighPriv.ZSTARTTIMEZONEOFFSET AS 'YHBKAzPhotosHighPriv-Start Timezone Offset',
+	YHBKAzPhotosHighPriv.ZENDTIMEZONEOFFSET AS 'YHBKAzPhotosHighPriv-End Timezone Offset',
+	DateTime ( YHBKAzPhotosHighPriv.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'YHBKAzPhotosHighPriv-End Date',
+	YHBKAzPhotosHighPriv.ZASSETSCOUNT AS 'YHBKAzPhotosHighPriv-Asset Count',
+	YHBKAzPhotosHighPriv.ZASSETSCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Asset Count Shared',
+	YHBKAzPhotosHighPriv.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'YHBKAzPhotosHighPriv-Video Assets Suggested By Photos Count',
+	YHBKAzPhotosHighPriv.ZSUMMARYCOUNT AS 'YHBKAzPhotosHighPriv-Summary Count',
+	YHBKAzPhotosHighPriv.ZSUMMARYCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Summary Count Shared',
+	YHBKAzPhotosHighPriv.ZEXTENDEDCOUNT AS 'YHBKAzPhotosHighPriv-Extended Count',
+	YHBKAzPhotosHighPriv.ZEXTENDEDCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Extended Count Shared',
+	YHBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNT AS 'YHBKAzPhotosHighPriv-Day Group Assets Count',
+	YHBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Day Group Assets Count Shared',
+	YHBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'YHBKAzPhotosHighPriv-Day Group Ext Assets Count',
+	YHBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Day Group Ext Assets Count Shared',
+	YHBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNT AS 'YHBKAzPhotosHighPriv-Day Group Summary Assets Count',
+	YHBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Day Group Summary Assets Count Shared',
+	YHBKAzPhotosHighPriv.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'YHBKAzPhotosHighPriv-Photo Assets Suggested By Photos Count',
+	YHBKAzPhotosHighPriv.ZPARENTPHOTOSHIGHLIGHT AS 'YHBKAzPhotosHighPriv-Parent PH Key',
+	YHBKAzPhotosHighPriv.ZYEARKEYASSETPRIVATE AS 'YHBKAzPhotosHighPriv-Year Key Asset Private',
+	YHBKAzPhotosHighPriv.ZYEARKEYASSETSHARED AS 'YHBKAzPhotosHighPriv-Year Key Asset Shared',
+	YHBKAzPhotosHighPriv.ZMONTHKEYASSETPRIVATE AS 'YHBKAzPhotosHighPriv-Month Key Asset Private',
+	YHBKAzPhotosHighPriv.ZMONTHKEYASSETSHARED AS 'YHBKAzPhotosHighPriv-Month Key Asset Shared',
+	YHBKAzPhotosHighPriv.ZKEYASSETPRIVATE AS 'YHBKAzPhotosHighPriv-Key Asset Private',
+	YHBKAzPhotosHighPriv.ZKEYASSETSHARED AS 'YHBKAzPhotosHighPriv-Key Asset Shared',
+	YHBKAzPhotosHighPriv.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'YHBKAzPhotosHighPriv-Parent Day Group PH Key',
+	YHBKAzPhotosHighPriv.ZDAYGROUPKEYASSETPRIVATE AS 'YHBKAzPhotosHighPriv-Day Group Key Asset Private',
+	YHBKAzPhotosHighPriv.ZDAYGROUPKEYASSETSHARED AS 'YHBKAzPhotosHighPriv-Day Group Key Asset Shared',
+CASE
+		YHBKAzPhotosHighPriv.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE YHBKAzPhotosHighPriv.ZTYPE 
+	END AS 'YHBKAzPhotosHighPriv-Type',
+CASE
+		YHBKAzPhotosHighPriv.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE YHBKAzPhotosHighPriv.ZKIND 
+	END AS 'YHBKAzPhotosHighPriv-Kind',
+CASE
+		YHBKAzPhotosHighPriv.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE YHBKAzPhotosHighPriv.ZCATEGORY 
+	END AS 'YHBKAzPhotosHighPriv-Category',
+CASE
+		YHBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+	END AS 'YHBKAzPhotosHighPriv-Visibility State',
+CASE
+		YHBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YHBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+	END AS 'YHBKAzPhotosHighPriv-Visibility State Mixed',
+CASE
+		YHBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YHBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+	END AS 'YHBKAzPhotosHighPriv-Visibility State Shared',
+CASE
+		YHBKAzPhotosHighPriv.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE YHBKAzPhotosHighPriv.ZMOOD 
+	END AS 'YHBKAzPhotosHighPriv-Mood',
+CASE
+		YHBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+	END AS 'YHBKAzPhotosHighPriv-Enrichment State',
+	YHBKAzPhotosHighPriv.ZENRICHMENTVERSION AS 'YHBKAzPhotosHighPriv-Enrichment Version',
+	YHBKAzPhotosHighPriv.ZHIGHLIGHTVERSION AS 'YHBKAzPhotosHighPriv-Highlight Version',
+CASE
+		YHBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE YHBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+	END AS 'YHBKAzPhotosHighPriv-Sharing Composition',
+CASE
+		YHBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'YHBKAzPhotosHighPriv-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		YHBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'YHBKAzPhotosHighPriv-Search Index Rebuild State',
+	YMParzPhotosHighPriv.ZUUID AS 'YMParzPhotosHighPriv-UUID',
+	YMParzPhotosHighPriv.Z_PK AS 'YMParzPhotosHighPriv-zPK',
+	YMParzPhotosHighPriv.ZPARENTPHOTOSHIGHLIGHT AS 'YMParzPhotosHighPriv-Parent PH Key',
+	YMParzPhotosHighPriv.Z_ENT AS 'YMParzPhotosHighPriv-zENT',
+	YMParzPhotosHighPriv.Z_OPT AS 'YMParzPhotosHighPriv-zOPT',
+	YMParzPhotosHighPriv.ZPROMOTIONSCORE AS 'YMParzPhotosHighPriv-Promotion Score',
+	YMParzPhotosHighPriv.ZTITLE AS 'YMParzPhotosHighPriv-Title',
+	YMParzPhotosHighPriv.ZTITLEMIXED AS 'YMParzPhotosHighPriv-Title Mixed',
+	YMParzPhotosHighPriv.ZTITLESHARED AS 'YMParzPhotosHighPriv-Title Shared',
+	YMParzPhotosHighPriv.ZSUBTITLE AS 'YMParzPhotosHighPriv-Subtitle',
+	YMParzPhotosHighPriv.ZSUBTITLEMIXED AS 'YMParzPhotosHighPriv-Subtitle Mixed',
+	YMParzPhotosHighPriv.ZSUBTITLESHARED AS 'YMParzPhotosHighPriv-Subtitle Shared',
+	YMParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTION AS 'YMParzPhotosHighPriv-Verbose Smart Description',
+	YMParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONMIXED AS 'YMParzPhotosHighPriv-Verbose Smart Description Mixed',
+	YMParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONSHARED AS 'YMParzPhotosHighPriv-Verbose Smart Description Shared',
+	DateTime ( YMParzPhotosHighPriv.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'YMParzPhotosHighPriv-Start Date',
+	DateTime ( YMParzPhotosHighPriv.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'YMParzPhotosHighPriv-End Date',
+	YMParzPhotosHighPriv.ZMONTHKEYASSETPRIVATE AS 'YMParzPhotosHighPriv-Month Key Asset Private',
+	YMParzPhotosHighPriv.ZMONTHKEYASSETSHARED AS 'YMParzPhotosHighPriv-Month Key Asset Shared',
+CASE
+		YMParzPhotosHighPriv.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE YMParzPhotosHighPriv.ZKIND 
+	END AS 'YMParzPhotosHighPriv-Kind',
+CASE
+		YMParzPhotosHighPriv.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE YMParzPhotosHighPriv.ZCATEGORY 
+	END AS 'YMParzPhotosHighPriv-Category',
+CASE
+		YMParzPhotosHighPriv.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YMParzPhotosHighPriv.ZVISIBILITYSTATE 
+	END AS 'YMParzPhotosHighPriv-Visibility State',
+CASE
+		YMParzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YMParzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+	END AS 'YMParzPhotosHighPriv-Visibility State Mixed',
+CASE
+		YMParzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YMParzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+	END AS 'YMParzPhotosHighPriv-Visibility State Shared',
+CASE
+		YMParzPhotosHighPriv.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YMParzPhotosHighPriv.ZENRICHMENTSTATE 
+	END AS 'YMParzPhotosHighPriv-Enrichment State',
+	YMParzPhotosHighPriv.ZENRICHMENTVERSION AS 'YMParzPhotosHighPriv-Enrichment Version',
+	YMParzPhotosHighPriv.ZHIGHLIGHTVERSION AS 'YMParzPhotosHighPriv-Highlight Version',
+CASE
+		YMParzPhotosHighPriv.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE YMParzPhotosHighPriv.ZSHARINGCOMPOSITION 
+	END AS 'YMParzPhotosHighPriv-Sharing Composition',
+CASE
+		YMParzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YMParzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'YMParzPhotosHighPriv-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		YMParzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YMParzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'YMParzPhotosHighPriv-Search Index Rebuild State',
+	zAsset.ZMONTHHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Month Highlight Being Key Asset Key Private',
+	zAsset.ZMONTHHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Month Highlight Being Key Asset Key Shared',
+	MHBKAzPhotosHighPriv.ZUUID AS 'MHBKAzPhotosHighPriv-UUID',
+	MHBKAzPhotosHighPriv.Z_PK AS 'MHBKAzPhotosHighPriv-zPK',
+	MHBKAzPhotosHighPriv.Z_ENT AS 'MHBKAzPhotosHighPriv-zENT',
+	MHBKAzPhotosHighPriv.Z_OPT AS 'MHBKAzPhotosHighPriv-zOPT',
+	MHBKAzPhotosHighPriv.ZPROMOTIONSCORE AS 'MHBKAzPhotosHighPriv-Promotion Score',
+	MHBKAzPhotosHighPriv.ZTITLE AS 'MHBKAzPhotosHighPriv-Title',
+	MHBKAzPhotosHighPriv.ZTITLEMIXED AS 'MHBKAzPhotosHighPriv-Title Mixed',
+	MHBKAzPhotosHighPriv.ZTITLESHARED AS 'MHBKAzPhotosHighPriv-Title Shared',
+	MHBKAzPhotosHighPriv.ZSUBTITLE AS 'MHBKAzPhotosHighPriv-Subtitle',
+	MHBKAzPhotosHighPriv.ZSUBTITLEMIXED AS 'MHBKAzPhotosHighPriv-Subtitle Mixed',
+	MHBKAzPhotosHighPriv.ZSUBTITLESHARED AS 'MHBKAzPhotosHighPriv-Subtitle Shared',
+	MHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTION AS 'MHBKAzPhotosHighPriv-Verbose Smart Description',
+	MHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONMIXED AS 'MHBKAzPhotosHighPriv-Verbose Smart Description Mixed',
+	MHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONSHARED AS 'MHBKAzPhotosHighPriv-Verbose Smart Description Shared',
+	DateTime ( MHBKAzPhotosHighPriv.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'MHBKAzPhotosHighPriv-Start Date',
+	MHBKAzPhotosHighPriv.ZSTARTTIMEZONEOFFSET AS 'MHBKAzPhotosHighPriv-Start Timezone Offset',
+	MHBKAzPhotosHighPriv.ZENDTIMEZONEOFFSET AS 'MHBKAzPhotosHighPriv-End Timezone Offset',
+	DateTime ( MHBKAzPhotosHighPriv.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'MHBKAzPhotosHighPriv-End Date',
+	MHBKAzPhotosHighPriv.ZASSETSCOUNT AS 'MHBKAzPhotosHighPriv-Asset Count',
+	MHBKAzPhotosHighPriv.ZASSETSCOUNTSHARED AS 'MHBKAzPhotosHighPriv-Asset Count Shared',
+	MHBKAzPhotosHighPriv.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'MHBKAzPhotosHighPriv-Video Assets Suggested By Photos Count',
+	MHBKAzPhotosHighPriv.ZSUMMARYCOUNT AS 'MHBKAzPhotosHighPriv-Summary Count',
+	MHBKAzPhotosHighPriv.ZSUMMARYCOUNTSHARED AS 'MHBKAzPhotosHighPriv-Summary Count Shared',
+	MHBKAzPhotosHighPriv.ZEXTENDEDCOUNT AS 'MHBKAzPhotosHighPriv-Extended Count',
+	MHBKAzPhotosHighPriv.ZEXTENDEDCOUNTSHARED AS 'MHBKAzPhotosHighPriv-Extended Count Shared',
+	MHBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNT AS 'MHBKAzPhotosHighPriv-Day Group Assets Count',
+	MHBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNTSHARED AS 'MHBKAzPhotosHighPriv-Day Group Assets Count Shared',
+	MHBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'MHBKAzPhotosHighPriv-Day Group Ext Assets Count',
+	MHBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'MHBKAzPhotosHighPriv-Day Group Ext Assets Count Shared',
+	MHBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNT AS 'MHBKAzPhotosHighPriv-Day Group Summary Assets Count',
+	MHBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'MHBKAzPhotosHighPriv-Day Group Summary Assets Count Shared',
+	MHBKAzPhotosHighPriv.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'MHBKAzPhotosHighPriv-Photo Assets Suggested By Photos Count',
+	MHBKAzPhotosHighPriv.ZPARENTPHOTOSHIGHLIGHT AS 'MHBKAzPhotosHighPriv-Parent PH Key',
+	MHBKAzPhotosHighPriv.ZYEARKEYASSETPRIVATE AS 'MHBKAzPhotosHighPriv-Year Key Asset Private',
+	MHBKAzPhotosHighPriv.ZYEARKEYASSETSHARED AS 'MHBKAzPhotosHighPriv-Year Key Asset Shared',
+	MHBKAzPhotosHighPriv.ZMONTHKEYASSETPRIVATE AS 'MHBKAzPhotosHighPriv-Month Key Asset Private',
+	MHBKAzPhotosHighPriv.ZMONTHKEYASSETSHARED AS 'MHBKAzPhotosHighPriv-Month Key Asset Shared',
+	MHBKAzPhotosHighPriv.ZKEYASSETPRIVATE AS 'MHBKAzPhotosHighPriv-Key Asset Private',
+	MHBKAzPhotosHighPriv.ZKEYASSETSHARED AS 'MHBKAzPhotosHighPriv-Key Asset Shared',
+	MHBKAzPhotosHighPriv.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'MHBKAzPhotosHighPriv-Parent Day Group PH Key',
+	MHBKAzPhotosHighPriv.ZDAYGROUPKEYASSETPRIVATE AS 'MHBKAzPhotosHighPriv-Day Group Key Asset Private',
+	MHBKAzPhotosHighPriv.ZDAYGROUPKEYASSETSHARED AS 'MHBKAzPhotosHighPriv-Day Group Key Asset Shared',
+CASE
+		MHBKAzPhotosHighPriv.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE MHBKAzPhotosHighPriv.ZTYPE 
+	END AS 'MHBKAzPhotosHighPriv-Type',
+CASE
+		MHBKAzPhotosHighPriv.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE MHBKAzPhotosHighPriv.ZKIND 
+	END AS 'MHBKAzPhotosHighPriv-Kind',
+CASE
+		MHBKAzPhotosHighPriv.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE MHBKAzPhotosHighPriv.ZCATEGORY 
+	END AS 'MHBKAzPhotosHighPriv-Category',
+CASE
+		MHBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE MHBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+	END AS 'MHBKAzPhotosHighPriv-Visibility State',
+CASE
+		MHBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE MHBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+	END AS 'MHBKAzPhotosHighPriv-Visibility State Mixed',
+CASE
+		MHBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE MHBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+	END AS 'MHBKAzPhotosHighPriv-Visibility State Shared',
+CASE
+		MHBKAzPhotosHighPriv.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE MHBKAzPhotosHighPriv.ZMOOD 
+	END AS 'MHBKAzPhotosHighPriv-Mood',
+CASE
+		MHBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE MHBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+	END AS 'MHBKAzPhotosHighPriv-Enrichment State',
+	MHBKAzPhotosHighPriv.ZENRICHMENTVERSION AS 'MHBKAzPhotosHighPriv-Enrichment Version',
+	MHBKAzPhotosHighPriv.ZHIGHLIGHTVERSION AS 'MHBKAzPhotosHighPriv-Highlight Version',
+CASE
+		MHBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE MHBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+	END AS 'MHBKAzPhotosHighPriv-Sharing Composition',
+CASE
+		MHBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE MHBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'MHBKAzPhotosHighPriv-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		MHBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE MHBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'MHBKAzPhotosHighPriv-Search Index Rebuild State',
+	DGParzPhotosHighPriv.ZUUID AS 'DGParzPhotosHighPriv-UUID',
+	DGParzPhotosHighPriv.Z_PK AS 'DGParzPhotosHighPriv-zPK',
+	DGParzPhotosHighPriv.ZPARENTPHOTOSHIGHLIGHT AS 'DGParzPhotosHighPriv-Parent PH Key',
+	DGParzPhotosHighPriv.Z_ENT AS 'DGParzPhotosHighPriv-zENT',
+	DGParzPhotosHighPriv.Z_OPT AS 'DGParzPhotosHighPriv-zOPT',
+	DGParzPhotosHighPriv.ZPROMOTIONSCORE AS 'DGParzPhotosHighPriv-Promotion Score',
+	DGParzPhotosHighPriv.ZTITLE AS 'DGParzPhotosHighPriv-Title',
+	DGParzPhotosHighPriv.ZTITLEMIXED AS 'DGParzPhotosHighPriv-Title Mixed',
+	DGParzPhotosHighPriv.ZTITLESHARED AS 'DGParzPhotosHighPriv-Title Shared',
+	DGParzPhotosHighPriv.ZSUBTITLE AS 'DGParzPhotosHighPriv-Subtitle',
+	DGParzPhotosHighPriv.ZSUBTITLEMIXED AS 'DGParzPhotosHighPriv-Subtitle Mixed',
+	DGParzPhotosHighPriv.ZSUBTITLESHARED AS 'DGParzPhotosHighPriv-Subtitle Shared',
+	DGParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTION AS 'DGParzPhotosHighPriv-Verbose Smart Description',
+	DGParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONMIXED AS 'DGParzPhotosHighPriv-Verbose Smart Description Mixed',
+	DGParzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONSHARED AS 'DGParzPhotosHighPriv-Verbose Smart Description Shared',
+	DateTime ( DGParzPhotosHighPriv.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'DGParzPhotosHighPriv-Start Date',
+	DateTime ( DGParzPhotosHighPriv.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'DGParzPhotosHighPriv-End Date',
+	DGParzPhotosHighPriv.ZMONTHKEYASSETPRIVATE AS 'DGParzPhotosHighPriv-Month Key Asset Private',
+	DGParzPhotosHighPriv.ZMONTHKEYASSETSHARED AS 'DGParzPhotosHighPriv-Month Key Asset Shared',
+CASE
+		DGParzPhotosHighPriv.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE DGParzPhotosHighPriv.ZKIND 
+	END AS 'DGParzPhotosHighPriv-Kind',
+CASE
+		DGParzPhotosHighPriv.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE DGParzPhotosHighPriv.ZCATEGORY 
+	END AS 'DGParzPhotosHighPriv-Category',
+CASE
+		DGParzPhotosHighPriv.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGParzPhotosHighPriv.ZVISIBILITYSTATE 
+	END AS 'DGParzPhotosHighPriv-Visibility State',
+CASE
+		DGParzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGParzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+	END AS 'DGParzPhotosHighPriv-Visibility State Mixed',
+CASE
+		DGParzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGParzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+	END AS 'DGParzPhotosHighPriv-Visibility State Shared',
+CASE
+		DGParzPhotosHighPriv.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGParzPhotosHighPriv.ZENRICHMENTSTATE 
+	END AS 'DGParzPhotosHighPriv-Enrichment State',
+	DGParzPhotosHighPriv.ZENRICHMENTVERSION AS 'DGParzPhotosHighPriv-Enrichment Version',
+	DGParzPhotosHighPriv.ZHIGHLIGHTVERSION AS 'DGParzPhotosHighPriv-Highlight Version',
+CASE
+		DGParzPhotosHighPriv.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE DGParzPhotosHighPriv.ZSHARINGCOMPOSITION 
+	END AS 'DGParzPhotosHighPriv-Sharing Composition',
+CASE
+		DGParzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGParzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'DGParzPhotosHighPriv-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		DGParzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGParzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'DGParzPhotosHighPriv-Search Index Rebuild State',
+	zAsset.ZDAYGROUPHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Day Group Highlight Being Key Asset Key Private',
+	zAsset.ZDAYGROUPHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Day Group Highlight Being Key Asset Key Shared',
+	DGHBKAzPhotosHighPriv.ZUUID AS 'DGHBKAzPhotosHighPriv-UUID',
+	DGHBKAzPhotosHighPriv.Z_PK AS 'DGHBKAzPhotosHighPriv-zPK',
+	DGHBKAzPhotosHighPriv.Z_ENT AS 'DGHBKAzPhotosHighPriv-zENT',
+	DGHBKAzPhotosHighPriv.Z_OPT AS 'DGHBKAzPhotosHighPriv-zOPT',
+	DGHBKAzPhotosHighPriv.ZPROMOTIONSCORE AS 'DGHBKAzPhotosHighPriv-Promotion Score',
+	DGHBKAzPhotosHighPriv.ZTITLE AS 'DGHBKAzPhotosHighPriv-Title',
+	DGHBKAzPhotosHighPriv.ZTITLEMIXED AS 'DGHBKAzPhotosHighPriv-Title Mixed',
+	DGHBKAzPhotosHighPriv.ZTITLESHARED AS 'DGHBKAzPhotosHighPriv-Title Shared',
+	DGHBKAzPhotosHighPriv.ZSUBTITLE AS 'DGHBKAzPhotosHighPriv-Subtitle',
+	DGHBKAzPhotosHighPriv.ZSUBTITLEMIXED AS 'DGHBKAzPhotosHighPriv-Subtitle Mixed',
+	DGHBKAzPhotosHighPriv.ZSUBTITLESHARED AS 'DGHBKAzPhotosHighPriv-Subtitle Shared',
+	DGHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTION AS 'DGHBKAzPhotosHighPriv-Verbose Smart Description',
+	DGHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONMIXED AS 'DGHBKAzPhotosHighPriv-Verbose Smart Description Mixed',
+	DGHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONSHARED AS 'DGHBKAzPhotosHighPriv-Verbose Smart Description Shared',
+	DateTime ( DGHBKAzPhotosHighPriv.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBKAzPhotosHighPriv-Start Date',
+	DGHBKAzPhotosHighPriv.ZSTARTTIMEZONEOFFSET AS 'DGHBKAzPhotosHighPriv-Start Timezone Offset',
+	DGHBKAzPhotosHighPriv.ZENDTIMEZONEOFFSET AS 'DGHBKAzPhotosHighPriv-End Timezone Offset',
+	DateTime ( DGHBKAzPhotosHighPriv.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBKAzPhotosHighPriv-End Date',
+	DGHBKAzPhotosHighPriv.ZASSETSCOUNT AS 'DGHBKAzPhotosHighPriv-Asset Count',
+	DGHBKAzPhotosHighPriv.ZASSETSCOUNTSHARED AS 'DGHBKAzPhotosHighPriv-Asset Count Shared',
+	DGHBKAzPhotosHighPriv.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBKAzPhotosHighPriv-Video Assets Suggested By Photos Count',
+	DGHBKAzPhotosHighPriv.ZSUMMARYCOUNT AS 'DGHBKAzPhotosHighPriv-Summary Count',
+	DGHBKAzPhotosHighPriv.ZSUMMARYCOUNTSHARED AS 'DGHBKAzPhotosHighPriv-Summary Count Shared',
+	DGHBKAzPhotosHighPriv.ZEXTENDEDCOUNT AS 'DGHBKAzPhotosHighPriv-Extended Count',
+	DGHBKAzPhotosHighPriv.ZEXTENDEDCOUNTSHARED AS 'DGHBKAzPhotosHighPriv-Extended Count Shared',
+	DGHBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNT AS 'DGHBKAzPhotosHighPriv-Day Group Assets Count',
+	DGHBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNTSHARED AS 'DGHBKAzPhotosHighPriv-Day Group Assets Count Shared',
+	DGHBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'DGHBKAzPhotosHighPriv-Day Group Ext Assets Count',
+	DGHBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'DGHBKAzPhotosHighPriv-Day Group Ext Assets Count Shared',
+	DGHBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNT AS 'DGHBKAzPhotosHighPriv-Day Group Summary Assets Count',
+	DGHBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'DGHBKAzPhotosHighPriv-Day Group Summary Assets Count Shared',
+	DGHBKAzPhotosHighPriv.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBKAzPhotosHighPriv-Photo Assets Suggested By Photos Count',
+	DGHBKAzPhotosHighPriv.ZPARENTPHOTOSHIGHLIGHT AS 'DGHBKAzPhotosHighPriv-Parent PH Key',
+	DGHBKAzPhotosHighPriv.ZYEARKEYASSETPRIVATE AS 'DGHBKAzPhotosHighPriv-Year Key Asset Private',
+	DGHBKAzPhotosHighPriv.ZYEARKEYASSETSHARED AS 'DGHBKAzPhotosHighPriv-Year Key Asset Shared',
+	DGHBKAzPhotosHighPriv.ZMONTHKEYASSETPRIVATE AS 'DGHBKAzPhotosHighPriv-Month Key Asset Private',
+	DGHBKAzPhotosHighPriv.ZMONTHKEYASSETSHARED AS 'DGHBKAzPhotosHighPriv-Month Key Asset Shared',
+	DGHBKAzPhotosHighPriv.ZKEYASSETPRIVATE AS 'DGHBKAzPhotosHighPriv-Key Asset Private',
+	DGHBKAzPhotosHighPriv.ZKEYASSETSHARED AS 'DGHBKAzPhotosHighPriv-Key Asset Shared',
+	DGHBKAzPhotosHighPriv.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'DGHBKAzPhotosHighPriv-Parent Day Group PH Key',
+	DGHBKAzPhotosHighPriv.ZDAYGROUPKEYASSETPRIVATE AS 'DGHBKAzPhotosHighPriv-Day Group Key Asset Private',
+	DGHBKAzPhotosHighPriv.ZDAYGROUPKEYASSETSHARED AS 'DGHBKAzPhotosHighPriv-Day Group Key Asset Shared',
+CASE
+		DGHBKAzPhotosHighPriv.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE DGHBKAzPhotosHighPriv.ZTYPE 
+	END AS 'DGHBKAzPhotosHighPriv-Type',
+CASE
+		DGHBKAzPhotosHighPriv.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE DGHBKAzPhotosHighPriv.ZKIND 
+	END AS 'DGHBKAzPhotosHighPriv-Kind',
+CASE
+		DGHBKAzPhotosHighPriv.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE DGHBKAzPhotosHighPriv.ZCATEGORY 
+	END AS 'DGHBKAzPhotosHighPriv-Category',
+CASE
+		DGHBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+	END AS 'DGHBKAzPhotosHighPriv-Visibility State',
+CASE
+		DGHBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+	END AS 'DGHBKAzPhotosHighPriv-Visibility State Mixed',
+CASE
+		DGHBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+	END AS 'DGHBKAzPhotosHighPriv-Visibility State Shared',
+CASE
+		DGHBKAzPhotosHighPriv.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE DGHBKAzPhotosHighPriv.ZMOOD 
+	END AS 'DGHBKAzPhotosHighPriv-Mood',
+CASE
+		DGHBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+	END AS 'DGHBKAzPhotosHighPriv-Enrichment State',
+	DGHBKAzPhotosHighPriv.ZENRICHMENTVERSION AS 'DGHBKAzPhotosHighPriv-Enrichment Version',
+	DGHBKAzPhotosHighPriv.ZHIGHLIGHTVERSION AS 'DGHBKAzPhotosHighPriv-Highlight Version',
+CASE
+		DGHBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE DGHBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+	END AS 'DGHBKAzPhotosHighPriv-Sharing Composition',
+CASE
+		DGHBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'DGHBKAzPhotosHighPriv-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		DGHBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'DGHBKAzPhotosHighPriv-Search Index Rebuild State',
+	zAsset.ZDAYGROUPHIGHLIGHTBEINGASSETS 'zAsset-Day Group Highlight Being Assets Key',
+	DGHBAzPhotosHigh.ZUUID AS 'DGHBAzPhotosHigh-UUID',
+	DGHBAzPhotosHigh.Z_PK AS 'DGHBAzPhotosHigh-zPK',
+	DGHBAzPhotosHigh.Z_ENT AS 'DGHBAzPhotosHigh-zENT',
+	DGHBAzPhotosHigh.Z_OPT AS 'DGHBAzPhotosHigh-zOPT',
+	DGHBAzPhotosHigh.ZPROMOTIONSCORE AS 'DGHBAzPhotosHigh-Promotion Score',
+	DGHBAzPhotosHigh.ZTITLE AS 'DGHBAzPhotosHigh-Title',
+	DGHBAzPhotosHigh.ZTITLEMIXED AS 'DGHBAzPhotosHigh-Title Mixed',
+	DGHBAzPhotosHigh.ZTITLESHARED AS 'DGHBAzPhotosHigh-Title Shared',
+	DGHBAzPhotosHigh.ZSUBTITLE AS 'DGHBAzPhotosHigh-Subtitle',
+	DGHBAzPhotosHigh.ZSUBTITLEMIXED AS 'DGHBAzPhotosHigh-Subtitle Mixed',
+	DGHBAzPhotosHigh.ZSUBTITLESHARED AS 'DGHBAzPhotosHigh-Subtitle Shared',
+	DGHBAzPhotosHigh.ZVERBOSESMARTDESCRIPTION AS 'DGHBAzPhotosHigh-Verbose Smart Description',
+	DGHBAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONMIXED AS 'DGHBAzPhotosHigh-Verbose Smart Description Mixed',
+	DGHBAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONSHARED AS 'DGHBAzPhotosHigh-Verbose Smart Description Shared',
+	DateTime ( DGHBAzPhotosHigh.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBAzPhotosHigh-Start Date',
+	DGHBAzPhotosHigh.ZSTARTTIMEZONEOFFSET AS 'DGHBAzPhotosHigh-Start Timezone Offset',
+	DGHBAzPhotosHigh.ZENDTIMEZONEOFFSET AS 'DGHBAzPhotosHigh-End Timezone Offset',
+	DateTime ( DGHBAzPhotosHigh.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBAzPhotosHigh-End Date',
+	DGHBAzPhotosHigh.ZASSETSCOUNT AS 'DGHBAzPhotosHigh-Asset Count',
+	DGHBAzPhotosHigh.ZASSETSCOUNTSHARED AS 'DGHBAzPhotosHigh-Asset Count Shared',
+	DGHBAzPhotosHigh.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBAzPhotosHigh-Video Assets Suggested By Photos Count',
+	DGHBAzPhotosHigh.ZSUMMARYCOUNT AS 'DGHBAzPhotosHigh-Summary Count',
+	DGHBAzPhotosHigh.ZSUMMARYCOUNTSHARED AS 'DGHBAzPhotosHigh-Summary Count Shared',
+	DGHBAzPhotosHigh.ZEXTENDEDCOUNT AS 'DGHBAzPhotosHigh-Extended Count',
+	DGHBAzPhotosHigh.ZEXTENDEDCOUNTSHARED AS 'DGHBAzPhotosHigh-Extended Count Shared',
+	DGHBAzPhotosHigh.ZDAYGROUPASSETSCOUNT AS 'DGHBAzPhotosHigh-Day Group Assets Count',
+	DGHBAzPhotosHigh.ZDAYGROUPASSETSCOUNTSHARED AS 'DGHBAzPhotosHigh-Day Group Assets Count Shared',
+	DGHBAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'DGHBAzPhotosHigh-Day Group Ext Assets Count',
+	DGHBAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'DGHBAzPhotosHigh-Day Group Ext Assets Count Shared',
+	DGHBAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNT AS 'DGHBAzPhotosHigh-Day Group Summary Assets Count',
+	DGHBAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'DGHBAzPhotosHigh-Day Group Summary Assets Count Shared',
+	DGHBAzPhotosHigh.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBAzPhotosHigh-Photo Assets Suggested By Photos Count',
+	DGHBAzPhotosHigh.ZPARENTPHOTOSHIGHLIGHT AS 'DGHBAzPhotosHigh-Parent PH Key',
+	DGHBAzPhotosHigh.ZYEARKEYASSETPRIVATE AS 'DGHBAzPhotosHigh-Year Key Asset Private',
+	DGHBAzPhotosHigh.ZYEARKEYASSETSHARED AS 'DGHBAzPhotosHigh-Year Key Asset Shared',
+	DGHBAzPhotosHigh.ZMONTHKEYASSETPRIVATE AS 'DGHBAzPhotosHigh-Month Key Asset Private',
+	DGHBAzPhotosHigh.ZMONTHKEYASSETSHARED AS 'DGHBAzPhotosHigh-Month Key Asset Shared',
+	DGHBAzPhotosHigh.ZKEYASSETPRIVATE AS 'DGHBAzPhotosHigh-Key Asset Private',
+	DGHBAzPhotosHigh.ZKEYASSETSHARED AS 'DGHBAzPhotosHigh-Key Asset Shared',
+	DGHBAzPhotosHigh.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'DGHBAzPhotosHigh-Parent Day Group PH Key',
+	DGHBAzPhotosHigh.ZDAYGROUPKEYASSETPRIVATE AS 'DGHBAzPhotosHigh-Day Group Key Asset Private',
+	DGHBAzPhotosHigh.ZDAYGROUPKEYASSETSHARED AS 'DGHBAzPhotosHigh-Day Group Key Asset Shared',
+CASE
+		DGHBAzPhotosHigh.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE DGHBAzPhotosHigh.ZTYPE 
+	END AS 'DGHBAzPhotosHigh-Type',
+CASE
+		DGHBAzPhotosHigh.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE DGHBAzPhotosHigh.ZKIND 
+	END AS 'DGHBAzPhotosHigh-Kind',
+CASE
+		DGHBAzPhotosHigh.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE DGHBAzPhotosHigh.ZCATEGORY 
+	END AS 'DGHBAzPhotosHigh-Category',
+CASE
+		DGHBAzPhotosHigh.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBAzPhotosHigh.ZVISIBILITYSTATE 
+	END AS 'DGHBAzPhotosHigh-Visibility State',
+CASE
+		DGHBAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+	END AS 'DGHBAzPhotosHigh-Visibility State Mixed',
+CASE
+		DGHBAzPhotosHigh.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBAzPhotosHigh.ZVISIBILITYSTATESHARED 
+	END AS 'DGHBAzPhotosHigh-Visibility State Shared',
+CASE
+		DGHBAzPhotosHigh.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE DGHBAzPhotosHigh.ZMOOD 
+	END AS 'DGHBAzPhotosHigh-Mood',
+CASE
+		DGHBAzPhotosHigh.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBAzPhotosHigh.ZENRICHMENTSTATE 
+	END AS 'DGHBAzPhotosHigh-Enrichment State',
+	DGHBAzPhotosHigh.ZENRICHMENTVERSION AS 'DGHBAzPhotosHigh-Enrichment Version',
+	DGHBAzPhotosHigh.ZHIGHLIGHTVERSION AS 'DGHBAzPhotosHigh-Highlight Version',
+CASE
+		DGHBAzPhotosHigh.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE DGHBAzPhotosHigh.ZSHARINGCOMPOSITION 
+	END AS 'DGHBAzPhotosHigh-Sharing Composition',
+CASE
+		DGHBAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'DGHBAzPhotosHigh-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		DGHBAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'DGHBAzPhotosHigh-Search Index Rebuild State',
+	zAsset.ZDAYGROUPHIGHLIGHTBEINGEXTENDEDASSETS 'zAsset-Day Group Highlight Being Extended Assets Key',
+	DGHBEAzPhotosHigh.ZUUID AS 'DGHBEAzPhotosHigh-UUID',
+	DGHBEAzPhotosHigh.Z_PK AS 'DGHBEAzPhotosHigh-zPK',
+	DGHBEAzPhotosHigh.Z_ENT AS 'DGHBEAzPhotosHigh-zENT',
+	DGHBEAzPhotosHigh.Z_OPT AS 'DGHBEAzPhotosHigh-zOPT',
+	DGHBEAzPhotosHigh.ZPROMOTIONSCORE AS 'DGHBEAzPhotosHigh-Promotion Score',
+	DGHBEAzPhotosHigh.ZTITLE AS 'DGHBEAzPhotosHigh-Title',
+	DGHBEAzPhotosHigh.ZTITLEMIXED AS 'DGHBEAzPhotosHigh-Title Mixed',
+	DGHBEAzPhotosHigh.ZTITLESHARED AS 'DGHBEAzPhotosHigh-Title Shared',
+	DGHBEAzPhotosHigh.ZSUBTITLE AS 'DGHBEAzPhotosHigh-Subtitle',
+	DGHBEAzPhotosHigh.ZSUBTITLEMIXED AS 'DGHBEAzPhotosHigh-Subtitle Mixed',
+	DGHBEAzPhotosHigh.ZSUBTITLESHARED AS 'DGHBEAzPhotosHigh-Subtitle Shared',
+	DGHBEAzPhotosHigh.ZVERBOSESMARTDESCRIPTION AS 'DGHBEAzPhotosHigh-Verbose Smart Description',
+	DGHBEAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONMIXED AS 'DGHBEAzPhotosHigh-Verbose Smart Description Mixed',
+	DGHBEAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONSHARED AS 'DGHBEAzPhotosHigh-Verbose Smart Description Shared',
+	DateTime ( DGHBEAzPhotosHigh.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBEAzPhotosHigh-Start Date',
+	DGHBEAzPhotosHigh.ZSTARTTIMEZONEOFFSET AS 'DGHBEAzPhotosHigh-Start Timezone Offset',
+	DGHBEAzPhotosHigh.ZENDTIMEZONEOFFSET AS 'DGHBEAzPhotosHigh-End Timezone Offset',
+	DateTime ( DGHBEAzPhotosHigh.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBEAzPhotosHigh-End Date',
+	DGHBEAzPhotosHigh.ZASSETSCOUNT AS 'DGHBEAzPhotosHigh-Asset Count',
+	DGHBEAzPhotosHigh.ZASSETSCOUNTSHARED AS 'DGHBEAzPhotosHigh-Asset Count Shared',
+	DGHBEAzPhotosHigh.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBEAzPhotosHigh-Video Assets Suggested By Photos Count',
+	DGHBEAzPhotosHigh.ZSUMMARYCOUNT AS 'DGHBEAzPhotosHigh-Summary Count',
+	DGHBEAzPhotosHigh.ZSUMMARYCOUNTSHARED AS 'DGHBEAzPhotosHigh-Summary Count Shared',
+	DGHBEAzPhotosHigh.ZEXTENDEDCOUNT AS 'DGHBEAzPhotosHigh-Extended Count',
+	DGHBEAzPhotosHigh.ZEXTENDEDCOUNTSHARED AS 'DGHBEAzPhotosHigh-Extended Count Shared',
+	DGHBEAzPhotosHigh.ZDAYGROUPASSETSCOUNT AS 'DGHBEAzPhotosHigh-Day Group Assets Count',
+	DGHBEAzPhotosHigh.ZDAYGROUPASSETSCOUNTSHARED AS 'DGHBEAzPhotosHigh-Day Group Assets Count Shared',
+	DGHBEAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'DGHBEAzPhotosHigh-Day Group Ext Assets Count',
+	DGHBEAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'DGHBEAzPhotosHigh-Day Group Ext Assets Count Shared',
+	DGHBEAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNT AS 'DGHBEAzPhotosHigh-Day Group Summary Assets Count',
+	DGHBEAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'DGHBEAzPhotosHigh-Day Group Summary Assets Count Shared',
+	DGHBEAzPhotosHigh.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBEAzPhotosHigh-Photo Assets Suggested By Photos Count',
+	DGHBEAzPhotosHigh.ZPARENTPHOTOSHIGHLIGHT AS 'DGHBEAzPhotosHigh-Parent PH Key',
+	DGHBEAzPhotosHigh.ZYEARKEYASSETPRIVATE AS 'DGHBEAzPhotosHigh-Year Key Asset Private',
+	DGHBEAzPhotosHigh.ZYEARKEYASSETSHARED AS 'DGHBEAzPhotosHigh-Year Key Asset Shared',
+	DGHBEAzPhotosHigh.ZMONTHKEYASSETPRIVATE AS 'DGHBEAzPhotosHigh-Month Key Asset Private',
+	DGHBEAzPhotosHigh.ZMONTHKEYASSETSHARED AS 'DGHBEAzPhotosHigh-Month Key Asset Shared',
+	DGHBEAzPhotosHigh.ZKEYASSETPRIVATE AS 'DGHBEAzPhotosHigh-Key Asset Private',
+	DGHBEAzPhotosHigh.ZKEYASSETSHARED AS 'DGHBEAzPhotosHigh-Key Asset Shared',
+	DGHBEAzPhotosHigh.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'DGHBEAzPhotosHigh-Parent Day Group PH Key',
+	DGHBEAzPhotosHigh.ZDAYGROUPKEYASSETPRIVATE AS 'DGHBEAzPhotosHigh-Day Group Key Asset Private',
+	DGHBEAzPhotosHigh.ZDAYGROUPKEYASSETSHARED AS 'DGHBEAzPhotosHigh-Day Group Key Asset Shared',
+CASE
+		DGHBEAzPhotosHigh.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE DGHBEAzPhotosHigh.ZTYPE 
+	END AS 'DGHBEAzPhotosHigh-Type',
+CASE
+		DGHBEAzPhotosHigh.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE DGHBEAzPhotosHigh.ZKIND 
+	END AS 'DGHBEAzPhotosHigh-Kind',
+CASE
+		DGHBEAzPhotosHigh.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE DGHBEAzPhotosHigh.ZCATEGORY 
+	END AS 'DGHBEAzPhotosHigh-Category',
+CASE
+		DGHBEAzPhotosHigh.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBEAzPhotosHigh.ZVISIBILITYSTATE 
+	END AS 'DGHBEAzPhotosHigh-Visibility State',
+CASE
+		DGHBEAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBEAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+	END AS 'DGHBEAzPhotosHigh-Visibility State Mixed',
+CASE
+		DGHBEAzPhotosHigh.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBEAzPhotosHigh.ZVISIBILITYSTATESHARED 
+	END AS 'DGHBEAzPhotosHigh-Visibility State Shared',
+CASE
+		DGHBEAzPhotosHigh.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE DGHBEAzPhotosHigh.ZMOOD 
+	END AS 'DGHBEAzPhotosHigh-Mood',
+CASE
+		DGHBEAzPhotosHigh.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBEAzPhotosHigh.ZENRICHMENTSTATE 
+	END AS 'DGHBEAzPhotosHigh-Enrichment State',
+	DGHBEAzPhotosHigh.ZENRICHMENTVERSION AS 'DGHBEAzPhotosHigh-Enrichment Version',
+	DGHBEAzPhotosHigh.ZHIGHLIGHTVERSION AS 'DGHBEAzPhotosHigh-Highlight Version',
+CASE
+		DGHBEAzPhotosHigh.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE DGHBEAzPhotosHigh.ZSHARINGCOMPOSITION 
+	END AS 'DGHBEAzPhotosHigh-Sharing Composition',
+CASE
+		DGHBEAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBEAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'DGHBEAzPhotosHigh-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		DGHBEAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBEAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'DGHBEAzPhotosHigh-Search Index Rebuild State',
+	zAsset.ZDAYGROUPHIGHLIGHTBEINGSUMMARYASSETS 'zAsset-Day Group Highlight Being Summary Assets Key',
+	DGHBSAzPhotosHigh.ZUUID AS 'DGHBSAzPhotosHigh-UUID',
+	DGHBSAzPhotosHigh.Z_PK AS 'DGHBSAzPhotosHigh-zPK',
+	DGHBSAzPhotosHigh.Z_ENT AS 'DGHBSAzPhotosHigh-zENT',
+	DGHBSAzPhotosHigh.Z_OPT AS 'DGHBSAzPhotosHigh-zOPT',
+	DGHBSAzPhotosHigh.ZPROMOTIONSCORE AS 'DGHBSAzPhotosHigh-Promotion Score',
+	DGHBSAzPhotosHigh.ZTITLE AS 'DGHBSAzPhotosHigh-Title',
+	DGHBSAzPhotosHigh.ZTITLEMIXED AS 'DGHBSAzPhotosHigh-Title Mixed',
+	DGHBSAzPhotosHigh.ZTITLESHARED AS 'DGHBSAzPhotosHigh-Title Shared',
+	DGHBSAzPhotosHigh.ZSUBTITLE AS 'DGHBSAzPhotosHigh-Subtitle',
+	DGHBSAzPhotosHigh.ZSUBTITLEMIXED AS 'DGHBSAzPhotosHigh-Subtitle Mixed',
+	DGHBSAzPhotosHigh.ZSUBTITLESHARED AS 'DGHBSAzPhotosHigh-Subtitle Shared',
+	DGHBSAzPhotosHigh.ZVERBOSESMARTDESCRIPTION AS 'DGHBSAzPhotosHigh-Verbose Smart Description',
+	DGHBSAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONMIXED AS 'DGHBSAzPhotosHigh-Verbose Smart Description Mixed',
+	DGHBSAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONSHARED AS 'DGHBSAzPhotosHigh-Verbose Smart Description Shared',
+	DateTime ( DGHBSAzPhotosHigh.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBSAzPhotosHigh-Start Date',
+	DGHBSAzPhotosHigh.ZSTARTTIMEZONEOFFSET AS 'DGHBSAzPhotosHigh-Start Timezone Offset',
+	DGHBSAzPhotosHigh.ZENDTIMEZONEOFFSET AS 'DGHBSAzPhotosHigh-End Timezone Offset',
+	DateTime ( DGHBSAzPhotosHigh.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBSAzPhotosHigh-End Date',
+	DGHBSAzPhotosHigh.ZASSETSCOUNT AS 'DGHBSAzPhotosHigh-Asset Count',
+	DGHBSAzPhotosHigh.ZASSETSCOUNTSHARED AS 'DGHBSAzPhotosHigh-Asset Count Shared',
+	DGHBSAzPhotosHigh.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBSAzPhotosHigh-Video Assets Suggested By Photos Count',
+	DGHBSAzPhotosHigh.ZSUMMARYCOUNT AS 'DGHBSAzPhotosHigh-Summary Count',
+	DGHBSAzPhotosHigh.ZSUMMARYCOUNTSHARED AS 'DGHBSAzPhotosHigh-Summary Count Shared',
+	DGHBSAzPhotosHigh.ZEXTENDEDCOUNT AS 'DGHBSAzPhotosHigh-Extended Count',
+	DGHBSAzPhotosHigh.ZEXTENDEDCOUNTSHARED AS 'DGHBSAzPhotosHigh-Extended Count Shared',
+	DGHBSAzPhotosHigh.ZDAYGROUPASSETSCOUNT AS 'DGHBSAzPhotosHigh-Day Group Assets Count',
+	DGHBSAzPhotosHigh.ZDAYGROUPASSETSCOUNTSHARED AS 'DGHBSAzPhotosHigh-Day Group Assets Count Shared',
+	DGHBSAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'DGHBSAzPhotosHigh-Day Group Ext Assets Count',
+	DGHBSAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'DGHBSAzPhotosHigh-Day Group Ext Assets Count Shared',
+	DGHBSAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNT AS 'DGHBSAzPhotosHigh-Day Group Summary Assets Count',
+	DGHBSAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'DGHBSAzPhotosHigh-Day Group Summary Assets Count Shared',
+	DGHBSAzPhotosHigh.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBSAzPhotosHigh-Photo Assets Suggested By Photos Count',
+	DGHBSAzPhotosHigh.ZPARENTPHOTOSHIGHLIGHT AS 'DGHBSAzPhotosHigh-Parent PH Key',
+	DGHBSAzPhotosHigh.ZYEARKEYASSETPRIVATE AS 'DGHBSAzPhotosHigh-Year Key Asset Private',
+	DGHBSAzPhotosHigh.ZYEARKEYASSETSHARED AS 'DGHBSAzPhotosHigh-Year Key Asset Shared',
+	DGHBSAzPhotosHigh.ZMONTHKEYASSETPRIVATE AS 'DGHBSAzPhotosHigh-Month Key Asset Private',
+	DGHBSAzPhotosHigh.ZMONTHKEYASSETSHARED AS 'DGHBSAzPhotosHigh-Month Key Asset Shared',
+	DGHBSAzPhotosHigh.ZKEYASSETPRIVATE AS 'DGHBSAzPhotosHigh-Key Asset Private',
+	DGHBSAzPhotosHigh.ZKEYASSETSHARED AS 'DGHBSAzPhotosHigh-Key Asset Shared',
+	DGHBSAzPhotosHigh.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'DGHBSAzPhotosHigh-Parent Day Group PH Key',
+	DGHBSAzPhotosHigh.ZDAYGROUPKEYASSETPRIVATE AS 'DGHBSAzPhotosHigh-Day Group Key Asset Private',
+	DGHBSAzPhotosHigh.ZDAYGROUPKEYASSETSHARED AS 'DGHBSAzPhotosHigh-Day Group Key Asset Shared',
+CASE
+		DGHBSAzPhotosHigh.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE DGHBSAzPhotosHigh.ZTYPE 
+	END AS 'DGHBSAzPhotosHigh-Type',
+CASE
+		DGHBSAzPhotosHigh.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE DGHBSAzPhotosHigh.ZKIND 
+	END AS 'DGHBSAzPhotosHigh-Kind',
+CASE
+		DGHBSAzPhotosHigh.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE DGHBSAzPhotosHigh.ZCATEGORY 
+	END AS 'DGHBSAzPhotosHigh-Category',
+CASE
+		DGHBSAzPhotosHigh.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBSAzPhotosHigh.ZVISIBILITYSTATE 
+	END AS 'DGHBSAzPhotosHigh-Visibility State',
+CASE
+		DGHBSAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBSAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+	END AS 'DGHBSAzPhotosHigh-Visibility State Mixed',
+CASE
+		DGHBSAzPhotosHigh.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBSAzPhotosHigh.ZVISIBILITYSTATESHARED 
+	END AS 'DGHBSAzPhotosHigh-Visibility State Shared',
+CASE
+		DGHBSAzPhotosHigh.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE DGHBSAzPhotosHigh.ZMOOD 
+	END AS 'DGHBSAzPhotosHigh-Mood',
+CASE
+		DGHBSAzPhotosHigh.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBSAzPhotosHigh.ZENRICHMENTSTATE 
+	END AS 'DGHBSAzPhotosHigh-Enrichment State',
+	DGHBSAzPhotosHigh.ZENRICHMENTVERSION AS 'DGHBSAzPhotosHigh-Enrichment Version',
+	DGHBSAzPhotosHigh.ZHIGHLIGHTVERSION AS 'DGHBSAzPhotosHigh-Highlight Version',
+CASE
+		DGHBSAzPhotosHigh.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE DGHBSAzPhotosHigh.ZSHARINGCOMPOSITION 
+	END AS 'DGHBSAzPhotosHigh-Sharing Composition',
+CASE
+		DGHBSAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBSAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'DGHBSAzPhotosHigh-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		DGHBSAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBSAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'DGHBSAzPhotosHigh-Search Index Rebuild State',
+	zAsset.ZHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Highlight Being Key Asset Key Private',
+	zAsset.ZHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Highlight Being Key Asset Key Shared',
+	HBKAzPhotosHighPriv.ZUUID AS 'HBKAzPhotosHighPriv-UUID',
+	HBKAzPhotosHighPriv.Z_PK AS 'HBKAzPhotosHighPriv-zPK',
+	HBKAzPhotosHighPriv.Z_ENT AS 'HBKAzPhotosHighPriv-zENT',
+	HBKAzPhotosHighPriv.Z_OPT AS 'HBKAzPhotosHighPriv-zOPT',
+	HBKAzPhotosHighPriv.ZPROMOTIONSCORE AS 'HBKAzPhotosHighPriv-Promotion Score',
+	HBKAzPhotosHighPriv.ZTITLE AS 'HBKAzPhotosHighPriv-Title',
+	HBKAzPhotosHighPriv.ZTITLEMIXED AS 'HBKAzPhotosHighPriv-Title Mixed',
+	HBKAzPhotosHighPriv.ZTITLESHARED AS 'HBKAzPhotosHighPriv-Title Shared',
+	HBKAzPhotosHighPriv.ZSUBTITLE AS 'HBKAzPhotosHighPriv-Subtitle',
+	HBKAzPhotosHighPriv.ZSUBTITLEMIXED AS 'HBKAzPhotosHighPriv-Subtitle Mixed',
+	HBKAzPhotosHighPriv.ZSUBTITLESHARED AS 'HBKAzPhotosHighPriv-Subtitle Shared',
+	HBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTION AS 'HBKAzPhotosHighPriv-Verbose Smart Description',
+	HBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONMIXED AS 'HBKAzPhotosHighPriv-Verbose Smart Description Mixed',
+	HBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONSHARED AS 'HBKAzPhotosHighPriv-Verbose Smart Description Shared',
+	DateTime ( HBKAzPhotosHighPriv.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'HBKAzPhotosHighPriv-Start Date',
+	HBKAzPhotosHighPriv.ZSTARTTIMEZONEOFFSET AS 'HBKAzPhotosHighPriv-Start Timezone Offset',
+	HBKAzPhotosHighPriv.ZENDTIMEZONEOFFSET AS 'HBKAzPhotosHighPriv-End Timezone Offset',
+	DateTime ( HBKAzPhotosHighPriv.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'HBKAzPhotosHighPriv-End Date',
+	HBKAzPhotosHighPriv.ZASSETSCOUNT AS 'HBKAzPhotosHighPriv-Asset Count',
+	HBKAzPhotosHighPriv.ZASSETSCOUNTSHARED AS 'HBKAzPhotosHighPriv-Asset Count Shared',
+	HBKAzPhotosHighPriv.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBKAzPhotosHighPriv-Video Assets Suggested By Photos Count',
+	HBKAzPhotosHighPriv.ZSUMMARYCOUNT AS 'HBKAzPhotosHighPriv-Summary Count',
+	HBKAzPhotosHighPriv.ZSUMMARYCOUNTSHARED AS 'HBKAzPhotosHighPriv-Summary Count Shared',
+	HBKAzPhotosHighPriv.ZEXTENDEDCOUNT AS 'HBKAzPhotosHighPriv-Extended Count',
+	HBKAzPhotosHighPriv.ZEXTENDEDCOUNTSHARED AS 'HBKAzPhotosHighPriv-Extended Count Shared',
+	HBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNT AS 'HBKAzPhotosHighPriv-Day Group Assets Count',
+	HBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNTSHARED AS 'HBKAzPhotosHighPriv-Day Group Assets Count Shared',
+	HBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'HBKAzPhotosHighPriv-Day Group Ext Assets Count',
+	HBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'HBKAzPhotosHighPriv-Day Group Ext Assets Count Shared',
+	HBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNT AS 'HBKAzPhotosHighPriv-Day Group Summary Assets Count',
+	HBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'HBKAzPhotosHighPriv-Day Group Summary Assets Count Shared',
+	HBKAzPhotosHighPriv.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBKAzPhotosHighPriv-Photo Assets Suggested By Photos Count',
+	HBKAzPhotosHighPriv.ZPARENTPHOTOSHIGHLIGHT AS 'HBKAzPhotosHighPriv-Parent PH Key',
+	HBKAzPhotosHighPriv.ZYEARKEYASSETPRIVATE AS 'HBKAzPhotosHighPriv-Year Key Asset Private',
+	HBKAzPhotosHighPriv.ZYEARKEYASSETSHARED AS 'HBKAzPhotosHighPriv-Year Key Asset Shared',
+	HBKAzPhotosHighPriv.ZMONTHKEYASSETPRIVATE AS 'HBKAzPhotosHighPriv-Month Key Asset Private',
+	HBKAzPhotosHighPriv.ZMONTHKEYASSETSHARED AS 'HBKAzPhotosHighPriv-Month Key Asset Shared',
+	HBKAzPhotosHighPriv.ZKEYASSETPRIVATE AS 'HBKAzPhotosHighPriv-Key Asset Private',
+	HBKAzPhotosHighPriv.ZKEYASSETSHARED AS 'HBKAzPhotosHighPriv-Key Asset Shared',
+	HBKAzPhotosHighPriv.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'HBKAzPhotosHighPriv-Parent Day Group PH Key',
+	HBKAzPhotosHighPriv.ZDAYGROUPKEYASSETPRIVATE AS 'HBKAzPhotosHighPriv-Day Group Key Asset Private',
+	HBKAzPhotosHighPriv.ZDAYGROUPKEYASSETSHARED AS 'HBKAzPhotosHighPriv-Day Group Key Asset Shared',
+CASE
+		HBKAzPhotosHighPriv.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE HBKAzPhotosHighPriv.ZTYPE 
+	END AS 'HBKAzPhotosHighPriv-Type',
+CASE
+		HBKAzPhotosHighPriv.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE HBKAzPhotosHighPriv.ZKIND 
+	END AS 'HBKAzPhotosHighPriv-Kind',
+CASE
+		HBKAzPhotosHighPriv.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE HBKAzPhotosHighPriv.ZCATEGORY 
+	END AS 'HBKAzPhotosHighPriv-Category',
+CASE
+		HBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+	END AS 'HBKAzPhotosHighPriv-Visibility State',
+CASE
+		HBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+	END AS 'HBKAzPhotosHighPriv-Visibility State Mixed',
+CASE
+		HBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+	END AS 'HBKAzPhotosHighPriv-Visibility State Shared',
+CASE
+		HBKAzPhotosHighPriv.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE HBKAzPhotosHighPriv.ZMOOD 
+	END AS 'HBKAzPhotosHighPriv-Mood',
+CASE
+		HBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+	END AS 'HBKAzPhotosHighPriv-Enrichment State',
+	HBKAzPhotosHighPriv.ZENRICHMENTVERSION AS 'HBKAzPhotosHighPriv-Enrichment Version',
+	HBKAzPhotosHighPriv.ZHIGHLIGHTVERSION AS 'HBKAzPhotosHighPriv-Highlight Version',
+CASE
+		HBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE HBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+	END AS 'HBKAzPhotosHighPriv-Sharing Composition',
+CASE
+		HBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'HBKAzPhotosHighPriv-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		HBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'HBKAzPhotosHighPriv-Search Index Rebuild State',
+	zAsset.ZHIGHLIGHTBEINGASSETS AS 'zAsset-Highlight Being Assets Key',
+	HBAzPhotosHigh.ZUUID AS 'HBAzPhotosHigh-UUID',
+	HBAzPhotosHigh.Z_PK AS 'HBAzPhotosHigh-zPK',
+	HBAzPhotosHigh.ZPARENTPHOTOSHIGHLIGHT AS 'HBAzPhotosHigh-Parent PH Key',
+	HBAzPhotosHigh.Z_ENT AS 'HBAzPhotosHigh-zENT',
+	HBAzPhotosHigh.Z_OPT AS 'HBAzPhotosHigh-zOPT',
+	HBAzPhotosHigh.ZPROMOTIONSCORE AS 'HBAzPhotosHigh-Promotion Score',
+	HBAzPhotosHigh.ZTITLE AS 'HBAzPhotosHigh-Title',
+	HBAzPhotosHigh.ZTITLEMIXED AS 'HBAzPhotosHigh-Title Mixed',
+	HBAzPhotosHigh.ZTITLESHARED AS 'HBAzPhotosHigh-Title Shared',
+	HBAzPhotosHigh.ZSUBTITLE AS 'HBAzPhotosHigh-Subtitle',
+	HBAzPhotosHigh.ZSUBTITLEMIXED AS 'HBAzPhotosHigh-Subtitle Mixed',
+	HBAzPhotosHigh.ZSUBTITLESHARED AS 'HBAzPhotosHigh-Subtitle Shared',
+	HBAzPhotosHigh.ZVERBOSESMARTDESCRIPTION AS 'HBAzPhotosHigh-Verbose Smart Description',
+	HBAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONMIXED AS 'HBAzPhotosHigh-Verbose Smart Description Mixed',
+	HBAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONSHARED AS 'HBAzPhotosHigh-Verbose Smart Description Shared',
+	DateTime ( HBAzPhotosHigh.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'HBAzPhotosHigh-Start Date',
+	HBAzPhotosHigh.ZSTARTTIMEZONEOFFSET AS 'HBAzPhotosHigh Start-Timezone Offset',
+	HBAzPhotosHigh.ZENDTIMEZONEOFFSET AS 'HBAzPhotosHigh-End Timezone Offset',
+	DateTime ( HBAzPhotosHigh.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'HBAzPhotosHigh-End Date',
+	HBAzPhotosHigh.ZASSETSCOUNT AS 'HBAzPhotosHigh-Asset Count',
+	HBAzPhotosHigh.ZASSETSCOUNTSHARED AS 'HBAzPhotosHigh-Asset Count Shared',
+	HBAzPhotosHigh.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBAzPhotosHigh-Video Assets Suggested By Photos Count',
+	HBAzPhotosHigh.ZSUMMARYCOUNT AS 'HBAzPhotosHigh-Summary Count',
+	HBAzPhotosHigh.ZSUMMARYCOUNTSHARED AS 'HBAzPhotosHigh-Summary Count Shared',
+	HBAzPhotosHigh.ZEXTENDEDCOUNT AS 'HBAzPhotosHigh-Extended Count',
+	HBAzPhotosHigh.ZEXTENDEDCOUNTSHARED AS 'HBAzPhotosHigh-Extended Count Shared',
+	HBAzPhotosHigh.ZDAYGROUPASSETSCOUNT AS 'HBAzPhotosHigh-Day Group Assets Count',
+	HBAzPhotosHigh.ZDAYGROUPASSETSCOUNTSHARED AS 'HBAzPhotosHigh-Day Group Assets Count Shared',
+	HBAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'HBAzPhotosHigh-Day Group Ext Assets Count',
+	HBAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'HBAzPhotosHigh-Day Group Ext Assets Count Shared',
+	HBAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNT AS 'HBAzPhotosHigh-Day Group Summary Assets Count',
+	HBAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'HBAzPhotosHigh-Day Group Summary Assets Count Shared',
+	HBAzPhotosHigh.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBAzPhotosHigh-Photo Assets Suggested By Photos Count',
+	HBAzPhotosHigh.ZKEYASSETPRIVATE AS 'HBAzPhotosHigh-Key Asset Private',
+	HBAzPhotosHigh.ZKEYASSETSHARED AS 'HBAzPhotosHigh-Key Asset Shared',
+CASE
+		HBAzPhotosHigh.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE HBAzPhotosHigh.ZTYPE 
+	END AS 'HBAzPhotosHigh-Type',
+CASE
+		HBAzPhotosHigh.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE HBAzPhotosHigh.ZKIND 
+	END AS 'HBAzPhotosHigh-Kind',
+CASE
+		HBAzPhotosHigh.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE HBAzPhotosHigh.ZCATEGORY 
+	END AS 'HBAzPhotosHigh-Category',
+CASE
+		HBAzPhotosHigh.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBAzPhotosHigh.ZVISIBILITYSTATE 
+	END AS 'HBAzPhotosHigh-Visibility State',
+CASE
+		HBAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+	END AS 'HBAzPhotosHigh-Visibility State Mixed',
+CASE
+		HBAzPhotosHigh.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBAzPhotosHigh.ZVISIBILITYSTATESHARED 
+	END AS 'HBAzPhotosHigh-Visibility State Shared',
+CASE
+		HBAzPhotosHigh.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE HBAzPhotosHigh.ZMOOD 
+	END AS 'HBAzPhotosHigh-Mood',
+CASE
+		HBAzPhotosHigh.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBAzPhotosHigh.ZENRICHMENTSTATE 
+	END AS 'HBAzPhotosHigh-Enrichment State',
+	HBAzPhotosHigh.ZENRICHMENTVERSION AS 'HBAzPhotosHigh-Enrichment Version',
+	HBAzPhotosHigh.ZHIGHLIGHTVERSION AS 'HBAzPhotosHigh-Highlight Version',
+CASE
+		HBAzPhotosHigh.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE HBAzPhotosHigh.ZSHARINGCOMPOSITION 
+	END AS 'HBAzPhotosHigh-Sharing Composition',
+CASE
+		HBAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'HBAzPhotosHigh-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		HBAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'HBAzPhotosHigh-Search Index Rebuild State',
+	zAsset.ZHIGHLIGHTBEINGEXTENDEDASSETS AS 'zAsset-Highlight Being Extended Assets Key',
+	HBEAzPhotosHigh.ZUUID AS 'HBEAzPhotosHigh-UUID',
+	HBEAzPhotosHigh.Z_PK AS 'HBEAzPhotosHigh-zPK',
+	HBEAzPhotosHigh.Z_ENT AS 'HBEAzPhotosHigh-zENT',
+	HBEAzPhotosHigh.Z_OPT AS 'HBEAzPhotosHigh-zOPT',
+	HBEAzPhotosHigh.ZPROMOTIONSCORE AS 'HBEAzPhotosHigh-Promotion Score',
+	HBEAzPhotosHigh.ZTITLE AS 'HBEAzPhotosHigh-Title',
+	HBEAzPhotosHigh.ZTITLEMIXED AS 'HBEAzPhotosHigh-Title Mixed',
+	HBEAzPhotosHigh.ZTITLESHARED AS 'HBEAzPhotosHigh-Title Shared',
+	HBEAzPhotosHigh.ZSUBTITLE AS 'HBEAzPhotosHigh-Subtitle',
+	HBEAzPhotosHigh.ZSUBTITLEMIXED AS 'HBEAzPhotosHigh-Subtitle Mixed',
+	HBEAzPhotosHigh.ZSUBTITLESHARED AS 'HBEAzPhotosHigh-Subtitle Shared',
+	HBEAzPhotosHigh.ZVERBOSESMARTDESCRIPTION AS 'HBEAzPhotosHigh-Verbose Smart Description',
+	HBEAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONMIXED AS 'HBEAzPhotosHigh-Verbose Smart Description Mixed',
+	HBEAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONSHARED AS 'HBEAzPhotosHigh-Verbose Smart Description Shared',
+	DateTime ( HBEAzPhotosHigh.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'HBEAzPhotosHigh-Start Date',
+	HBEAzPhotosHigh.ZSTARTTIMEZONEOFFSET AS 'HBEAzPhotosHigh-Start Timezone Offset',
+	HBEAzPhotosHigh.ZENDTIMEZONEOFFSET AS 'HBEAzPhotosHigh-End Timezone Offset',
+	DateTime ( HBEAzPhotosHigh.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'HBEAzPhotosHigh-End Date',
+	HBEAzPhotosHigh.ZASSETSCOUNT AS 'HBEAzPhotosHigh-Asset Count',
+	HBEAzPhotosHigh.ZASSETSCOUNTSHARED AS 'HBEAzPhotosHigh-Asset Count Shared',
+	HBEAzPhotosHigh.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBEAzPhotosHigh-Video Assets Suggested By Photos Count',
+	HBEAzPhotosHigh.ZSUMMARYCOUNT AS 'HBEAzPhotosHigh-Summary Count',
+	HBEAzPhotosHigh.ZSUMMARYCOUNTSHARED AS 'HBEAzPhotosHigh-Summary Count Shared',
+	HBEAzPhotosHigh.ZEXTENDEDCOUNT AS 'HBEAzPhotosHigh-Extended Count',
+	HBEAzPhotosHigh.ZEXTENDEDCOUNTSHARED AS 'HBEAzPhotosHigh-Extended Count Shared',
+	HBEAzPhotosHigh.ZDAYGROUPASSETSCOUNT AS 'HBEAzPhotosHigh-Day Group Assets Count',
+	HBEAzPhotosHigh.ZDAYGROUPASSETSCOUNTSHARED AS 'HBEAzPhotosHigh-Day Group Assets Count Shared',
+	HBEAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'HBEAzPhotosHigh-Day Group Ext Assets Count',
+	HBEAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'HBEAzPhotosHigh-Day Group Ext Assets Count Shared',
+	HBEAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNT AS 'HBEAzPhotosHigh-Day Group Summary Assets Count',
+	HBEAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'HBEAzPhotosHigh-Day Group Summary Assets Count Shared',
+	HBEAzPhotosHigh.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBEAzPhotosHigh-Photo Assets Suggested By Photos Count',
+	HBEAzPhotosHigh.ZPARENTPHOTOSHIGHLIGHT AS 'HBEAzPhotosHigh-Parent PH Key',
+	HBEAzPhotosHigh.ZYEARKEYASSETPRIVATE AS 'HBEAzPhotosHigh-Year Key Asset Private',
+	HBEAzPhotosHigh.ZYEARKEYASSETSHARED AS 'HBEAzPhotosHigh-Year Key Asset Shared',
+	HBEAzPhotosHigh.ZMONTHKEYASSETPRIVATE AS 'HBEAzPhotosHigh-Month Key Asset Private',
+	HBEAzPhotosHigh.ZMONTHKEYASSETSHARED AS 'HBEAzPhotosHigh-Month Key Asset Shared',
+	HBEAzPhotosHigh.ZKEYASSETPRIVATE AS 'HBEAzPhotosHigh-Key Asset Private',
+	HBEAzPhotosHigh.ZKEYASSETSHARED AS 'HBEAzPhotosHigh-Key Asset Shared',
+	HBEAzPhotosHigh.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'HBEAzPhotosHigh-Parent Day Group PH Key',
+	HBEAzPhotosHigh.ZDAYGROUPKEYASSETPRIVATE AS 'HBEAzPhotosHigh-Day Group Key Asset Private',
+	HBEAzPhotosHigh.ZDAYGROUPKEYASSETSHARED AS 'HBEAzPhotosHigh-Day Group Key Asset Shared',
+CASE
+		HBEAzPhotosHigh.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE HBEAzPhotosHigh.ZTYPE 
+	END AS 'HBEAzPhotosHigh-Type',
+CASE
+		HBEAzPhotosHigh.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE HBEAzPhotosHigh.ZKIND 
+	END AS 'HBEAzPhotosHigh-Kind',
+CASE
+		HBEAzPhotosHigh.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE HBEAzPhotosHigh.ZCATEGORY 
+	END AS 'HBEAzPhotosHigh-Category',
+CASE
+		HBEAzPhotosHigh.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBEAzPhotosHigh.ZVISIBILITYSTATE 
+	END AS 'HBEAzPhotosHigh-Visibility State',
+CASE
+		HBEAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBEAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+	END AS 'HBEAzPhotosHigh-Visibility State Mixed',
+CASE
+		HBEAzPhotosHigh.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBEAzPhotosHigh.ZVISIBILITYSTATESHARED 
+	END AS 'HBEAzPhotosHigh-Visibility State Shared',
+CASE
+		HBEAzPhotosHigh.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE HBEAzPhotosHigh.ZMOOD 
+	END AS 'HBEAzPhotosHigh-Mood',
+CASE
+		HBEAzPhotosHigh.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBEAzPhotosHigh.ZENRICHMENTSTATE 
+	END AS 'HBEAzPhotosHigh-Enrichment State',
+	HBEAzPhotosHigh.ZENRICHMENTVERSION AS 'HBEAzPhotosHigh-Enrichment Version',
+	HBEAzPhotosHigh.ZHIGHLIGHTVERSION AS 'HBEAzPhotosHigh-Highlight Version',
+CASE
+		HBEAzPhotosHigh.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE HBEAzPhotosHigh.ZSHARINGCOMPOSITION 
+	END AS 'HBEAzPhotosHigh-Sharing Composition',
+CASE
+		HBEAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBEAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'HBEAzPhotosHigh-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		HBEAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBEAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'HBEAzPhotosHigh-Search Index Rebuild State',
+	zAsset.ZHIGHLIGHTBEINGSUMMARYASSETS AS 'zAsset-Highlight Being Summary Assets Key',
+	HBSAzPhotosHigh.ZUUID AS 'HBSAzPhotosHigh-UUID',
+	HBSAzPhotosHigh.Z_PK AS 'HBSAzPhotosHigh-zPK',
+	HBSAzPhotosHigh.Z_ENT AS 'HBSAzPhotosHigh-zENT',
+	HBSAzPhotosHigh.Z_OPT AS 'HBSAzPhotosHigh-zOPT',
+	HBSAzPhotosHigh.ZPROMOTIONSCORE AS 'HBSAzPhotosHigh-Promotion Score',
+	HBSAzPhotosHigh.ZTITLE AS 'HBSAzPhotosHigh-Title',
+	HBSAzPhotosHigh.ZTITLEMIXED AS 'HBSAzPhotosHigh-Title Mixed',
+	HBSAzPhotosHigh.ZTITLESHARED AS 'HBSAzPhotosHigh-Title Shared',
+	HBSAzPhotosHigh.ZSUBTITLE AS 'HBSAzPhotosHigh-Subtitle',
+	HBSAzPhotosHigh.ZSUBTITLEMIXED AS 'HBSAzPhotosHigh-Subtitle Mixed',
+	HBSAzPhotosHigh.ZSUBTITLESHARED AS 'HBSAzPhotosHigh-Subtitle Shared',
+	HBSAzPhotosHigh.ZVERBOSESMARTDESCRIPTION AS 'HBSAzPhotosHigh-Verbose Smart Description',
+	HBSAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONMIXED AS 'HBSAzPhotosHigh-Verbose Smart Description Mixed',
+	HBSAzPhotosHigh.ZVERBOSESMARTDESCRIPTIONSHARED AS 'HBSAzPhotosHigh-Verbose Smart Description Shared',
+	DateTime ( HBSAzPhotosHigh.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'HBSAzPhotosHigh-Start Date',
+	HBSAzPhotosHigh.ZSTARTTIMEZONEOFFSET AS 'HBSAzPhotosHigh-Start Timezone Offset',
+	HBSAzPhotosHigh.ZENDTIMEZONEOFFSET AS 'HBSAzPhotosHigh-End Timezone Offset',
+	DateTime ( HBSAzPhotosHigh.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'HBSAzPhotosHigh-End Date',
+	HBSAzPhotosHigh.ZASSETSCOUNT AS 'HBSAzPhotosHigh-Asset Count',
+	HBSAzPhotosHigh.ZASSETSCOUNTSHARED AS 'HBSAzPhotosHigh-Asset Count Shared',
+	HBSAzPhotosHigh.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBSAzPhotosHigh-Video Assets Suggested By Photos Count',
+	HBSAzPhotosHigh.ZSUMMARYCOUNT AS 'HBSAzPhotosHigh-Summary Count',
+	HBSAzPhotosHigh.ZSUMMARYCOUNTSHARED AS 'HBSAzPhotosHigh-Summary Count Shared',
+	HBSAzPhotosHigh.ZEXTENDEDCOUNT AS 'HBSAzPhotosHigh-Extended Count',
+	HBSAzPhotosHigh.ZEXTENDEDCOUNTSHARED AS 'HBSAzPhotosHigh-Extended Count Shared',
+	HBSAzPhotosHigh.ZDAYGROUPASSETSCOUNT AS 'HBSAzPhotosHigh-Day Group Assets Count',
+	HBSAzPhotosHigh.ZDAYGROUPASSETSCOUNTSHARED AS 'HBSAzPhotosHigh-Day Group Assets Count Shared',
+	HBSAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'HBSAzPhotosHigh-Day Group Ext Assets Count',
+	HBSAzPhotosHigh.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'HBSAzPhotosHigh-Day Group Ext Assets Count Shared',
+	HBSAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNT AS 'HBSAzPhotosHigh-Day Group Summary Assets Count',
+	HBSAzPhotosHigh.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'HBSAzPhotosHigh-Day Group Summary Assets Count Shared',
+	HBSAzPhotosHigh.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBSAzPhotosHigh-Photo Assets Suggested By Photos Count',
+	HBSAzPhotosHigh.ZPARENTPHOTOSHIGHLIGHT AS 'HBSAzPhotosHigh-Parent PH Key',
+	HBSAzPhotosHigh.ZYEARKEYASSETPRIVATE AS 'HBSAzPhotosHigh-Year Key Asset Private',
+	HBSAzPhotosHigh.ZYEARKEYASSETSHARED AS 'HBSAzPhotosHigh-Year Key Asset Shared',
+	HBSAzPhotosHigh.ZMONTHKEYASSETPRIVATE AS 'HBSAzPhotosHigh-Month Key Asset Private',
+	HBSAzPhotosHigh.ZMONTHKEYASSETSHARED AS 'HBSAzPhotosHigh-Month Key Asset Shared',
+	HBSAzPhotosHigh.ZKEYASSETPRIVATE AS 'HBSAzPhotosHigh-Key Asset Private',
+	HBSAzPhotosHigh.ZKEYASSETSHARED AS 'HBSAzPhotosHigh-Key Asset Shared',
+	HBSAzPhotosHigh.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'HBSAzPhotosHigh-Parent Day Group PH Key',
+	HBSAzPhotosHigh.ZDAYGROUPKEYASSETPRIVATE AS 'HBSAzPhotosHigh-Day Group Key Asset Private',
+	HBSAzPhotosHigh.ZDAYGROUPKEYASSETSHARED AS 'HBSAzPhotosHigh-Day Group Key Asset Shared',
+CASE
+		HBSAzPhotosHigh.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE HBSAzPhotosHigh.ZTYPE 
+	END AS 'HBSAzPhotosHigh-Type',
+CASE
+		HBSAzPhotosHigh.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE HBSAzPhotosHigh.ZKIND 
+	END AS 'HBSAzPhotosHigh-Kind',
+CASE
+		HBSAzPhotosHigh.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE HBSAzPhotosHigh.ZCATEGORY 
+	END AS 'HBSAzPhotosHigh-Category',
+CASE
+		HBSAzPhotosHigh.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBSAzPhotosHigh.ZVISIBILITYSTATE 
+	END AS 'HBSAzPhotosHigh-Visibility State',
+CASE
+		HBSAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBSAzPhotosHigh.ZVISIBILITYSTATEMIXED 
+	END AS 'HBSAzPhotosHigh-Visibility State Mixed',
+CASE
+		HBSAzPhotosHigh.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBSAzPhotosHigh.ZVISIBILITYSTATESHARED 
+	END AS 'HBSAzPhotosHigh-Visibility State Shared',
+CASE
+		HBSAzPhotosHigh.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE HBSAzPhotosHigh.ZMOOD 
+	END AS 'HBSAzPhotosHigh-Mood',
+CASE
+		HBSAzPhotosHigh.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBSAzPhotosHigh.ZENRICHMENTSTATE 
+	END AS 'HBSAzPhotosHigh-Enrichment State',
+	HBSAzPhotosHigh.ZENRICHMENTVERSION AS 'HBSAzPhotosHigh-Enrichment Version',
+	HBSAzPhotosHigh.ZHIGHLIGHTVERSION AS 'HBSAzPhotosHigh-Highlight Version',
+CASE
+		HBSAzPhotosHigh.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE HBSAzPhotosHigh.ZSHARINGCOMPOSITION 
+	END AS 'HBSAzPhotosHigh-Sharing Composition',
+CASE
+		HBSAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBSAzPhotosHigh.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'HBSAzPhotosHigh-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		HBSAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBSAzPhotosHigh.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'HBSAzPhotosHigh-Search Index Rebuild State',
+	YearParzPhotosHighShared.ZUUID AS 'YearParzPhotosHighShared-UUID',
+	YearParzPhotosHighShared.Z_PK AS 'YearParzPhotosHighShared-zPK',
+	YearParzPhotosHighShared.Z_ENT AS 'YearParzPhotosHighShared-zENT',
+	YearParzPhotosHighShared.Z_OPT AS 'YearParzPhotosHighShared-zOPT',
+	YearParzPhotosHighShared.ZPROMOTIONSCORE AS 'YearParzPhotosHighShared-Promotion Score',
+	YearParzPhotosHighShared.ZTITLE AS 'YearParzPhotosHighShared-Title',
+	YearParzPhotosHighShared.ZTITLEMIXED AS 'YearParzPhotosHighShared-Title Mixed',
+	YearParzPhotosHighShared.ZTITLESHARED AS 'YearParzPhotosHighShared-Title Shared',
+	YearParzPhotosHighShared.ZVERBOSESMARTDESCRIPTION AS 'YearParzPhotosHighShared-Verbose Smart Description',
+	YearParzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONMIXED AS 'YearParzPhotosHighShared-Verbose Smart Description Mixed',
+	YearParzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONSHARED AS 'YearParzPhotosHighShared-Verbose Smart Description Shared',
+	DateTime ( YearParzPhotosHighShared.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'YearParzPhotosHighShared-Start Date',
+	DateTime ( YearParzPhotosHighShared.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'YearParzPhotosHighShared-End Date',
+	YearParzPhotosHighShared.ZYEARKEYASSETPRIVATE AS 'YearParzPhotosHighShared-Year Key Asset Private',
+	YearParzPhotosHighShared.ZYEARKEYASSETSHARED AS 'YearParzPhotosHighShared-Year Key Asset Shared',
+CASE
+		YearParzPhotosHighShared.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE YearParzPhotosHighShared.ZKIND 
+	END AS 'YearParzPhotosHighShared-Kind',
+CASE
+		YearParzPhotosHighShared.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE YearParzPhotosHighShared.ZCATEGORY 
+	END AS 'YearParzPhotosHighShared-Category',
+CASE
+		YearParzPhotosHighShared.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YearParzPhotosHighShared.ZVISIBILITYSTATE 
+	END AS 'YearParzPhotosHighShared-Visibility State',
+CASE
+		YearParzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YearParzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+	END AS 'YearParzPhotosHighShared-Visibility State Mixed',
+CASE
+		YearParzPhotosHighShared.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YearParzPhotosHighShared.ZVISIBILITYSTATESHARED 
+	END AS 'YearParzPhotosHighShared-Visibility State Shared',
+CASE
+		YearParzPhotosHighShared.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YearParzPhotosHighShared.ZENRICHMENTSTATE 
+	END AS 'YearParzPhotosHighShared-Enrichment State',
+	YearParzPhotosHighShared.ZENRICHMENTVERSION AS 'YearParzPhotosHighShared-Enrichment Version',
+	YearParzPhotosHighShared.ZHIGHLIGHTVERSION AS 'YearParzPhotosHighShared-Highlight Version',
+CASE
+		YearParzPhotosHighShared.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE YearParzPhotosHighShared.ZSHARINGCOMPOSITION 
+	END AS 'YearParzPhotosHighShared-Sharing Composition',
+CASE
+		YearParzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YearParzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'YearParzPhotosHighShared-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		YearParzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YearParzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'YearParzPhotosHighShared-Search Index Rebuild State',
+	zAsset.ZYEARHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Year Highlight Being Key Asset Private',
+	zAsset.ZYEARHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Year Highlight Being Key Asset Shared',
+	YHBKAzPhotosHighPriv.ZUUID AS 'YHBKAzPhotosHighPriv-UUID',
+	YHBKAzPhotosHighPriv.Z_PK AS 'YHBKAzPhotosHighPriv-zPK',
+	YHBKAzPhotosHighPriv.Z_ENT AS 'YHBKAzPhotosHighPriv-zENT',
+	YHBKAzPhotosHighPriv.Z_OPT AS 'YHBKAzPhotosHighPriv-zOPT',
+	YHBKAzPhotosHighPriv.ZPROMOTIONSCORE AS 'YHBKAzPhotosHighPriv-Promotion Score',
+	YHBKAzPhotosHighPriv.ZTITLE AS 'YHBKAzPhotosHighPriv-Title',
+	YHBKAzPhotosHighPriv.ZTITLEMIXED AS 'YHBKAzPhotosHighPriv-Title Mixed',
+	YHBKAzPhotosHighPriv.ZTITLESHARED AS 'YHBKAzPhotosHighPriv-Title Shared',
+	YHBKAzPhotosHighPriv.ZSUBTITLE AS 'YHBKAzPhotosHighPriv-Subtitle',
+	YHBKAzPhotosHighPriv.ZSUBTITLEMIXED AS 'YHBKAzPhotosHighPriv-Subtitle Mixed',
+	YHBKAzPhotosHighPriv.ZSUBTITLESHARED AS 'YHBKAzPhotosHighPriv-Subtitle Shared',
+	YHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTION AS 'YHBKAzPhotosHighPriv-Verbose Smart Description',
+	YHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONMIXED AS 'YHBKAzPhotosHighPriv-Verbose Smart Description Mixed',
+	YHBKAzPhotosHighPriv.ZVERBOSESMARTDESCRIPTIONSHARED AS 'YHBKAzPhotosHighPriv-Verbose Smart Description Shared',
+	DateTime ( YHBKAzPhotosHighPriv.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'YHBKAzPhotosHighPriv-Start Date',
+	YHBKAzPhotosHighPriv.ZSTARTTIMEZONEOFFSET AS 'YHBKAzPhotosHighPriv-Start Timezone Offset',
+	YHBKAzPhotosHighPriv.ZENDTIMEZONEOFFSET AS 'YHBKAzPhotosHighPriv-End Timezone Offset',
+	DateTime ( YHBKAzPhotosHighPriv.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'YHBKAzPhotosHighPriv-End Date',
+	YHBKAzPhotosHighPriv.ZASSETSCOUNT AS 'YHBKAzPhotosHighPriv-Asset Count',
+	YHBKAzPhotosHighPriv.ZASSETSCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Asset Count Shared',
+	YHBKAzPhotosHighPriv.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'YHBKAzPhotosHighPriv-Video Assets Suggested By Photos Count',
+	YHBKAzPhotosHighPriv.ZSUMMARYCOUNT AS 'YHBKAzPhotosHighPriv-Summary Count',
+	YHBKAzPhotosHighPriv.ZSUMMARYCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Summary Count Shared',
+	YHBKAzPhotosHighPriv.ZEXTENDEDCOUNT AS 'YHBKAzPhotosHighPriv-Extended Count',
+	YHBKAzPhotosHighPriv.ZEXTENDEDCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Extended Count Shared',
+	YHBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNT AS 'YHBKAzPhotosHighPriv-Day Group Assets Count',
+	YHBKAzPhotosHighPriv.ZDAYGROUPASSETSCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Day Group Assets Count Shared',
+	YHBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'YHBKAzPhotosHighPriv-Day Group Ext Assets Count',
+	YHBKAzPhotosHighPriv.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Day Group Ext Assets Count Shared',
+	YHBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNT AS 'YHBKAzPhotosHighPriv-Day Group Summary Assets Count',
+	YHBKAzPhotosHighPriv.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'YHBKAzPhotosHighPriv-Day Group Summary Assets Count Shared',
+	YHBKAzPhotosHighPriv.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'YHBKAzPhotosHighPriv-Photo Assets Suggested By Photos Count',
+	YHBKAzPhotosHighPriv.ZPARENTPHOTOSHIGHLIGHT AS 'YHBKAzPhotosHighPriv-Parent PH Key',
+	YHBKAzPhotosHighPriv.ZYEARKEYASSETPRIVATE AS 'YHBKAzPhotosHighPriv-Year Key Asset Private',
+	YHBKAzPhotosHighPriv.ZYEARKEYASSETSHARED AS 'YHBKAzPhotosHighPriv-Year Key Asset Shared',
+	YHBKAzPhotosHighPriv.ZMONTHKEYASSETPRIVATE AS 'YHBKAzPhotosHighPriv-Month Key Asset Private',
+	YHBKAzPhotosHighPriv.ZMONTHKEYASSETSHARED AS 'YHBKAzPhotosHighPriv-Month Key Asset Shared',
+	YHBKAzPhotosHighPriv.ZKEYASSETPRIVATE AS 'YHBKAzPhotosHighPriv-Key Asset Private',
+	YHBKAzPhotosHighPriv.ZKEYASSETSHARED AS 'YHBKAzPhotosHighPriv-Key Asset Shared',
+	YHBKAzPhotosHighPriv.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'YHBKAzPhotosHighPriv-Parent Day Group PH Key',
+	YHBKAzPhotosHighPriv.ZDAYGROUPKEYASSETPRIVATE AS 'YHBKAzPhotosHighPriv-Day Group Key Asset Private',
+	YHBKAzPhotosHighPriv.ZDAYGROUPKEYASSETSHARED AS 'YHBKAzPhotosHighPriv-Day Group Key Asset Shared',
+CASE
+		YHBKAzPhotosHighPriv.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE YHBKAzPhotosHighPriv.ZTYPE 
+	END AS 'YHBKAzPhotosHighPriv-Type',
+CASE
+		YHBKAzPhotosHighPriv.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE YHBKAzPhotosHighPriv.ZKIND 
+	END AS 'YHBKAzPhotosHighPriv-Kind',
+CASE
+		YHBKAzPhotosHighPriv.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE YHBKAzPhotosHighPriv.ZCATEGORY 
+	END AS 'YHBKAzPhotosHighPriv-Category',
+CASE
+		YHBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighPriv.ZVISIBILITYSTATE 
+	END AS 'YHBKAzPhotosHighPriv-Visibility State',
+CASE
+		YHBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YHBKAzPhotosHighPriv.ZVISIBILITYSTATEMIXED 
+	END AS 'YHBKAzPhotosHighPriv-Visibility State Mixed',
+CASE
+		YHBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YHBKAzPhotosHighPriv.ZVISIBILITYSTATESHARED 
+	END AS 'YHBKAzPhotosHighPriv-Visibility State Shared',
+CASE
+		YHBKAzPhotosHighPriv.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE YHBKAzPhotosHighPriv.ZMOOD 
+	END AS 'YHBKAzPhotosHighPriv-Mood',
+CASE
+		YHBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighPriv.ZENRICHMENTSTATE 
+	END AS 'YHBKAzPhotosHighPriv-Enrichment State',
+	YHBKAzPhotosHighPriv.ZENRICHMENTVERSION AS 'YHBKAzPhotosHighPriv-Enrichment Version',
+	YHBKAzPhotosHighPriv.ZHIGHLIGHTVERSION AS 'YHBKAzPhotosHighPriv-Highlight Version',
+CASE
+		YHBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE YHBKAzPhotosHighPriv.ZSHARINGCOMPOSITION 
+	END AS 'YHBKAzPhotosHighPriv-Sharing Composition',
+CASE
+		YHBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighPriv.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'YHBKAzPhotosHighPriv-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		YHBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighPriv.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'YHBKAzPhotosHighPriv-Search Index Rebuild State',
+	zAsset.ZYEARHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Year Highlight Being Key Asset Private',
+	zAsset.ZYEARHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Year Highlight Being Key Asset Shared',
+	YHBKAzPhotosHighShared.ZUUID AS 'YHBKAzPhotosHighShared-UUID',
+	YHBKAzPhotosHighShared.Z_PK AS 'YHBKAzPhotosHighShared-zPK',
+	YHBKAzPhotosHighShared.Z_ENT AS 'YHBKAzPhotosHighShared-zENT',
+	YHBKAzPhotosHighShared.Z_OPT AS 'YHBKAzPhotosHighShared-zOPT',
+	YHBKAzPhotosHighShared.ZPROMOTIONSCORE AS 'YHBKAzPhotosHighShared-Promotion Score',
+	YHBKAzPhotosHighShared.ZTITLE AS 'YHBKAzPhotosHighShared-Title',
+	YHBKAzPhotosHighShared.ZTITLEMIXED AS 'YHBKAzPhotosHighShared-Title Mixed',
+	YHBKAzPhotosHighShared.ZTITLESHARED AS 'YHBKAzPhotosHighShared-Title Shared',
+	YHBKAzPhotosHighShared.ZSUBTITLE AS 'YHBKAzPhotosHighShared-Subtitle',
+	YHBKAzPhotosHighShared.ZSUBTITLEMIXED AS 'YHBKAzPhotosHighShared-Subtitle Mixed',
+	YHBKAzPhotosHighShared.ZSUBTITLESHARED AS 'YHBKAzPhotosHighShared-Subtitle Shared',
+	YHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTION AS 'YHBKAzPhotosHighShared-Verbose Smart Description',
+	YHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONMIXED AS 'YHBKAzPhotosHighShared-Verbose Smart Description Mixed',
+	YHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONSHARED AS 'YHBKAzPhotosHighShared-Verbose Smart Description Shared',
+	DateTime ( YHBKAzPhotosHighShared.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'YHBKAzPhotosHighShared-Start Date',
+	YHBKAzPhotosHighShared.ZSTARTTIMEZONEOFFSET AS 'YHBKAzPhotosHighShared-Start Timezone Offset',
+	YHBKAzPhotosHighShared.ZENDTIMEZONEOFFSET AS 'YHBKAzPhotosHighShared-End Timezone Offset',
+	DateTime ( YHBKAzPhotosHighShared.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'YHBKAzPhotosHighShared-End Date',
+	YHBKAzPhotosHighShared.ZASSETSCOUNT AS 'YHBKAzPhotosHighShared-Asset Count',
+	YHBKAzPhotosHighShared.ZASSETSCOUNTSHARED AS 'YHBKAzPhotosHighShared-Asset Count Shared',
+	YHBKAzPhotosHighShared.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'YHBKAzPhotosHighShared-Video Assets Suggested By Photos Count',
+	YHBKAzPhotosHighShared.ZSUMMARYCOUNT AS 'YHBKAzPhotosHighShared-Summary Count',
+	YHBKAzPhotosHighShared.ZSUMMARYCOUNTSHARED AS 'YHBKAzPhotosHighShared-Summary Count Shared',
+	YHBKAzPhotosHighShared.ZEXTENDEDCOUNT AS 'YHBKAzPhotosHighShared-Extended Count',
+	YHBKAzPhotosHighShared.ZEXTENDEDCOUNTSHARED AS 'YHBKAzPhotosHighShared-Extended Count Shared',
+	YHBKAzPhotosHighShared.ZDAYGROUPASSETSCOUNT AS 'YHBKAzPhotosHighShared-Day Group Assets Count',
+	YHBKAzPhotosHighShared.ZDAYGROUPASSETSCOUNTSHARED AS 'YHBKAzPhotosHighShared-Day Group Assets Count Shared',
+	YHBKAzPhotosHighShared.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'YHBKAzPhotosHighShared-Day Group Ext Assets Count',
+	YHBKAzPhotosHighShared.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'YHBKAzPhotosHighShared-Day Group Ext Assets Count Shared',
+	YHBKAzPhotosHighShared.ZDAYGROUPSUMMARYASSETSCOUNT AS 'YHBKAzPhotosHighShared-Day Group Summary Assets Count',
+	YHBKAzPhotosHighShared.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'YHBKAzPhotosHighShared-Day Group Summary Assets Count Shared',
+	YHBKAzPhotosHighShared.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'YHBKAzPhotosHighShared-Photo Assets Suggested By Photos Count',
+	YHBKAzPhotosHighShared.ZPARENTPHOTOSHIGHLIGHT AS 'YHBKAzPhotosHighShared-Parent PH Key',
+	YHBKAzPhotosHighShared.ZYEARKEYASSETPRIVATE AS 'YHBKAzPhotosHighShared-Year Key Asset Private',
+	YHBKAzPhotosHighShared.ZYEARKEYASSETSHARED AS 'YHBKAzPhotosHighShared-Year Key Asset Shared',
+	YHBKAzPhotosHighShared.ZMONTHKEYASSETPRIVATE AS 'YHBKAzPhotosHighShared-Month Key Asset Private',
+	YHBKAzPhotosHighShared.ZMONTHKEYASSETSHARED AS 'YHBKAzPhotosHighShared-Month Key Asset Shared',
+	YHBKAzPhotosHighShared.ZKEYASSETPRIVATE AS 'YHBKAzPhotosHighShared-Key Asset Private',
+	YHBKAzPhotosHighShared.ZKEYASSETSHARED AS 'YHBKAzPhotosHighShared-Key Asset Shared',
+	YHBKAzPhotosHighShared.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'YHBKAzPhotosHighShared-Parent Day Group PH Key',
+	YHBKAzPhotosHighShared.ZDAYGROUPKEYASSETPRIVATE AS 'YHBKAzPhotosHighShared-Day Group Key Asset Private',
+	YHBKAzPhotosHighShared.ZDAYGROUPKEYASSETSHARED AS 'YHBKAzPhotosHighShared-Day Group Key Asset Shared',
+CASE
+		YHBKAzPhotosHighShared.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE YHBKAzPhotosHighShared.ZTYPE 
+	END AS 'YHBKAzPhotosHighShared-Type',
+CASE
+		YHBKAzPhotosHighShared.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE YHBKAzPhotosHighShared.ZKIND 
+	END AS 'YHBKAzPhotosHighShared-Kind',
+CASE
+		YHBKAzPhotosHighShared.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE YHBKAzPhotosHighShared.ZCATEGORY 
+	END AS 'YHBKAzPhotosHighShared-Category',
+CASE
+		YHBKAzPhotosHighShared.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighShared.ZVISIBILITYSTATE 
+	END AS 'YHBKAzPhotosHighShared-Visibility State',
+CASE
+		YHBKAzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YHBKAzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+	END AS 'YHBKAzPhotosHighShared-Visibility State Mixed',
+CASE
+		YHBKAzPhotosHighShared.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YHBKAzPhotosHighShared.ZVISIBILITYSTATESHARED 
+	END AS 'YHBKAzPhotosHighShared-Visibility State Shared',
+CASE
+		YHBKAzPhotosHighShared.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE YHBKAzPhotosHighShared.ZMOOD 
+	END AS 'YHBKAzPhotosHighShared-Mood',
+CASE
+		YHBKAzPhotosHighShared.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighShared.ZENRICHMENTSTATE 
+	END AS 'YHBKAzPhotosHighShared-Enrichment State',
+	YHBKAzPhotosHighShared.ZENRICHMENTVERSION AS 'YHBKAzPhotosHighShared-Enrichment Version',
+	YHBKAzPhotosHighShared.ZHIGHLIGHTVERSION AS 'YHBKAzPhotosHighShared-Highlight Version',
+CASE
+		YHBKAzPhotosHighShared.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE YHBKAzPhotosHighShared.ZSHARINGCOMPOSITION 
+	END AS 'YHBKAzPhotosHighShared-Sharing Composition',
+CASE
+		YHBKAzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'YHBKAzPhotosHighShared-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		YHBKAzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YHBKAzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'YHBKAzPhotosHighShared-Search Index Rebuild State',
+	YMParzPhotosHighShared.ZUUID AS 'YMParzPhotosHighShared-UUID',
+	YMParzPhotosHighShared.Z_PK AS 'YMParzPhotosHighShared-zPK',
+	YMParzPhotosHighShared.ZPARENTPHOTOSHIGHLIGHT AS 'YMParzPhotosHighShared-Parent PH Key',
+	YMParzPhotosHighShared.Z_ENT AS 'YMParzPhotosHighShared-zENT',
+	YMParzPhotosHighShared.Z_OPT AS 'YMParzPhotosHighShared-zOPT',
+	YMParzPhotosHighShared.ZPROMOTIONSCORE AS 'YMParzPhotosHighShared-Promotion Score',
+	YMParzPhotosHighShared.ZTITLE AS 'YMParzPhotosHighShared-Title',
+	YMParzPhotosHighShared.ZTITLEMIXED AS 'YMParzPhotosHighShared-Title Mixed',
+	YMParzPhotosHighShared.ZTITLESHARED AS 'YMParzPhotosHighShared-Title Shared',
+	YMParzPhotosHighShared.ZSUBTITLE AS 'YMParzPhotosHighShared-Subtitle',
+	YMParzPhotosHighShared.ZSUBTITLEMIXED AS 'YMParzPhotosHighShared-Subtitle Mixed',
+	YMParzPhotosHighShared.ZSUBTITLESHARED AS 'YMParzPhotosHighShared-Subtitle Shared',
+	YMParzPhotosHighShared.ZVERBOSESMARTDESCRIPTION AS 'YMParzPhotosHighShared-Verbose Smart Description',
+	YMParzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONMIXED AS 'YMParzPhotosHighShared-Verbose Smart Description Mixed',
+	YMParzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONSHARED AS 'YMParzPhotosHighShared-Verbose Smart Description Shared',
+	DateTime ( YMParzPhotosHighShared.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'YMParzPhotosHighShared-Start Date',
+	DateTime ( YMParzPhotosHighShared.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'YMParzPhotosHighShared-End Date',
+	YMParzPhotosHighShared.ZMONTHKEYASSETPRIVATE AS 'YMParzPhotosHighShared-Month Key Asset Private',
+	YMParzPhotosHighShared.ZMONTHKEYASSETSHARED AS 'YMParzPhotosHighShared-Month Key Asset Shared',
+CASE
+		YMParzPhotosHighShared.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE YMParzPhotosHighShared.ZKIND 
+	END AS 'YMParzPhotosHighShared-Kind',
+CASE
+		YMParzPhotosHighShared.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE YMParzPhotosHighShared.ZCATEGORY 
+	END AS 'YMParzPhotosHighShared-Category',
+CASE
+		YMParzPhotosHighShared.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YMParzPhotosHighShared.ZVISIBILITYSTATE 
+	END AS 'YMParzPhotosHighShared-Visibility State',
+CASE
+		YMParzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YMParzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+	END AS 'YMParzPhotosHighShared-Visibility State Mixed',
+CASE
+		YMParzPhotosHighShared.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE YMParzPhotosHighShared.ZVISIBILITYSTATESHARED 
+	END AS 'YMParzPhotosHighShared-Visibility State Shared',
+CASE
+		YMParzPhotosHighShared.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YMParzPhotosHighShared.ZENRICHMENTSTATE 
+	END AS 'YMParzPhotosHighShared-Enrichment State',
+	YMParzPhotosHighShared.ZENRICHMENTVERSION AS 'YMParzPhotosHighShared-Enrichment Version',
+	YMParzPhotosHighShared.ZHIGHLIGHTVERSION AS 'YMParzPhotosHighShared-Highlight Version',
+CASE
+		YMParzPhotosHighShared.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE YMParzPhotosHighShared.ZSHARINGCOMPOSITION 
+	END AS 'YMParzPhotosHighShared-Sharing Composition',
+CASE
+		YMParzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YMParzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'YMParzPhotosHighShared-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		YMParzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE YMParzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'YMParzPhotosHighShared-Search Index Rebuild State',
+	zAsset.ZMONTHHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Month Highlight Being Key Asset Key Private',
+	zAsset.ZMONTHHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Month Highlight Being Key Asset Key Shared',
+	MHBKAzPhotosHighShared.ZUUID AS 'MHBKAzPhotosHighShared-UUID',
+	MHBKAzPhotosHighShared.Z_PK AS 'MHBKAzPhotosHighShared-zPK',
+	MHBKAzPhotosHighShared.Z_ENT AS 'MHBKAzPhotosHighShared-zENT',
+	MHBKAzPhotosHighShared.Z_OPT AS 'MHBKAzPhotosHighShared-zOPT',
+	MHBKAzPhotosHighShared.ZPROMOTIONSCORE AS 'MHBKAzPhotosHighShared-Promotion Score',
+	MHBKAzPhotosHighShared.ZTITLE AS 'MHBKAzPhotosHighShared-Title',
+	MHBKAzPhotosHighShared.ZTITLEMIXED AS 'MHBKAzPhotosHighShared-Title Mixed',
+	MHBKAzPhotosHighShared.ZTITLESHARED AS 'MHBKAzPhotosHighShared-Title Shared',
+	MHBKAzPhotosHighShared.ZSUBTITLE AS 'MHBKAzPhotosHighShared-Subtitle',
+	MHBKAzPhotosHighShared.ZSUBTITLEMIXED AS 'MHBKAzPhotosHighShared-Subtitle Mixed',
+	MHBKAzPhotosHighShared.ZSUBTITLESHARED AS 'MHBKAzPhotosHighShared-Subtitle Shared',
+	MHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTION AS 'MHBKAzPhotosHighShared-Verbose Smart Description',
+	MHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONMIXED AS 'MHBKAzPhotosHighShared-Verbose Smart Description Mixed',
+	MHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONSHARED AS 'MHBKAzPhotosHighShared-Verbose Smart Description Shared',
+	DateTime ( MHBKAzPhotosHighShared.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'MHBKAzPhotosHighShared-Start Date',
+	MHBKAzPhotosHighShared.ZSTARTTIMEZONEOFFSET AS 'MHBKAzPhotosHighShared-Start Timezone Offset',
+	MHBKAzPhotosHighShared.ZENDTIMEZONEOFFSET AS 'MHBKAzPhotosHighShared-End Timezone Offset',
+	DateTime ( MHBKAzPhotosHighShared.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'MHBKAzPhotosHighShared-End Date',
+	MHBKAzPhotosHighShared.ZASSETSCOUNT AS 'MHBKAzPhotosHighShared-Asset Count',
+	MHBKAzPhotosHighShared.ZASSETSCOUNTSHARED AS 'MHBKAzPhotosHighShared-Asset Count Shared',
+	MHBKAzPhotosHighShared.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'MHBKAzPhotosHighShared-Video Assets Suggested By Photos Count',
+	MHBKAzPhotosHighShared.ZSUMMARYCOUNT AS 'MHBKAzPhotosHighShared-Summary Count',
+	MHBKAzPhotosHighShared.ZSUMMARYCOUNTSHARED AS 'MHBKAzPhotosHighShared-Summary Count Shared',
+	MHBKAzPhotosHighShared.ZEXTENDEDCOUNT AS 'MHBKAzPhotosHighShared-Extended Count',
+	MHBKAzPhotosHighShared.ZEXTENDEDCOUNTSHARED AS 'MHBKAzPhotosHighShared-Extended Count Shared',
+	MHBKAzPhotosHighShared.ZDAYGROUPASSETSCOUNT AS 'MHBKAzPhotosHighShared-Day Group Assets Count',
+	MHBKAzPhotosHighShared.ZDAYGROUPASSETSCOUNTSHARED AS 'MHBKAzPhotosHighShared-Day Group Assets Count Shared',
+	MHBKAzPhotosHighShared.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'MHBKAzPhotosHighShared-Day Group Ext Assets Count',
+	MHBKAzPhotosHighShared.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'MHBKAzPhotosHighShared-Day Group Ext Assets Count Shared',
+	MHBKAzPhotosHighShared.ZDAYGROUPSUMMARYASSETSCOUNT AS 'MHBKAzPhotosHighShared-Day Group Summary Assets Count',
+	MHBKAzPhotosHighShared.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'MHBKAzPhotosHighShared-Day Group Summary Assets Count Shared',
+	MHBKAzPhotosHighShared.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'MHBKAzPhotosHighShared-Photo Assets Suggested By Photos Count',
+	MHBKAzPhotosHighShared.ZPARENTPHOTOSHIGHLIGHT AS 'MHBKAzPhotosHighShared-Parent PH Key',
+	MHBKAzPhotosHighShared.ZYEARKEYASSETPRIVATE AS 'MHBKAzPhotosHighShared-Year Key Asset Private',
+	MHBKAzPhotosHighShared.ZYEARKEYASSETSHARED AS 'MHBKAzPhotosHighShared-Year Key Asset Shared',
+	MHBKAzPhotosHighShared.ZMONTHKEYASSETPRIVATE AS 'MHBKAzPhotosHighShared-Month Key Asset Private',
+	MHBKAzPhotosHighShared.ZMONTHKEYASSETSHARED AS 'MHBKAzPhotosHighShared-Month Key Asset Shared',
+	MHBKAzPhotosHighShared.ZKEYASSETPRIVATE AS 'MHBKAzPhotosHighShared-Key Asset Private',
+	MHBKAzPhotosHighShared.ZKEYASSETSHARED AS 'MHBKAzPhotosHighShared-Key Asset Shared',
+	MHBKAzPhotosHighShared.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'MHBKAzPhotosHighShared-Parent Day Group PH Key',
+	MHBKAzPhotosHighShared.ZDAYGROUPKEYASSETPRIVATE AS 'MHBKAzPhotosHighShared-Day Group Key Asset Private',
+	MHBKAzPhotosHighShared.ZDAYGROUPKEYASSETSHARED AS 'MHBKAzPhotosHighShared-Day Group Key Asset Shared',
+CASE
+		MHBKAzPhotosHighShared.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE MHBKAzPhotosHighShared.ZTYPE 
+	END AS 'MHBKAzPhotosHighShared-Type',
+CASE
+		MHBKAzPhotosHighShared.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE MHBKAzPhotosHighShared.ZKIND 
+	END AS 'MHBKAzPhotosHighShared-Kind',
+CASE
+		MHBKAzPhotosHighShared.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE MHBKAzPhotosHighShared.ZCATEGORY 
+	END AS 'MHBKAzPhotosHighShared-Category',
+CASE
+		MHBKAzPhotosHighShared.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE MHBKAzPhotosHighShared.ZVISIBILITYSTATE 
+	END AS 'MHBKAzPhotosHighShared-Visibility State',
+CASE
+		MHBKAzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE MHBKAzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+	END AS 'MHBKAzPhotosHighShared-Visibility State Mixed',
+CASE
+		MHBKAzPhotosHighShared.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE MHBKAzPhotosHighShared.ZVISIBILITYSTATESHARED 
+	END AS 'MHBKAzPhotosHighShared-Visibility State Shared',
+CASE
+		MHBKAzPhotosHighShared.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE MHBKAzPhotosHighShared.ZMOOD 
+	END AS 'MHBKAzPhotosHighShared-Mood',
+CASE
+		MHBKAzPhotosHighShared.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE MHBKAzPhotosHighShared.ZENRICHMENTSTATE 
+	END AS 'MHBKAzPhotosHighShared-Enrichment State',
+	MHBKAzPhotosHighShared.ZENRICHMENTVERSION AS 'MHBKAzPhotosHighShared-Enrichment Version',
+	MHBKAzPhotosHighShared.ZHIGHLIGHTVERSION AS 'MHBKAzPhotosHighShared-Highlight Version',
+CASE
+		MHBKAzPhotosHighShared.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE MHBKAzPhotosHighShared.ZSHARINGCOMPOSITION 
+	END AS 'MHBKAzPhotosHighShared-Sharing Composition',
+CASE
+		MHBKAzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE MHBKAzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'MHBKAzPhotosHighShared-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		MHBKAzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE MHBKAzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'MHBKAzPhotosHighShared-Search Index Rebuild State',
+	DGParzPhotosHighShared.ZUUID AS 'DGParzPhotosHighShared-UUID',
+	DGParzPhotosHighShared.Z_PK AS 'DGParzPhotosHighShared-zPK',
+	DGParzPhotosHighShared.ZPARENTPHOTOSHIGHLIGHT AS 'DGParzPhotosHighShared-Parent PH Key',
+	DGParzPhotosHighShared.Z_ENT AS 'DGParzPhotosHighShared-zENT',
+	DGParzPhotosHighShared.Z_OPT AS 'DGParzPhotosHighShared-zOPT',
+	DGParzPhotosHighShared.ZPROMOTIONSCORE AS 'DGParzPhotosHighShared-Promotion Score',
+	DGParzPhotosHighShared.ZTITLE AS 'DGParzPhotosHighShared-Title',
+	DGParzPhotosHighShared.ZTITLEMIXED AS 'DGParzPhotosHighShared-Title Mixed',
+	DGParzPhotosHighShared.ZTITLESHARED AS 'DGParzPhotosHighShared-Title Shared',
+	DGParzPhotosHighShared.ZSUBTITLE AS 'DGParzPhotosHighShared-Subtitle',
+	DGParzPhotosHighShared.ZSUBTITLEMIXED AS 'DGParzPhotosHighShared-Subtitle Mixed',
+	DGParzPhotosHighShared.ZSUBTITLESHARED AS 'DGParzPhotosHighShared-Subtitle Shared',
+	DGParzPhotosHighShared.ZVERBOSESMARTDESCRIPTION AS 'DGParzPhotosHighShared-Verbose Smart Description',
+	DGParzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONMIXED AS 'DGParzPhotosHighShared-Verbose Smart Description Mixed',
+	DGParzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONSHARED AS 'DGParzPhotosHighShared-Verbose Smart Description Shared',
+	DateTime ( DGParzPhotosHighShared.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'DGParzPhotosHighShared-Start Date',
+	DateTime ( DGParzPhotosHighShared.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'DGParzPhotosHighShared-End Date',
+	DGParzPhotosHighShared.ZMONTHKEYASSETPRIVATE AS 'DGParzPhotosHighShared-Month Key Asset Private',
+	DGParzPhotosHighShared.ZMONTHKEYASSETSHARED AS 'DGParzPhotosHighShared-Month Key Asset Shared',
+CASE
+		DGParzPhotosHighShared.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE DGParzPhotosHighShared.ZKIND 
+	END AS 'DGParzPhotosHighShared-Kind',
+CASE
+		DGParzPhotosHighShared.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE DGParzPhotosHighShared.ZCATEGORY 
+	END AS 'DGParzPhotosHighShared-Category',
+CASE
+		DGParzPhotosHighShared.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGParzPhotosHighShared.ZVISIBILITYSTATE 
+	END AS 'DGParzPhotosHighShared-Visibility State',
+CASE
+		DGParzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGParzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+	END AS 'DGParzPhotosHighShared-Visibility State Mixed',
+CASE
+		DGParzPhotosHighShared.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGParzPhotosHighShared.ZVISIBILITYSTATESHARED 
+	END AS 'DGParzPhotosHighShared-Visibility State Shared',
+CASE
+		DGParzPhotosHighShared.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGParzPhotosHighShared.ZENRICHMENTSTATE 
+	END AS 'DGParzPhotosHighShared-Enrichment State',
+	DGParzPhotosHighShared.ZENRICHMENTVERSION AS 'DGParzPhotosHighShared-Enrichment Version',
+	DGParzPhotosHighShared.ZHIGHLIGHTVERSION AS 'DGParzPhotosHighShared-Highlight Version',
+CASE
+		DGParzPhotosHighShared.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE DGParzPhotosHighShared.ZSHARINGCOMPOSITION 
+	END AS 'DGParzPhotosHighShared-Sharing Composition',
+CASE
+		DGParzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGParzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'DGParzPhotosHighShared-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		DGParzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGParzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'DGParzPhotosHighShared-Search Index Rebuild State',
+	zAsset.ZDAYGROUPHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Day Group Highlight Being Key Asset Key Private',
+	zAsset.ZDAYGROUPHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Day Group Highlight Being Key Asset Key Shared',
+	DGHBKAzPhotosHighShared.ZUUID AS 'DGHBKAzPhotosHighShared-UUID',
+	DGHBKAzPhotosHighShared.Z_PK AS 'DGHBKAzPhotosHighShared-zPK',
+	DGHBKAzPhotosHighShared.Z_ENT AS 'DGHBKAzPhotosHighShared-zENT',
+	DGHBKAzPhotosHighShared.Z_OPT AS 'DGHBKAzPhotosHighShared-zOPT',
+	DGHBKAzPhotosHighShared.ZPROMOTIONSCORE AS 'DGHBKAzPhotosHighShared-Promotion Score',
+	DGHBKAzPhotosHighShared.ZTITLE AS 'DGHBKAzPhotosHighShared-Title',
+	DGHBKAzPhotosHighShared.ZTITLEMIXED AS 'DGHBKAzPhotosHighShared-Title Mixed',
+	DGHBKAzPhotosHighShared.ZTITLESHARED AS 'DGHBKAzPhotosHighShared-Title Shared',
+	DGHBKAzPhotosHighShared.ZSUBTITLE AS 'DGHBKAzPhotosHighShared-Subtitle',
+	DGHBKAzPhotosHighShared.ZSUBTITLEMIXED AS 'DGHBKAzPhotosHighShared-Subtitle Mixed',
+	DGHBKAzPhotosHighShared.ZSUBTITLESHARED AS 'DGHBKAzPhotosHighShared-Subtitle Shared',
+	DGHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTION AS 'DGHBKAzPhotosHighShared-Verbose Smart Description',
+	DGHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONMIXED AS 'DGHBKAzPhotosHighShared-Verbose Smart Description Mixed',
+	DGHBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONSHARED AS 'DGHBKAzPhotosHighShared-Verbose Smart Description Shared',
+	DateTime ( DGHBKAzPhotosHighShared.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBKAzPhotosHighShared-Start Date',
+	DGHBKAzPhotosHighShared.ZSTARTTIMEZONEOFFSET AS 'DGHBKAzPhotosHighShared-Start Timezone Offset',
+	DGHBKAzPhotosHighShared.ZENDTIMEZONEOFFSET AS 'DGHBKAzPhotosHighShared-End Timezone Offset',
+	DateTime ( DGHBKAzPhotosHighShared.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'DGHBKAzPhotosHighShared-End Date',
+	DGHBKAzPhotosHighShared.ZASSETSCOUNT AS 'DGHBKAzPhotosHighShared-Asset Count',
+	DGHBKAzPhotosHighShared.ZASSETSCOUNTSHARED AS 'DGHBKAzPhotosHighShared-Asset Count Shared',
+	DGHBKAzPhotosHighShared.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBKAzPhotosHighShared-Video Assets Suggested By Photos Count',
+	DGHBKAzPhotosHighShared.ZSUMMARYCOUNT AS 'DGHBKAzPhotosHighShared-Summary Count',
+	DGHBKAzPhotosHighShared.ZSUMMARYCOUNTSHARED AS 'DGHBKAzPhotosHighShared-Summary Count Shared',
+	DGHBKAzPhotosHighShared.ZEXTENDEDCOUNT AS 'DGHBKAzPhotosHighShared-Extended Count',
+	DGHBKAzPhotosHighShared.ZEXTENDEDCOUNTSHARED AS 'DGHBKAzPhotosHighShared-Extended Count Shared',
+	DGHBKAzPhotosHighShared.ZDAYGROUPASSETSCOUNT AS 'DGHBKAzPhotosHighShared-Day Group Assets Count',
+	DGHBKAzPhotosHighShared.ZDAYGROUPASSETSCOUNTSHARED AS 'DGHBKAzPhotosHighShared-Day Group Assets Count Shared',
+	DGHBKAzPhotosHighShared.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'DGHBKAzPhotosHighShared-Day Group Ext Assets Count',
+	DGHBKAzPhotosHighShared.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'DGHBKAzPhotosHighShared-Day Group Ext Assets Count Shared',
+	DGHBKAzPhotosHighShared.ZDAYGROUPSUMMARYASSETSCOUNT AS 'DGHBKAzPhotosHighShared-Day Group Summary Assets Count',
+	DGHBKAzPhotosHighShared.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'DGHBKAzPhotosHighShared-Day Group Summary Assets Count Shared',
+	DGHBKAzPhotosHighShared.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'DGHBKAzPhotosHighShared-Photo Assets Suggested By Photos Count',
+	DGHBKAzPhotosHighShared.ZPARENTPHOTOSHIGHLIGHT AS 'DGHBKAzPhotosHighShared-Parent PH Key',
+	DGHBKAzPhotosHighShared.ZYEARKEYASSETPRIVATE AS 'DGHBKAzPhotosHighShared-Year Key Asset Private',
+	DGHBKAzPhotosHighShared.ZYEARKEYASSETSHARED AS 'DGHBKAzPhotosHighShared-Year Key Asset Shared',
+	DGHBKAzPhotosHighShared.ZMONTHKEYASSETPRIVATE AS 'DGHBKAzPhotosHighShared-Month Key Asset Private',
+	DGHBKAzPhotosHighShared.ZMONTHKEYASSETSHARED AS 'DGHBKAzPhotosHighShared-Month Key Asset Shared',
+	DGHBKAzPhotosHighShared.ZKEYASSETPRIVATE AS 'DGHBKAzPhotosHighShared-Key Asset Private',
+	DGHBKAzPhotosHighShared.ZKEYASSETSHARED AS 'DGHBKAzPhotosHighShared-Key Asset Shared',
+	DGHBKAzPhotosHighShared.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'DGHBKAzPhotosHighShared-Parent Day Group PH Key',
+	DGHBKAzPhotosHighShared.ZDAYGROUPKEYASSETPRIVATE AS 'DGHBKAzPhotosHighShared-Day Group Key Asset Private',
+	DGHBKAzPhotosHighShared.ZDAYGROUPKEYASSETSHARED AS 'DGHBKAzPhotosHighShared-Day Group Key Asset Shared',
+CASE
+		DGHBKAzPhotosHighShared.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE DGHBKAzPhotosHighShared.ZTYPE 
+	END AS 'DGHBKAzPhotosHighShared-Type',
+CASE
+		DGHBKAzPhotosHighShared.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE DGHBKAzPhotosHighShared.ZKIND 
+	END AS 'DGHBKAzPhotosHighShared-Kind',
+CASE
+		DGHBKAzPhotosHighShared.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE DGHBKAzPhotosHighShared.ZCATEGORY 
+	END AS 'DGHBKAzPhotosHighShared-Category',
+CASE
+		DGHBKAzPhotosHighShared.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBKAzPhotosHighShared.ZVISIBILITYSTATE 
+	END AS 'DGHBKAzPhotosHighShared-Visibility State',
+CASE
+		DGHBKAzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBKAzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+	END AS 'DGHBKAzPhotosHighShared-Visibility State Mixed',
+CASE
+		DGHBKAzPhotosHighShared.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE DGHBKAzPhotosHighShared.ZVISIBILITYSTATESHARED 
+	END AS 'DGHBKAzPhotosHighShared-Visibility State Shared',
+CASE
+		DGHBKAzPhotosHighShared.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE DGHBKAzPhotosHighShared.ZMOOD 
+	END AS 'DGHBKAzPhotosHighShared-Mood',
+CASE
+		DGHBKAzPhotosHighShared.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBKAzPhotosHighShared.ZENRICHMENTSTATE 
+	END AS 'DGHBKAzPhotosHighShared-Enrichment State',
+	DGHBKAzPhotosHighShared.ZENRICHMENTVERSION AS 'DGHBKAzPhotosHighShared-Enrichment Version',
+	DGHBKAzPhotosHighShared.ZHIGHLIGHTVERSION AS 'DGHBKAzPhotosHighShared-Highlight Version',
+CASE
+		DGHBKAzPhotosHighShared.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE DGHBKAzPhotosHighShared.ZSHARINGCOMPOSITION 
+	END AS 'DGHBKAzPhotosHighShared-Sharing Composition',
+CASE
+		DGHBKAzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBKAzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'DGHBKAzPhotosHighShared-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		DGHBKAzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE DGHBKAzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'DGHBKAzPhotosHighShared-Search Index Rebuild State',
+	zAsset.ZHIGHLIGHTBEINGKEYASSETPRIVATE AS 'zAsset-Highlight Being Key Asset Key Private',
+	zAsset.ZHIGHLIGHTBEINGKEYASSETSHARED AS 'zAsset-Highlight Being Key Asset Key Shared',
+	HBKAzPhotosHighShared.ZUUID AS 'HBKAzPhotosHighShared-UUID',
+	HBKAzPhotosHighShared.Z_PK AS 'HBKAzPhotosHighShared-zPK',
+	HBKAzPhotosHighShared.Z_ENT AS 'HBKAzPhotosHighShared-zENT',
+	HBKAzPhotosHighShared.Z_OPT AS 'HBKAzPhotosHighShared-zOPT',
+	HBKAzPhotosHighShared.ZPROMOTIONSCORE AS 'HBKAzPhotosHighShared-Promotion Score',
+	HBKAzPhotosHighShared.ZTITLE AS 'HBKAzPhotosHighShared-Title',
+	HBKAzPhotosHighShared.ZTITLEMIXED AS 'HBKAzPhotosHighShared-Title Mixed',
+	HBKAzPhotosHighShared.ZTITLESHARED AS 'HBKAzPhotosHighShared-Title Shared',
+	HBKAzPhotosHighShared.ZSUBTITLE AS 'HBKAzPhotosHighShared-Subtitle',
+	HBKAzPhotosHighShared.ZSUBTITLEMIXED AS 'HBKAzPhotosHighShared-Subtitle Mixed',
+	HBKAzPhotosHighShared.ZSUBTITLESHARED AS 'HBKAzPhotosHighShared-Subtitle Shared',
+	HBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTION AS 'HBKAzPhotosHighShared-Verbose Smart Description',
+	HBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONMIXED AS 'HBKAzPhotosHighShared-Verbose Smart Description Mixed',
+	HBKAzPhotosHighShared.ZVERBOSESMARTDESCRIPTIONSHARED AS 'HBKAzPhotosHighShared-Verbose Smart Description Shared',
+	DateTime ( HBKAzPhotosHighShared.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'HBKAzPhotosHighShared-Start Date',
+	HBKAzPhotosHighShared.ZSTARTTIMEZONEOFFSET AS 'HBKAzPhotosHighShared-Start Timezone Offset',
+	HBKAzPhotosHighShared.ZENDTIMEZONEOFFSET AS 'HBKAzPhotosHighShared-End Timezone Offset',
+	DateTime ( HBKAzPhotosHighShared.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'HBKAzPhotosHighShared-End Date',
+	HBKAzPhotosHighShared.ZASSETSCOUNT AS 'HBKAzPhotosHighShared-Asset Count',
+	HBKAzPhotosHighShared.ZASSETSCOUNTSHARED AS 'HBKAzPhotosHighShared-Asset Count Shared',
+	HBKAzPhotosHighShared.ZVIDEOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBKAzPhotosHighShared-Video Assets Suggested By Photos Count',
+	HBKAzPhotosHighShared.ZSUMMARYCOUNT AS 'HBKAzPhotosHighShared-Summary Count',
+	HBKAzPhotosHighShared.ZSUMMARYCOUNTSHARED AS 'HBKAzPhotosHighShared-Summary Count Shared',
+	HBKAzPhotosHighShared.ZEXTENDEDCOUNT AS 'HBKAzPhotosHighShared-Extended Count',
+	HBKAzPhotosHighShared.ZEXTENDEDCOUNTSHARED AS 'HBKAzPhotosHighShared-Extended Count Shared',
+	HBKAzPhotosHighShared.ZDAYGROUPASSETSCOUNT AS 'HBKAzPhotosHighShared-Day Group Assets Count',
+	HBKAzPhotosHighShared.ZDAYGROUPASSETSCOUNTSHARED AS 'HBKAzPhotosHighShared-Day Group Assets Count Shared',
+	HBKAzPhotosHighShared.ZDAYGROUPEXTENDEDASSETSCOUNT AS 'HBKAzPhotosHighShared-Day Group Ext Assets Count',
+	HBKAzPhotosHighShared.ZDAYGROUPEXTENDEDASSETSCOUNTSHARED AS 'HBKAzPhotosHighShared-Day Group Ext Assets Count Shared',
+	HBKAzPhotosHighShared.ZDAYGROUPSUMMARYASSETSCOUNT AS 'HBKAzPhotosHighShared-Day Group Summary Assets Count',
+	HBKAzPhotosHighShared.ZDAYGROUPSUMMARYASSETSCOUNTSHARED AS 'HBKAzPhotosHighShared-Day Group Summary Assets Count Shared',
+	HBKAzPhotosHighShared.ZPHOTOASSETSSUGGESTEDBYPHOTOSCOUNT AS 'HBKAzPhotosHighShared-Photo Assets Suggested By Photos Count',
+	HBKAzPhotosHighShared.ZPARENTPHOTOSHIGHLIGHT AS 'HBKAzPhotosHighShared-Parent PH Key',
+	HBKAzPhotosHighShared.ZYEARKEYASSETPRIVATE AS 'HBKAzPhotosHighShared-Year Key Asset Private',
+	HBKAzPhotosHighShared.ZYEARKEYASSETSHARED AS 'HBKAzPhotosHighShared-Year Key Asset Shared',
+	HBKAzPhotosHighShared.ZMONTHKEYASSETPRIVATE AS 'HBKAzPhotosHighShared-Month Key Asset Private',
+	HBKAzPhotosHighShared.ZMONTHKEYASSETSHARED AS 'HBKAzPhotosHighShared-Month Key Asset Shared',
+	HBKAzPhotosHighShared.ZKEYASSETPRIVATE AS 'HBKAzPhotosHighShared-Key Asset Private',
+	HBKAzPhotosHighShared.ZKEYASSETSHARED AS 'HBKAzPhotosHighShared-Key Asset Shared',
+	HBKAzPhotosHighShared.ZPARENTDAYGROUPPHOTOSHIGHLIGHT AS 'HBKAzPhotosHighShared-Parent Day Group PH Key',
+	HBKAzPhotosHighShared.ZDAYGROUPKEYASSETPRIVATE AS 'HBKAzPhotosHighShared-Day Group Key Asset Private',
+	HBKAzPhotosHighShared.ZDAYGROUPKEYASSETSHARED AS 'HBKAzPhotosHighShared-Day Group Key Asset Shared',
+CASE
+		HBKAzPhotosHighShared.ZTYPE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Photos Highlights Day Group' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'6-Parent Day Group Photos Highlight' ELSE HBKAzPhotosHighShared.ZTYPE 
+	END AS 'HBKAzPhotosHighShared-Type',
+CASE
+		HBKAzPhotosHighShared.ZKIND 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'Year&Month Photo Highlights-1' 
+		WHEN 2 THEN
+		'Year Photo Highlights-2' 
+		WHEN 3 THEN
+		'Day Group Assets Photo Highlights-3' ELSE HBKAzPhotosHighShared.ZKIND 
+	END AS 'HBKAzPhotosHighShared-Kind',
+CASE
+		HBKAzPhotosHighShared.ZCATEGORY 
+		WHEN 0 THEN
+		'0-Past Highlights' 
+		WHEN 1 THEN
+		'1-Todays Highlights' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' ELSE HBKAzPhotosHighShared.ZCATEGORY 
+	END AS 'HBKAzPhotosHighShared-Category',
+CASE
+		HBKAzPhotosHighShared.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBKAzPhotosHighShared.ZVISIBILITYSTATE 
+	END AS 'HBKAzPhotosHighShared-Visibility State',
+CASE
+		HBKAzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBKAzPhotosHighShared.ZVISIBILITYSTATEMIXED 
+	END AS 'HBKAzPhotosHighShared-Visibility State Mixed',
+CASE
+		HBKAzPhotosHighShared.ZVISIBILITYSTATESHARED 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Year&Month No Asset Count' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Visible via For You' ELSE HBKAzPhotosHighShared.ZVISIBILITYSTATESHARED 
+	END AS 'HBKAzPhotosHighShared-Visibility State Shared',
+CASE
+		HBKAzPhotosHighShared.ZMOOD 
+		WHEN 0 THEN
+		'0-None' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 16 THEN
+		'16-Unknown' 
+		WHEN 32 THEN
+		'32-Unknown' 
+		WHEN 64 THEN
+		'64-Unknown' 
+		WHEN 128 THEN
+		'128-Unknown' 
+		WHEN 512 THEN
+		'512-Unknown' ELSE HBKAzPhotosHighShared.ZMOOD 
+	END AS 'HBKAzPhotosHighShared-Mood',
+CASE
+		HBKAzPhotosHighShared.ZENRICHMENTSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBKAzPhotosHighShared.ZENRICHMENTSTATE 
+	END AS 'HBKAzPhotosHighShared-Enrichment State',
+	HBKAzPhotosHighShared.ZENRICHMENTVERSION AS 'HBKAzPhotosHighShared-Enrichment Version',
+	HBKAzPhotosHighShared.ZHIGHLIGHTVERSION AS 'HBKAzPhotosHighShared-Highlight Version',
+CASE
+		HBKAzPhotosHighShared.ZSHARINGCOMPOSITION 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' ELSE HBKAzPhotosHighShared.ZSHARINGCOMPOSITION 
+	END AS 'HBKAzPhotosHighShared-Sharing Composition',
+CASE
+		HBKAzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBKAzPhotosHighShared.ZMIXEDSHARINGCOMPOSITIONKEYASSETRELATIONSHIP 
+	END AS 'HBKAzPhotosHighShared-Mixed Sharing Composition Key Asset Relationship',
+CASE
+		HBKAzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+		WHEN 0 THEN
+		'0-Unknown' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'3-Unknown' 
+		WHEN 4 THEN
+		'4-Unknown' ELSE HBKAzPhotosHighShared.ZSEARCHINDEXREBUILDSTATE 
+	END AS 'HBKAzPhotosHighShared-Search Index Rebuild State' 
+FROM
+	ZASSET zAsset
+	LEFT JOIN ZADDITIONALASSETATTRIBUTES zAddAssetAttr ON zAddAssetAttr.Z_PK = zAsset.ZADDITIONALATTRIBUTES
+	LEFT JOIN ZEXTENDEDATTRIBUTES zExtAttr ON zExtAttr.Z_PK = zAsset.ZEXTENDEDATTRIBUTES
+	LEFT JOIN ZPHOTOSHIGHLIGHT HBAzPhotosHigh ON HBAzPhotosHigh.Z_PK = zAsset.ZHIGHLIGHTBEINGASSETS
+	LEFT JOIN ZPHOTOSHIGHLIGHT HBEAzPhotosHigh ON HBEAzPhotosHigh.Z_PK = zAsset.ZHIGHLIGHTBEINGEXTENDEDASSETS
+	LEFT JOIN ZPHOTOSHIGHLIGHT HBKAzPhotosHighPriv ON HBKAzPhotosHighPriv.Z_PK = zAsset.ZHIGHLIGHTBEINGKEYASSETPRIVATE
+	LEFT JOIN ZPHOTOSHIGHLIGHT HBKAzPhotosHighShared ON HBKAzPhotosHighShared.Z_PK = zAsset.ZHIGHLIGHTBEINGKEYASSETSHARED
+	LEFT JOIN ZPHOTOSHIGHLIGHT HBSAzPhotosHigh ON HBSAzPhotosHigh.Z_PK = zAsset.ZHIGHLIGHTBEINGSUMMARYASSETS
+	LEFT JOIN ZPHOTOSHIGHLIGHT YHBKAzPhotosHighPriv ON YHBKAzPhotosHighPriv.Z_PK = zAsset.ZYEARHIGHLIGHTBEINGKEYASSETPRIVATE
+	LEFT JOIN ZPHOTOSHIGHLIGHT YHBKAzPhotosHighShared ON YHBKAzPhotosHighShared.Z_PK = zAsset.ZYEARHIGHLIGHTBEINGKEYASSETSHARED
+	LEFT JOIN ZPHOTOSHIGHLIGHT MHBKAzPhotosHighPriv ON MHBKAzPhotosHighPriv.Z_PK = zAsset.ZMONTHHIGHLIGHTBEINGKEYASSETPRIVATE
+	LEFT JOIN ZPHOTOSHIGHLIGHT MHBKAzPhotosHighShared ON MHBKAzPhotosHighShared.Z_PK = zAsset.ZMONTHHIGHLIGHTBEINGKEYASSETSHARED
+	LEFT JOIN ZPHOTOSHIGHLIGHT DGHBAzPhotosHigh ON DGHBAzPhotosHigh.Z_PK = zAsset.ZDAYGROUPHIGHLIGHTBEINGASSETS
+	LEFT JOIN ZPHOTOSHIGHLIGHT DGHBEAzPhotosHigh ON DGHBEAzPhotosHigh.Z_PK = zAsset.ZDAYGROUPHIGHLIGHTBEINGEXTENDEDASSETS
+	LEFT JOIN ZPHOTOSHIGHLIGHT DGHBKAzPhotosHighPriv ON DGHBKAzPhotosHighPriv.Z_PK = zAsset.ZDAYGROUPHIGHLIGHTBEINGKEYASSETPRIVATE
+	LEFT JOIN ZPHOTOSHIGHLIGHT DGHBKAzPhotosHighShared ON DGHBKAzPhotosHighShared.Z_PK = zAsset.ZDAYGROUPHIGHLIGHTBEINGKEYASSETSHARED
+	LEFT JOIN ZPHOTOSHIGHLIGHT DGHBSAzPhotosHigh ON DGHBSAzPhotosHigh.Z_PK = zAsset.ZDAYGROUPHIGHLIGHTBEINGSUMMARYASSETS
+	LEFT JOIN ZPHOTOSHIGHLIGHT YMParzPhotosHighPriv ON YMParzPhotosHighPriv.Z_PK = HBAzPhotosHigh.ZPARENTPHOTOSHIGHLIGHT
+	LEFT JOIN ZPHOTOSHIGHLIGHT YMParzPhotosHighShared ON YMParzPhotosHighShared.Z_PK = HBAzPhotosHigh.ZPARENTPHOTOSHIGHLIGHT
+	LEFT JOIN ZPHOTOSHIGHLIGHT YearParzPhotosHighPriv ON YearParzPhotosHighPriv.Z_PK = YMParzPhotosHighPriv.ZPARENTPHOTOSHIGHLIGHT
+	LEFT JOIN ZPHOTOSHIGHLIGHT YearParzPhotosHighShared ON YearParzPhotosHighShared.Z_PK = YMParzPhotosHighShared.ZPARENTPHOTOSHIGHLIGHT
+	LEFT JOIN ZPHOTOSHIGHLIGHT DGParzPhotosHighPriv ON DGParzPhotosHighPriv.Z_PK = HBAzPhotosHigh.ZPARENTDAYGROUPPHOTOSHIGHLIGHT
+	LEFT JOIN ZPHOTOSHIGHLIGHT DGParzPhotosHighShared ON DGParzPhotosHighShared.Z_PK = HBAzPhotosHigh.ZPARENTDAYGROUPPHOTOSHIGHLIGHT 
+ORDER BY
+	zAsset.ZDATECREATED
