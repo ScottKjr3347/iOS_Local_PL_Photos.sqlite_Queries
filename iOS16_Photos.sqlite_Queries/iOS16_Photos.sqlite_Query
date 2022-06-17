@@ -68,27 +68,6 @@ CASE
 		'iCldPhotos ON=Asset Synced with iCloud-1' ELSE zAsset.ZCLOUDLOCALSTATE 
 	END AS 'zAsset-Cloud Local State',
 CASE
-		zAsset.ZSAVEDASSETTYPE 
-		WHEN 0 THEN
-		'Saved-via-other-source-0' 
-		WHEN 1 THEN
-		'1-Unknown' 
-		WHEN 2 THEN
-		'2-Unknown' 
-		WHEN 3 THEN
-		'DCIM-APPLE-3' 
-		WHEN 4 THEN
-		'PhotoCloudSharingData-4' 
-		WHEN 5 THEN
-		'5-Unknown' 
-		WHEN 6 THEN
-		'CPLAssets-6' 
-		WHEN 7 THEN
-		'7-Unknown' 
-		WHEN 8 THEN
-		'CMMAssets-8' ELSE zAsset.ZSAVEDASSETTYPE 
-	END AS 'zAsset-Saved Asset Type',
-CASE
 		zAsset.ZVISIBILITYSTATE 
 		WHEN 0 THEN
 		'Visible-Photo-Library-0' 
