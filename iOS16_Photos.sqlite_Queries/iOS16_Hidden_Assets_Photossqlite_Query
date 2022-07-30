@@ -1,0 +1,170 @@
+SELECT
+	zAsset.Z_PK AS 'zAsset-zPK',
+	zAsset.ZADDITIONALATTRIBUTES AS 'zAsset-Additional Attributes Key',
+	CASE
+		zAsset.ZHIDDEN 
+		WHEN 0 THEN
+		'Asset Not Hidden-0' 
+		WHEN 1 THEN
+		'Asset Hidden-1' ELSE zAsset.ZHIDDEN 
+	END AS 'zAsset-Hidden',	
+	AAAzCldMastMedData.ZDATA AS 'AAAzCldMastMedData-Data/HEX',
+	CMzCldMastMedData.ZDATA AS 'CMzCldMastMedData-Data/HEX',
+	zExtAttr.ZCAMERAMAKE AS 'zExtAttr-Camera Make',
+	zExtAttr.ZCAMERAMODEL AS 'zExtAttr-Camera Model',
+	zExtAttr.ZLENSMODEL AS 'zExtAttr-Lens Model',
+CASE
+		zAsset.ZCLOUDLOCALSTATE 
+		WHEN 0 THEN
+		'iCldPhotos ON=Asset in Shared Album/iCldPhotos OFF=Not Synced-0' 
+		WHEN 1 THEN
+		'iCldPhotos ON=Asset Synced with iCloud-1' ELSE zAsset.ZCLOUDLOCALSTATE 
+	END AS 'zAsset-Cloud Local State',
+CASE
+		zAsset.ZVISIBILITYSTATE 
+		WHEN 0 THEN
+		'Visible-Photo-Library-0' 
+		WHEN 2 THEN
+		'Not-Visible-Photo-Library-2' ELSE zAsset.ZVISIBILITYSTATE 
+	END AS 'zAsset-Visibility State',
+	zAsset.ZFILENAME AS 'zAsset-Filename',
+	zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
+	zCldMast.ZORIGINALFILENAME AS 'zCldMast-Org Filename',
+	DateTime ( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Date Created',
+	DateTime ( zExtAttr.ZDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zExtAttr-Date Created',
+	zAddAssetAttr.ZTIMEZONENAME AS 'zAddAssetAttr-Time Zone Name',
+	zExtAttr.ZTIMEZONENAME AS 'zExtAttr-Time Zone Name',
+	zAddAssetAttr.ZTIMEZONEOFFSET AS 'zAddAssetAttr-Time Zone Offset',
+	zExtAttr.ZTIMEZONEOFFSET AS 'zExtAttr-Time Zone Offset',
+	zAddAssetAttr.ZINFERREDTIMEZONEOFFSET AS 'zAddAssetAttr-Inferred Time Zone Offset',
+	DateTime ( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH', 'localtime' ) AS 'zAsset-Date Created Localtime',
+	DateTime ( zExtAttr.ZDATECREATED + 978307200, 'UNIXEPOCH', 'localtime' ) AS 'zExtAttr-Date Created Localtime',
+	zAddAssetAttr.ZEXIFTIMESTAMPSTRING AS 'zAddAssetAttr-EXIF Timestamp String-DeviceTime',
+	DateTime ( zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Add Date',
+	DateTime ( zAsset.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Modification Date',
+	DateTime ( zCldMast.ZCREATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldMast-Creation Date',
+	DateTime ( zCldMast.ZIMPORTDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldMast-Import Date',
+	DateTime ( zAsset.ZLASTSHAREDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Last Shared Date',
+	zAsset.ZDIRECTORY AS 'zAsset-Directory/Path',
+CASE
+		zAsset.ZSAVEDASSETTYPE 
+		WHEN 0 THEN
+		'Saved-via-other-source-0' 
+		WHEN 1 THEN
+		'1-Unknown' 
+		WHEN 2 THEN
+		'2-Unknown' 
+		WHEN 3 THEN
+		'DCIM-APPLE-3' 
+		WHEN 4 THEN
+		'PhotoCloudSharingData-4' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'CPLAssets-6' 
+		WHEN 7 THEN
+		'7-Unknown' 
+		WHEN 8 THEN
+		'CMMAssets-8' ELSE zAsset.ZSAVEDASSETTYPE 
+	END AS 'zAsset-Saved Asset Type',
+	zAddAssetAttr.ZIMPORTEDBYBUNDLEIDENTIFIER AS 'zAddAssetAttr.Imported by Bundle Identifier',
+	zAddAssetAttr.ZIMPORTEDBYDISPLAYNAME AS 'zAddAssetAttr-Imported By Display Name',
+CASE
+		zAddAssetAttr.ZIMPORTEDBY 
+		WHEN 0 THEN
+		'Cloud-Other-0' 
+		WHEN 1 THEN
+		'Native-Back-Camera-1' 
+		WHEN 2 THEN
+		'Native-Front-Camera-2' 
+		WHEN 3 THEN
+		'Third-Party-App-3' 
+		WHEN 4 THEN
+		'4-Unknown' 
+		WHEN 5 THEN
+		'5-Unknown' 
+		WHEN 6 THEN
+		'Third-Party-App-6' 
+		WHEN 7 THEN
+		'7-Unknown' 
+		WHEN 8 THEN
+		'Native-App-8' 
+		WHEN 9 THEN
+		'Native-App-9' 
+		WHEN 10 THEN
+		'10-Unknown' 
+		WHEN 11 THEN
+		'11-Unknown' 
+		WHEN 12 THEN
+		'12-Unknown' ELSE zAddAssetAttr.ZIMPORTEDBY 
+	END AS 'zAddAssetAttr-Imported by',
+CASE
+		zAsset.ZDERIVEDCAMERACAPTUREDEVICE 
+		WHEN 0 THEN
+		'BackCamera-Other-Screenshot-Cloud-Downloaded-0' 
+		WHEN 1 THEN
+		'Front-Camera-1' ELSE zAsset.ZDERIVEDCAMERACAPTUREDEVICE 
+	END AS 'zAsset-Derived Camera Capture Device',
+CASE
+		zAddAssetAttr.ZCAMERACAPTUREDEVICE 
+		WHEN 0 THEN
+		'BackCamera-Other-Screenshot-Cloud-Downloaded0' 
+		WHEN 1 THEN
+		'Front-Camera-1' ELSE zAddAssetAttr.ZCAMERACAPTUREDEVICE 
+	END AS 'zAddAssetAttr-Camera Captured Device',
+CASE
+		zAsset.ZKIND 
+		WHEN 0 THEN
+		'Photo-0' 
+		WHEN 1 THEN
+		'Video-1' 
+	END AS 'zAsset-Kind',
+CASE
+		zAsset.ZKINDSUBTYPE 
+		WHEN 0 THEN
+		'Still-Photo-0' 
+		WHEN 2 THEN
+		'Live-Photo-2' 
+		WHEN 10 THEN
+		'SpringBoard-Screenshot-10' 
+		WHEN 100 THEN
+		'Video-100' 
+		WHEN 101 THEN
+		'Slow-Mo-Video-101' 
+		WHEN 102 THEN
+		'Time-lapse-Video-102' ELSE zAsset.ZKINDSUBTYPE 
+	END AS 'zAsset-Kind Sub Type',
+	zExtAttr.ZDURATION AS 'zExtAttr-Duration',
+	zAsset.ZDURATION AS 'zAsset-Video Duration',
+	zAsset.ZVIDEOCPDURATIONVALUE AS 'zAsset-Video CP Duration',
+CASE
+		zAsset.ZLATITUDE 
+		WHEN - 180.0 THEN
+		'0' ELSE zAsset.ZLATITUDE 
+	END AS 'zAsset-Latitude',
+	zExtAttr.ZLATITUDE AS 'zExtAttr-Latitude',
+CASE
+		zAsset.ZLONGITUDE 
+		WHEN - 180.0 THEN
+		'0' ELSE zAsset.ZLONGITUDE 
+	END AS 'zAsset-Longitude',
+	zExtAttr.ZLONGITUDE AS 'zExtAttr-Longitude',
+CASE
+		zAddAssetAttr.ZGPSHORIZONTALACCURACY 
+		WHEN - 1.0 THEN
+		'0' ELSE zAddAssetAttr.ZGPSHORIZONTALACCURACY 
+	END AS 'zAddAssetAttr-GPS Horizontal Accuracy',
+	zAsset.ZLOCATIONDATA AS 'zAsset-Location Data/HEX',
+	zAddAssetAttr.ZREVERSELOCATIONDATA AS 'zAddAssetAttr-Reverse Location Data/Orig-Asset/HEX NSKeyed Plist '
+FROM
+	ZASSET zAsset
+	LEFT JOIN ZADDITIONALASSETATTRIBUTES zAddAssetAttr ON zAddAssetAttr.Z_PK = zAsset.ZADDITIONALATTRIBUTES
+	LEFT JOIN ZEXTENDEDATTRIBUTES zExtAttr ON zExtAttr.Z_PK = zAsset.ZEXTENDEDATTRIBUTES
+	LEFT JOIN Z_28ASSETS z28Assets ON z28Assets.Z_3ASSETS = zAsset.Z_PK
+	LEFT JOIN ZCLOUDMASTER zCldMast ON zAsset.ZMASTER = zCldMast.Z_PK
+	LEFT JOIN ZCLOUDMASTERMEDIAMETADATA AAAzCldMastMedData ON AAAzCldMastMedData.Z_PK = zAddAssetAttr.ZMEDIAMETADATA
+	LEFT JOIN ZCLOUDMASTERMEDIAMETADATA CMzCldMastMedData ON CMzCldMastMedData.Z_PK = zCldMast.ZMEDIAMETADATA
+	LEFT JOIN ZMEDIAANALYSISASSETATTRIBUTES zMedAnlyAstAttr ON zAsset.ZMEDIAANALYSISATTRIBUTES = zMedAnlyAstAttr.Z_PK
+WHERE zAsset.ZHIDDEN = 1
+ORDER BY
+	zAsset.ZDATECREATED
