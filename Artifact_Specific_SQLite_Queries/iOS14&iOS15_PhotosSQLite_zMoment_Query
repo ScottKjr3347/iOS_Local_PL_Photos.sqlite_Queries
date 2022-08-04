@@ -15,7 +15,7 @@ CASE
 		WHEN 3 THEN
 		'Yes-3' 
 		WHEN 6 THEN
-		'Yes-6' ELSE zMoment.ZPROCESSEDLOCATION 
+		'Yes-6' ELSE 'Unknown-New-Value!: '||zMoment.ZPROCESSEDLOCATION||'
 	END AS 'zMoment-Processed Location',
 	zMoment.ZAPPROXIMATELATITUDE AS 'zMoment-Approx Latitude',
 	zMoment.ZAPPROXIMATELONGITUDE AS 'zMoment-Approx Longitude',
