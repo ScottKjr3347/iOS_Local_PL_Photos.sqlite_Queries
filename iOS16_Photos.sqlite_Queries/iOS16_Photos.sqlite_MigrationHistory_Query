@@ -13,7 +13,7 @@ CASE
 		WHEN 2 THEN
 		'2-iOS Update-2' 
 		WHEN 3 THEN
-		'3-iOS History Start/Factory Reset-3' ELSE zMigrationHistory.ZMIGRATIONTYPE 
+		'3-iOS History Start/Factory Reset-3' ELSE 'Unknown-New-Value!: '||zMigrationHistory.ZMIGRATIONTYPE||'' 
 	END AS 'zMigrationHistory-Migration Type',
 	zMigrationHistory.ZFORCEREBUILDREASON AS 'zMigrationHistory-Force Rebuild Reason',
 	zMigrationHistory.ZSOURCEMODELVERSION AS 'zMigrationHistory-Source Model Version',
