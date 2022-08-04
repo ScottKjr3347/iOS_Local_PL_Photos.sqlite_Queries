@@ -7,8 +7,13 @@ Mac OS: /Users//Pictures/PhotosLibrary.photoslibrary/database/Photos.sqlite
 
 The query output includes the decoded data and the original database column values. The original value might be listed before or after the decoded value, here are a few examples:
 
-Flash Fired-1                CPLAssets-6              Native-Back-Camera-1              Native-App-8               Live-Photo-2
-4-Visible via For You        0-Past Highlights        4-Unknown
+Flash Fired-1
+CPLAssets-6
+Native-Back-Camera-1
+Live-Photo-2
+4-Visible via For You
+0-Past Highlights
+4-Unknown
 
 Some community members reached out and suggested a great change/update to my ELSE statements. The ELSE statements will now provide an indication if the value is new and its decoding is unknown. Here is an example of what that looks like:
 
