@@ -6,7 +6,7 @@ SELECT
 		WHEN 0 THEN
 		'Asset Not Hidden-0' 
 		WHEN 1 THEN
-		'Asset Hidden-1' ELSE zAsset.ZHIDDEN 
+		'Asset Hidden-1' ELSE 'Unknown-New-Value!: '||zAsset.ZHIDDEN||'' 
 	END AS 'zAsset-Hidden',	
 	AAAzCldMastMedData.ZDATA AS 'AAAzCldMastMedData-Data/HEX',
 	CMzCldMastMedData.ZDATA AS 'CMzCldMastMedData-Data/HEX',
@@ -18,14 +18,14 @@ CASE
 		WHEN 0 THEN
 		'iCldPhotos ON=Asset in Shared Album/iCldPhotos OFF=Not Synced-0' 
 		WHEN 1 THEN
-		'iCldPhotos ON=Asset Synced with iCloud-1' ELSE zAsset.ZCLOUDLOCALSTATE 
+		'iCldPhotos ON=Asset Synced with iCloud-1' ELSE 'Unknown-New-Value!: '||zAsset.ZCLOUDLOCALSTATE||'' 
 	END AS 'zAsset-Cloud Local State',
 CASE
 		zAsset.ZVISIBILITYSTATE 
 		WHEN 0 THEN
 		'Visible-Photo-Library-0' 
 		WHEN 2 THEN
-		'Not-Visible-Photo-Library-2' ELSE zAsset.ZVISIBILITYSTATE 
+		'Not-Visible-Photo-Library-2' ELSE 'Unknown-New-Value!: '||zAsset.ZVISIBILITYSTATE||'' 
 	END AS 'zAsset-Visibility State',
 	zAsset.ZFILENAME AS 'zAsset-Filename',
 	zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
@@ -65,7 +65,7 @@ CASE
 		WHEN 7 THEN
 		'7-Unknown' 
 		WHEN 8 THEN
-		'CMMAssets-8' ELSE zAsset.ZSAVEDASSETTYPE 
+		'CMMAssets-8' ELSE 'Unknown-New-Value!: '||zAsset.ZSAVEDASSETTYPE||'' 
 	END AS 'zAsset-Saved Asset Type',
 	zAddAssetAttr.ZIMPORTEDBYBUNDLEIDENTIFIER AS 'zAddAssetAttr.Imported by Bundle Identifier',
 	zAddAssetAttr.ZIMPORTEDBYDISPLAYNAME AS 'zAddAssetAttr-Imported By Display Name',
@@ -96,21 +96,21 @@ CASE
 		WHEN 11 THEN
 		'11-Unknown' 
 		WHEN 12 THEN
-		'12-Unknown' ELSE zAddAssetAttr.ZIMPORTEDBY 
+		'12-Unknown' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZIMPORTEDBY||'' 
 	END AS 'zAddAssetAttr-Imported by',
 CASE
 		zAsset.ZDERIVEDCAMERACAPTUREDEVICE 
 		WHEN 0 THEN
 		'BackCamera-Other-Screenshot-Cloud-Downloaded-0' 
 		WHEN 1 THEN
-		'Front-Camera-1' ELSE zAsset.ZDERIVEDCAMERACAPTUREDEVICE 
+		'Front-Camera-1' ELSE 'Unknown-New-Value!: '||zAsset.ZDERIVEDCAMERACAPTUREDEVICE||'' 
 	END AS 'zAsset-Derived Camera Capture Device',
 CASE
 		zAddAssetAttr.ZCAMERACAPTUREDEVICE 
 		WHEN 0 THEN
 		'BackCamera-Other-Screenshot-Cloud-Downloaded0' 
 		WHEN 1 THEN
-		'Front-Camera-1' ELSE zAddAssetAttr.ZCAMERACAPTUREDEVICE 
+		'Front-Camera-1' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZCAMERACAPTUREDEVICE||'' 
 	END AS 'zAddAssetAttr-Camera Captured Device',
 CASE
 		zAsset.ZKIND 
@@ -132,7 +132,7 @@ CASE
 		WHEN 101 THEN
 		'Slow-Mo-Video-101' 
 		WHEN 102 THEN
-		'Time-lapse-Video-102' ELSE zAsset.ZKINDSUBTYPE 
+		'Time-lapse-Video-102' ELSE 'Unknown-New-Value!: '||zAsset.ZKINDSUBTYPE||'' 
 	END AS 'zAsset-Kind Sub Type',
 	zExtAttr.ZDURATION AS 'zExtAttr-Duration',
 	zAsset.ZDURATION AS 'zAsset-Video Duration',
@@ -140,27 +140,26 @@ CASE
 CASE
 		zAsset.ZLATITUDE 
 		WHEN - 180.0 THEN
-		'0' ELSE zAsset.ZLATITUDE 
+		'-180.0' ELSE zAsset.ZLATITUDE 
 	END AS 'zAsset-Latitude',
 	zExtAttr.ZLATITUDE AS 'zExtAttr-Latitude',
 CASE
 		zAsset.ZLONGITUDE 
 		WHEN - 180.0 THEN
-		'0' ELSE zAsset.ZLONGITUDE 
+		'-180.0' ELSE zAsset.ZLONGITUDE 
 	END AS 'zAsset-Longitude',
 	zExtAttr.ZLONGITUDE AS 'zExtAttr-Longitude',
 CASE
 		zAddAssetAttr.ZGPSHORIZONTALACCURACY 
 		WHEN - 1.0 THEN
-		'0' ELSE zAddAssetAttr.ZGPSHORIZONTALACCURACY 
+		'-1.0' ELSE zAddAssetAttr.ZGPSHORIZONTALACCURACY 
 	END AS 'zAddAssetAttr-GPS Horizontal Accuracy',
 	zAsset.ZLOCATIONDATA AS 'zAsset-Location Data/HEX',
-	zAddAssetAttr.ZREVERSELOCATIONDATA AS 'zAddAssetAttr-Reverse Location Data/Orig-Asset/HEX NSKeyed Plist '
+	zAddAssetAttr.ZREVERSELOCATIONDATA AS 'zAddAssetAttr-Reverse Location Data/Orig-Asset/HEX NSKeyed Plist'
 FROM
 	ZASSET zAsset
 	LEFT JOIN ZADDITIONALASSETATTRIBUTES zAddAssetAttr ON zAddAssetAttr.Z_PK = zAsset.ZADDITIONALATTRIBUTES
 	LEFT JOIN ZEXTENDEDATTRIBUTES zExtAttr ON zExtAttr.Z_PK = zAsset.ZEXTENDEDATTRIBUTES
-	LEFT JOIN Z_28ASSETS z28Assets ON z28Assets.Z_3ASSETS = zAsset.Z_PK
 	LEFT JOIN ZCLOUDMASTER zCldMast ON zAsset.ZMASTER = zCldMast.Z_PK
 	LEFT JOIN ZCLOUDMASTERMEDIAMETADATA AAAzCldMastMedData ON AAAzCldMastMedData.Z_PK = zAddAssetAttr.ZMEDIAMETADATA
 	LEFT JOIN ZCLOUDMASTERMEDIAMETADATA CMzCldMastMedData ON CMzCldMastMedData.Z_PK = zCldMast.ZMEDIAMETADATA
