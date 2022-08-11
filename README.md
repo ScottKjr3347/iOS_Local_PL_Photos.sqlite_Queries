@@ -19,7 +19,7 @@ Live-Photo-2
 
 0-Past Highlights
 
-4-Unknown
+4-StillTesting - Indicates a value observed during testing, but decoding has not be validated
 
 Some community members reached out and suggested a great change/update to my ELSE statements. The ELSE statements will now provide an indication if the value is new and its decoding is unknown. Here is an example of what that looks like:
 
@@ -36,6 +36,8 @@ Blog update posted 2022/02/21 and can be found [here](https://theforensicscooter
 2022/04/03 Queries were updated and beautified
 
 2022/8/3 Queries updated thanks to suggestions from Jacques Boucher
+
+2022/8/11 Queries updated to allow for better analysis of asset file names and asset dates 
 
 References:
 
