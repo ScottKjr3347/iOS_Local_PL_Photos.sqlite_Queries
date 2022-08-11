@@ -1,15 +1,40 @@
 SELECT
 	zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
+	zAsset.ZPROMOTIONSCORE AS 'zAsset-Promotion Score',
 CASE
 		zAsset.ZCOMPLETE 
 		WHEN 1 THEN
 		'Yes-1' 
 	END AS 'zAsset Complete',
+	zAsset.Z_PK AS 'zAsset-zPK',
+--zAsset.Z_ENT AS 'zAsset-zENT',
+--zAsset.Z_OPT AS 'zAsset-zOPT',
+	zAddAssetAttr.Z_PK AS 'zAddAssetAttr-zPK',
+--zAddAssetAttr.Z_ENT AS 'zAddAssetAttr-zENT',
+--zAddAssetAttr.Z_OPT AS 'zAddAssetAttr-zOPT',
+--zAsset.ZADDITIONALATTRIBUTES AS 'zAsset-Additional Attributes Key',	
+--zIntResou.zAsset AS 'zIntResou-Asset Key = zAsset.zPK',
+--zAddAssetAttr.zAsset AS 'zAddAssetAttr-Asset Key',
+--z26Assets.Z_3ASSETS AS 'z26Asset.z3Assets  =  zAsset.zPK',
+--zAsset.ZEXTENDEDATTRIBUTES AS 'zAsset-Extended Attributes = zExtAttr-zPK',
+--zExtAttr.Z_PK AS 'zExtAttr-zPK = zAsset-zExtendedAttributes',
+--zExtAttr.Z_ENT AS 'zExtAttr-zENT',
+--zExtAttr.Z_OPT AS 'zExtAttr-zOPT',
+--AAAzCldMastMedData.Z_PK AS 'AAAzCldMastMedData-zPK = zAddAssetAttr&zCldMast-Media MetaData',
+--AAAzCldMastMedData.Z_ENT AS 'AAAzCldMastMedData-zENT',
+--AAAzCldMastMedData.Z_OPT AS 'AAAzCldMastMedData-zOPT',
+--AAAzCldMastMedData.ZADDITIONALASSETATTRIBUTES AS 'AAAzCldMastMedData-AddAssetAttr = AddAssetAttr-zPK',
+--zAddAssetAttr.ZMEDIAMETADATA AS 'zAddAssetAttr-MediaMetadata = AAAzCldMastMedData-zPK',
+--zAsset.ZMEDIAANALYSISATTRIBUTES AS 'zAsset-Media Analysis Attributes',
+--zMedAnlyAstAttr.Z_PK AS 'zMedAnlyAstAttr-zPK = zAddAssetAttr-Media Metadata',
+--zMedAnlyAstAttr.zAsset AS 'zMedAnlyAstAttr-Asset = zAsset-zPK',
 	zAsset.ZUUID AS 'zAsset-UUID = store.cloudphotodb',
 	zAsset.ZCLOUDASSETGUID AS 'zAsset-Cloud_Asset_GUID = store.cloudphotodb',
 	zCldMast.ZCLOUDMASTERGUID AS 'zCldMast-Cloud_Master_GUID = store.cloudphotodb',
 	zGenAlbum.ZCLOUDGUID AS 'zGenAlbum-Cloud_GUID = store.cloudphotodb',
 	zShare.ZSCOPEIDENTIFIER AS 'zShare-Scope ID = store.cloudphotodb',
+	zAddAssetAttr.ZORIGINALASSETSUUID AS 'zAddAssetAttr-Original Assets UUID',
+	zAddAssetAttr.ZPUBLICGLOBALUUID AS 'zAddAssetAttr-Public Global UUID',
 	AAAzCldMastMedData.ZDATA AS 'AAAzCldMastMedData-Data',
 	CMzCldMastMedData.ZDATA AS 'CMzCldMastMedData-Data',
 	zExtAttr.ZCAMERAMAKE AS 'zExtAttr-Camera_Make',
@@ -18,31 +43,10 @@ CASE
 CASE
 		zExtAttr.ZFLASHFIRED 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zExtAttr.ZFLASHFIRED||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zExtAttr.ZFLASHFIRED||'' 
 	END AS 'zExtAttr-Flash Fired',
-	zAsset.Z_PK AS 'zAsset-zPK',
---zAsset.Z_ENT AS 'zAsset-zENT',
---zAsset.Z_OPT AS 'zAsset-zOPT',
-	zIntResou.zAsset AS 'zIntResou-Asset Key = zAsset.zPK',
-	zAddAssetAttr.zAsset AS 'zAddAssetAttr-Asset Key',
-	z26Assets.Z_3ASSETS AS 'z26Asset.z3Assets  =  zAsset.zPK',
-	zAddAssetAttr.Z_PK AS 'zAddAssetAttr-zPK',
---zAddAssetAttr.Z_ENT AS 'zAddAssetAttr-zENT',
---zAddAssetAttr.Z_OPT AS 'zAddAssetAttr-zOPT',
-	zAsset.ZADDITIONALATTRIBUTES AS 'zAsset-Additional Attributes Key',
-	AAAzCldMastMedData.ZADDITIONALASSETATTRIBUTES AS 'zCldMastMedData-AddAssetAttr = zAddAssetAttr-zPK',
-CASE
-		zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE 
-		WHEN 0 THEN
-		'No Copy-0' 
-		WHEN 1 THEN
-		'Has A Copy-1' 
-		WHEN 2 THEN
-		'Has A Copy-2' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE||'' 
-	END AS 'zAddAssetAttr-Destination Asset Copy State',
-	zAsset.ZSOURCEASSETFORDUPLICATION AS 'zAsset-Source Asset For Duplication',
 CASE
 		zAsset.ZCLOUDLOCALSTATE 
 		WHEN 0 THEN
@@ -51,26 +55,36 @@ CASE
 		'iCldPhotos ON=Asset Synced with iCloud-1' ELSE 'Unknown-New-Value!: '||zAsset.ZCLOUDLOCALSTATE||'' 
 	END AS 'zAsset-Cloud Local State',
 CASE
-		zAsset.ZSAVEDASSETTYPE 
+		zAddAssetAttr.ZIMPORTEDBY 
 		WHEN 0 THEN
-		'Saved-via-other-source-0' 
+		'Cloud-Other-0' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'Native-Back-Camera-1' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'Native-Front-Camera-2' 
 		WHEN 3 THEN
-		'DCIM-APPLE-3' 
+		'Third-Party-App-3' 
 		WHEN 4 THEN
-		'PhotoCloudSharingData-4' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
-		'CPLAssets-6' 
+		'Third-Party-App-6' 
 		WHEN 7 THEN
-		'7-Unknown' 
+		'7-StillTesting' 
 		WHEN 8 THEN
-		'CMMAssets-8' ELSE 'Unknown-New-Value!: '||zAsset.ZSAVEDASSETTYPE||'' 
-	END AS 'zAsset-Saved Asset Type',
+		'Native-App-8' 
+		WHEN 9 THEN
+		'Native-App-9' 
+		WHEN 10 THEN
+		'10-StillTesting' 
+		WHEN 11 THEN
+		'11-StillTesting' 
+		WHEN 12 THEN
+		'12-StillTesting' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZIMPORTEDBY||'' 
+	END AS 'zAddAssetAttr-Imported by',
+	zAddAssetAttr.ZCREATORBUNDLEID AS 'zAddAssetAttr-Creator Bundle ID',
+	zAddAssetAttr.ZIMPORTEDBYDISPLAYNAME AS 'zAddAssetAttr-Imported By Display Name',
 CASE
 		zAsset.ZVISIBILITYSTATE 
 		WHEN 0 THEN
@@ -78,20 +92,63 @@ CASE
 		WHEN 2 THEN
 		'Not-Visible-Photo-Library-2' ELSE 'Unknown-New-Value!: '||zAsset.ZVISIBILITYSTATE||'' 
 	END AS 'zAsset-Visibility State',
+	zAsset.ZIMAGEREQUESTHINTS AS 'zAsset-Image Request Hints',
+	zIntResou.ZDATASTOREKEYDATA AS 'zIntResou-Data Store Key Data',
+	zAsset.ZDIRECTORY AS 'zAsset-Directory',
+CASE
+		zAsset.ZSAVEDASSETTYPE 
+		WHEN 0 THEN
+		'Saved-via-other-source-0' 
+		WHEN 1 THEN
+		'1-StillTesting' 
+		WHEN 2 THEN
+		'2-StillTesting' 
+		WHEN 3 THEN
+		'DCIM-APPLE-3' 
+		WHEN 4 THEN
+		'PhotoCloudSharingData-4' 
+		WHEN 5 THEN
+		'5-StillTesting' 
+		WHEN 6 THEN
+		'CPLAssets-6' 
+		WHEN 7 THEN
+		'7-StillTesting' 
+		WHEN 8 THEN
+		'CMMAssets-8' ELSE 'Unknown-New-Value!: '||zAsset.ZSAVEDASSETTYPE||'' 
+	END AS 'zAsset-Saved Asset Type',
 	zAsset.ZFILENAME AS 'zAsset-Filename',
 	zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Org Filename',
-	DateTime( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Date Created',
-	zAddAssetAttr.ZTIMEZONENAME AS 'zAddAssetAttr-Time Zone Name',
-	zAddAssetAttr.ZTIMEZONEOFFSET AS 'zAddAssetAttr-Time Zone Offset',
-	zAddAssetAttr.ZINFERREDTIMEZONEOFFSET AS 'zAddAssetAttr-Inferred Time Zone Offset',
-	DateTime( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH', 'localtime' ) AS 'zAsset-Local Date Created',
-	zAddAssetAttr.ZEXIFTIMESTAMPSTRING AS 'zAddAssetAttr-EXIF Timestamp String',
-	DateTime( zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Add Date',
 	zCldMast.ZORIGINALFILENAME AS 'zCldMast-Org Filename',
-	DateTime( zAsset.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Modification Date',
+	zAddAssetAttr.ZTIMEZONENAME AS 'zAddAssetAttr-Time Zone Name',
+--zExtAttr.ZTIMEZONENAME AS 'zExtAttr-Time Zone Name',
+	zAddAssetAttr.ZTIMEZONEOFFSET AS 'zAddAssetAttr-Time Zone Offset',
+--zExtAttr.ZTIMEZONEOFFSET AS 'zExtAttr-Time Zone Offset',
+	zAddAssetAttr.ZINFERREDTIMEZONEOFFSET AS 'zAddAssetAttr-Inferred Time Zone Offset',
+	DateTime( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Date Created',
+--DateTime( zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH', 'localtime' ) AS 'zAsset-Local Date Created',
 	DateTime( zCldMast.ZCREATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldMast-Creation Date',
 	DateTime( zIntResou.ZCLOUDMASTERDATECREATED + 978307200, 'UNIXEPOCH' ) AS 'zIntResou-Cloud Master Date Created',
+	zAddAssetAttr.ZEXIFTIMESTAMPSTRING AS 'zAddAssetAttr-EXIF Timestamp String-DeviceTime',
 	DateTime( zCldMast.ZIMPORTDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldMast-Import Date',
+	DateTime( zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Add Date',
+	DateTime( zAsset.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Modification Date',
+	DateTime( zMedAnlyAstAttr.ZMEDIAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zMedAnlyAstAttr-Media Analysis Timestamp',
+	zAddAssetAttr.ZPENDINGVIEWCOUNT AS 'zAddAssetAttr-Pending View Count',
+	zAddAssetAttr.ZVIEWCOUNT AS 'zAddAssetAttr-View Count',
+	zAddAssetAttr.ZPENDINGPLAYCOUNT AS 'zAddAssetAttr-Pending Play Count',
+	zAddAssetAttr.ZPLAYCOUNT AS 'zAddAssetAttr-Play Count',
+	zAddAssetAttr.ZPENDINGSHARECOUNT AS 'zAddAssetAttr-Pending Share Count',
+	zAddAssetAttr.ZSHARECOUNT AS 'zAddAssetAttr-Share Count',
+CASE
+		zAddAssetAttr.ZALLOWEDFORANALYSIS 
+		WHEN 0 THEN
+		'Asset Not Allowed For Analysis-0' 
+		WHEN 1 THEN
+		'Asset Allowed for Analysis-1' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZALLOWEDFORANALYSIS||'' 
+	END AS 'zAddAssetAttr-Allowed for Analysis',
+	zAddAssetAttr.ZSCENEANALYSISVERSION AS 'zAddAssetAttr-Scene Analysis Version',
+	DateTime( zAddAssetAttr.ZSCENEANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zAddAssetAttr-Scene Analysis Timestamp',
+	DateTime( zAsset.ZANALYSISSTATEMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Analysis State Modificaion Date',
 CASE
 		zIntResou.ZCLOUDLASTPREFETCHDATE 
 		WHEN 0 THEN
@@ -104,10 +161,10 @@ CASE
 CASE
 		zGenAlbum.ZCLOUDLOCALSTATE 
 		WHEN 0 THEN
-		'iCldPhotos ON=Asset Share Album/iCldPhotos OFF=Asset in GenAlbum-0' 
+		'iCldPhotos ON=Asset In Other Album/iCldPhotos OFF=Asset in GenAlbum-0' 
 		WHEN 1 THEN
-		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZCLOUDLOCALSTATE||'' 
-	END AS 'zGenAlbum-Cloud Local State',
+		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZCLOUDLOCALSTATE||''  
+	END AS 'zGenAlbum-Cloud Local State',	
 CASE
 		zAsset.ZCLOUDISMYASSET 
 		WHEN 0 THEN
@@ -125,62 +182,17 @@ CASE
 	DateTime( zAsset.ZCLOUDBATCHPUBLISHDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Cloud Batch Publish Date',
 	DateTime( zAsset.ZCLOUDSERVERPUBLISHDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Cloud Server Publish Date',
 	zAsset.ZCLOUDDOWNLOADREQUESTS AS 'zAsset-Cloud Download Requests',
-	zAsset.ZCLOUDBATCHID AS 'zAsset-Cloud Batch ID',
-	zAsset.ZIMAGEREQUESTHINTS AS 'zAsset-Image Request Hints',
-	zIntResou.ZDATASTOREKEYDATA AS 'zIntResou-Data Store Key Data',
-	zAsset.ZDIRECTORY AS 'zAsset-Directory',
+	zAsset.ZCLOUDBATCHID AS 'zAsset-Cloud Batch ID',	
 CASE
-		zAsset.ZSAVEDASSETTYPE 
+		zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE 
 		WHEN 0 THEN
-		'Saved-via-other-source-0' 
+		'No Copy-0' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'Has A Copy-1' 
 		WHEN 2 THEN
-		'2-Unknown' 
-		WHEN 3 THEN
-		'DCIM-APPLE-3' 
-		WHEN 4 THEN
-		'PhotoCloudSharingData-4' 
-		WHEN 5 THEN
-		'5-Unknown' 
-		WHEN 6 THEN
-		'CPLAssets-6' 
-		WHEN 7 THEN
-		'7-Unknown' 
-		WHEN 8 THEN
-		'CMMAssets-8' ELSE 'Unknown-New-Value!: '||zAsset.ZSAVEDASSETTYPE||'' 
-	END AS 'zAsset-Saved Asset Type_#2',
-	zAddAssetAttr.ZCREATORBUNDLEID AS 'zAddAssetAttr-Creator Bundle ID',
-	zAddAssetAttr.ZIMPORTEDBYDISPLAYNAME AS 'zAddAssetAttr-Imported By Display Name',
-CASE
-		zAddAssetAttr.ZIMPORTEDBY 
-		WHEN 0 THEN
-		'Cloud-Other-0' 
-		WHEN 1 THEN
-		'Native-Back-Camera-1' 
-		WHEN 2 THEN
-		'Native-Front-Camera-2' 
-		WHEN 3 THEN
-		'Third-Party-App-3' 
-		WHEN 4 THEN
-		'4-Unknown' 
-		WHEN 5 THEN
-		'5-Unknown' 
-		WHEN 6 THEN
-		'Third-Party-App-6' 
-		WHEN 7 THEN
-		'7-Unknown' 
-		WHEN 8 THEN
-		'Native-App-8' 
-		WHEN 9 THEN
-		'Native-App-9' 
-		WHEN 10 THEN
-		'10-Unknown' 
-		WHEN 11 THEN
-		'11-Unknown' 
-		WHEN 12 THEN
-		'12-Unknown' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZIMPORTEDBY||'' 
-	END AS 'zAddAssetAttr-Imported by',
+		'Has A Copy-2' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE||'' 
+	END AS 'zAddAssetAttr-Destination Asset Copy State',
+	zAsset.ZSOURCEASSETFORDUPLICATION AS 'zAsset-Source Asset For Duplication',
 CASE
 		zAsset.ZORIENTATION 
 		WHEN 1 THEN
@@ -254,7 +266,9 @@ CASE
 		WHEN 101 THEN
 		'Slow-Mo-Video-101' 
 		WHEN 102 THEN
-		'Time-lapse-Video-102' ELSE 'Unknown-New-Value!: '||zAsset.ZKINDSUBTYPE||'' 
+		'Time-lapse-Video-102'
+		WHEN 103 THEN
+		'103-StillTesting' ELSE 'Unknown-New-Value!: '||zAsset.ZKINDSUBTYPE||'' 
 	END AS 'zAsset-Kind Sub Type',
 	zExtAttr.ZDURATION AS 'zExtAttr-Duration',
 	zAsset.ZDURATION AS 'zAsset-Video Duration',
@@ -310,13 +324,6 @@ CASE
 	END AS 'zAddAssetAttr-Shifted Location Valid',
 	zAddAssetAttr.ZSHIFTEDLOCATIONDATA AS 'zAddAssetAttr-Shifted Location Data',
 	zAddAssetAttr.ZLOCATIONHASH AS 'zAddAssetAttr-Location Hash',
-	DateTime( zMedAnlyAstAttr.ZMEDIAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zMedAnlyAstAttr-Media Analysis Timestamp',
-	zAddAssetAttr.ZPENDINGVIEWCOUNT AS 'zAddAssetAttr-Pending View Count',
-	zAddAssetAttr.ZVIEWCOUNT AS 'zAddAssetAttr-View Count',
-	zAddAssetAttr.ZPENDINGPLAYCOUNT AS 'zAddAssetAttr-Pending Play Count',
-	zAddAssetAttr.ZPLAYCOUNT AS 'zAddAssetAttr-Play Count',
-	zAddAssetAttr.ZPENDINGSHARECOUNT AS 'zAddAssetAttr-Pending Share Count',
-	zAddAssetAttr.ZSHARECOUNT AS 'zAddAssetAttr-Share Count',
 CASE
 		zAsset.ZHASADJUSTMENTS 
 		WHEN 0 THEN
@@ -341,13 +348,13 @@ CASE
 		WHEN 0 THEN
 		'Standard or Portrait with erros-0' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'Portrait-2' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||zUnmAdj.ZADJUSTMENTRENDERTYPES||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||zUnmAdj.ZADJUSTMENTRENDERTYPES||'' 
 	END AS 'zUnmAdj-Adjustment Render Types',
 CASE
 		zUnmAdj.ZADJUSTMENTFORMATVERSION 
@@ -356,9 +363,9 @@ CASE
 		WHEN 1.1 THEN
 		'Slow-Mo-1.1' 
 		WHEN 1.2 THEN
-		'1.2-Unknown' 
+		'1.2-StillTesting' 
 		WHEN 1.3 THEN
-		'1.3-Unknown' 
+		'1.3-StillTesting' 
 		WHEN 1.4 THEN
 		'Filter-1.4' 
 		WHEN 1.5 THEN
@@ -366,11 +373,11 @@ CASE
 		WHEN 1.6 THEN
 		'Video-Trim-1.6' 
 		WHEN 1.7 THEN
-		'1.7-Unknown' 
+		'1.7-StillTesting' 
 		WHEN 1.8 THEN
-		'1.8-Unknown' 
+		'1.8-StillTesting' 
 		WHEN 1.9 THEN
-		'1.9-Unknown' 
+		'1.9-StillTesting' 
 		WHEN 2.0 THEN
 		'ScreenshotServices-2.0' ELSE 'Unknown-New-Value!: '||zUnmAdj.ZADJUSTMENTFORMATVERSION||'' 
 	END AS 'zUnmAdj-Adjustment Format Version',
@@ -401,7 +408,7 @@ CASE
 		WHEN 0 THEN
 		'Standard-0' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'Adjustments-2' 
 		WHEN 3 THEN
@@ -419,7 +426,7 @@ CASE
 		WHEN 0 THEN
 		'Device-CPLAsset-0' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'Cloud-Share-2' ELSE 'Unknown-New-Value!: '||zIntResou.ZDATASTORECLASSID||'' 
 	END AS 'zIntResou-Data Store Class ID',
@@ -461,39 +468,39 @@ CASE
 		WHEN 8 THEN
 		'MP4-Cloud-Share-RecipeID-131079-8' 
 		WHEN 9 THEN
-		'9-Unknown' 
+		'9-StillTesting' 
 		WHEN 10 THEN
-		'10-Unknown' 
+		'10-StillTesting' 
 		WHEN 11 THEN
-		'11-Unknown' 
+		'11-StillTesting' 
 		WHEN 12 THEN
-		'12-Unknown' 
+		'12-StillTesting' 
 		WHEN 13 THEN
 		'PNG-CPLAsset-Markup-13' 
 		WHEN 14 THEN
-		'14-Unknown' 
+		'14-StillTesting' 
 		WHEN 15 THEN
 		'Has-Markup-and-Adjustments-15' 
 		WHEN 16 THEN
 		'Video-Length-Edit-16' 
 		WHEN 17 THEN
-		'17-Unknown' 
+		'17-StillTesting' 
 		WHEN 18 THEN
 		'Live-Photo-Video-Org-Size-18' 
 		WHEN 19 THEN
 		'Live-Photo-with-Adjustments-19' 
 		WHEN 20 THEN
-		'20-Unknown' 
+		'20-StillTesting' 
 		WHEN 21 THEN
-		'21-Unknown' 
+		'21-StillTesting' 
 		WHEN 22 THEN
 		'Settings-Changed-Prior-to-Capture-22' 
 		WHEN 23 THEN
-		'23-Unknown' 
+		'23-StillTesting' 
 		WHEN 24 THEN
-		'24-Unknown' 
+		'24-StillTesting' 
 		WHEN 25 THEN
-		'25-Unknown' 
+		'25-StillTesting' 
 		WHEN 26 THEN
 		'MOV-CPLAsset-Small-Data-26' ELSE 'Unknown-New-Value!: '||zIntResou.ZDATASTORESUBTYPE||'' 
 	END AS 'zIntResou-Data Store Sub Type',
@@ -548,14 +555,14 @@ CASE
 CASE
 		zIntResou.ZLOCALAVAILABILITYTARGET 
 		WHEN 0 THEN
-		'0-Unknown' ELSE 'Unknown-New-Value!: '||zIntResou.ZLOCALAVAILABILITYTARGET||'' 
+		'0-StillTesting' ELSE 'Unknown-New-Value!: '||zIntResou.ZLOCALAVAILABILITYTARGET||'' 
 	END AS 'zIntResou-Local Avilability Target',
 CASE
 		zIntResou.ZREMOTEAVAILABILITYTARGET 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zIntResou.ZREMOTEAVAILABILITYTARGET||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zIntResou.ZREMOTEAVAILABILITYTARGET||'' 
 	END AS 'zIntResou-Remote Avilability Target',
 CASE
 		zIntResou.ZLOCALAVAILABILITY 
@@ -587,9 +594,9 @@ CASE
 		WHEN 0 THEN
 		'Local&CloudMaster Asset-0' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'Cloud 5005JPG Thumbnail Asset Only-3' 
 		WHEN 4 THEN
@@ -597,7 +604,7 @@ CASE
 		WHEN 5 THEN
 		'Asset_synced_via_iCloud_Photos_2_Device-5' 
 		WHEN 6 THEN
-		'6-Unknown' 
+		'6-StillTesting' 
 		WHEN 7 THEN
 		'Cloud MP4 7' 
 		WHEN 8 THEN
@@ -610,7 +617,7 @@ CASE
 		WHEN 0 THEN
 		'Still Photo-0' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'Live Photo-2' 
 		WHEN 3 THEN
@@ -625,9 +632,9 @@ CASE
 CASE
 		zAddAssetAttr.ZCLOUDRECOVERYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZCLOUDRECOVERYSTATE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZCLOUDRECOVERYSTATE||'' 
 	END AS 'zAddAssetAttr-Cloud Recovery State',
 	zAddAssetAttr.ZCLOUDSTATERECOVERYATTEMPTSCOUNT AS 'zAddAssetAttr-Cloud State Recovery Attempts Count',
 	zCldMast.ZIMPORTSESSIONID AS 'zCldMast-Import Session ID',
@@ -644,23 +651,23 @@ CASE
 		WHEN 3 THEN
 		'Third-Party-App-3' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'Third-Party-App-6' 
 		WHEN 7 THEN
-		'7-Unknown' 
+		'7-StillTesting' 
 		WHEN 8 THEN
 		'Native-App-8' 
 		WHEN 9 THEN
 		'Native-App-9' 
 		WHEN 10 THEN
-		'10-Unknown' 
+		'10-StillTesting' 
 		WHEN 11 THEN
-		'11-Unknown' 
+		'11-StillTesting' 
 		WHEN 12 THEN
-		'12-Unknown' ELSE 'Unknown-New-Value!: '||zCldMast.ZIMPORTEDBY||'' 
+		'12-StillTesting' ELSE 'Unknown-New-Value!: '||zCldMast.ZIMPORTEDBY||'' 
 	END AS 'zCldMast-Imported By',
 CASE
 		zCldMast.ZORIGINALORIENTATION 
@@ -713,7 +720,7 @@ CASE
 		WHEN 1 THEN
 		'1-Pending Upload' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'Synced with Cloud-3' ELSE 'Unknown-New-Value!: '||zCldMast.ZCLOUDLOCALSTATE||'' 
 	END AS 'zCldMast-Cloud Local State',
@@ -788,16 +795,6 @@ CASE
 	zAddAssetAttr.ZTITLE AS 'zAddAssetAttr-Title',
 	zAddAssetAttr.ZACCESSIBILITYDESCRIPTION AS 'zAddAssetAttr-Accessibility Description',
 	zAsset.ZMEDIAGROUPUUID AS 'zAsset-Media Group UUID',
-CASE
-		zAddAssetAttr.ZALLOWEDFORANALYSIS 
-		WHEN 0 THEN
-		'Asset Not Allowed For Analysis-0' 
-		WHEN 1 THEN
-		'Asset Allowed for Analysis-1' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZALLOWEDFORANALYSIS||'' 
-	END AS 'zAddAssetAttr-Allowed for Analysis',
-	zAddAssetAttr.ZSCENEANALYSISVERSION AS 'zAddAssetAttr-Scene Analysis Version',
-	DateTime( zAddAssetAttr.ZSCENEANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zAddAssetAttr-Scene Analysis Timestamp',
-	DateTime( zAsset.ZANALYSISSTATEMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Analysis State Modificaion Date',
 	zAsset.ZFACEADJUSTMENTVERSION AS 'zAsset-Face Adjustment Version',
 	zAddAssetAttr.ZFACEREGIONS AS 'zAddAssetAttr-Face Regions HEX',
 	DateTime( zCldFeedEnt.ZENTRYDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldFeedEnt-Entry Date',
@@ -807,18 +804,18 @@ CASE
 CASE
 		zCldFeedEnt.ZENTRYPRIORITYNUMBER 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zCldFeedEnt.ZENTRYPRIORITYNUMBER||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zCldFeedEnt.ZENTRYPRIORITYNUMBER||'' 
 	END AS 'zCldFeedEnt-Entry Priority Number',
 CASE
 		zCldFeedEnt.ZENTRYTYPENUMBER 
 		WHEN 1 THEN
 		'Is My Shared Asset-1' 
 		WHEN 2 THEN
-		'2-Unknown-2' 
+		'2-StillTesting-2' 
 		WHEN 3 THEN
-		'3-Unknown-3' 
+		'3-StillTesting-3' 
 		WHEN 4 THEN
 		'Not My Shared Asset-4' 
 		WHEN 5 THEN
@@ -911,63 +908,65 @@ CASE
 		WHEN 1505 THEN
 		'Shared Album-1505' 
 		WHEN 1506 THEN
-		'1506' 
+		'1506-StillTesting'
+		WHEN 1510 THEN
+		'Duplicate_Album - Pending_Merge-1510'		
 		WHEN 1552 THEN
-		'1552' 
+		'1552-StillTesting' 
 		WHEN 1600 THEN
-		'1600' 
+		'1600-StillTesting' 
 		WHEN 1602 THEN
-		'1602' 
+		'1602-StillTesting' 
 		WHEN 1605 THEN
-		'1605' 
+		'1605-StillTesting' 
 		WHEN 1606 THEN
-		'1606' 
+		'1606-StillTesting' 
 		WHEN 1607 THEN
-		'1607' 
+		'1607-StillTesting' 
 		WHEN 1608 THEN
-		'1608' 
+		'1608-StillTesting' 
 		WHEN 1609 THEN
-		'1609' 
+		'1609-StillTesting' 
 		WHEN 1610 THEN
-		'1610' 
+		'1610-StillTesting' 
 		WHEN 1611 THEN
-		'1611' 
+		'1611-StillTesting' 
 		WHEN 1612 THEN
-		'1612' 
+		'1612-StillTesting' 
 		WHEN 1613 THEN
-		'1613' 
+		'1613-StillTesting' 
 		WHEN 1614 THEN
-		'1614' 
+		'1614-StillTesting' 
 		WHEN 1615 THEN
-		'1615' 
+		'1615-StillTesting' 
 		WHEN 1616 THEN
-		'1616' 
+		'1616-StillTesting' 
 		WHEN 1617 THEN
-		'1617' 
+		'1617-StillTesting' 
 		WHEN 1618 THEN
-		'1618' 
+		'1618-StillTesting' 
 		WHEN 1619 THEN
-		'1619' 
+		'1619-StillTesting' 
 		WHEN 1620 THEN
-		'1620' 
+		'1620-StillTesting' 
 		WHEN 1621 THEN
-		'1621' 
+		'1621-StillTesting' 
 		WHEN 1622 THEN
-		'1622' 
+		'1622-StillTesting' 
 		WHEN 1623 THEN
-		'1623' 
+		'1623-StillTesting' 
 		WHEN 1624 THEN
-		'1624' 
+		'1624-StillTesting' 
 		WHEN 1625 THEN
-		'1625' 
+		'1625-StillTesting' 
 		WHEN 1626 THEN
-		'1626' 
+		'1626-StillTesting' 
 		WHEN 1627 THEN
-		'1627' 
+		'1627-StillTesting' 
 		WHEN 1628 THEN
-		'1628' 
+		'1628-StillTesting' 
 		WHEN 1630 THEN
-		'1630' 
+		'1630-StillTesting' 
 		WHEN 3571 THEN
 		'3571-Progress-Sync-3571' 
 		WHEN 3572 THEN
@@ -981,16 +980,16 @@ CASE
 		WHEN 4000 THEN
 		'Parent is Folder on Local Device-4000' 
 		WHEN 4001 THEN
-		'4001' 
+		'4001-StillTesting' 
 		WHEN 4002 THEN
-		'4002' 
+		'4002-StillTesting' 
 		WHEN 4003 THEN
-		'4003' ELSE 'Unknown-New-Value!: '||ParentzGenAlbum.ZKIND||'' 
+		'4003-StillTesting' ELSE 'Unknown-New-Value!: '||ParentzGenAlbum.ZKIND||''  
 	END AS 'ParentzGenAlbum-Kind',
 CASE
 		ParentzGenAlbum.ZCLOUDLOCALSTATE 
 		WHEN 0 THEN
-		'iCldPhotos ON=Asset Share Album/iCldPhotos OFF=Asset in GenAlbum-0' 
+		'iCldPhotos ON=Asset In Other Album /iCldPhotos OFF=Asset in GenAlbum-0' 
 		WHEN 1 THEN
 		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: '||ParentzGenAlbum.ZCLOUDLOCALSTATE||'' 
 	END AS 'ParentzGenAlbum-Cloud Local State',
@@ -1000,7 +999,7 @@ CASE
 		WHEN 1 THEN
 		'No-1' 
 		WHEN 24 THEN
-		'24-Unknown' ELSE 'Unknown-New-Value!: '||ParentzGenAlbum.ZPENDINGITEMSTYPE||'' 
+		'24-StillTesting' ELSE 'Unknown-New-Value!: '||ParentzGenAlbum.ZPENDINGITEMSTYPE||'' 
 	END AS 'ParentzGenAlbum-Pending Items Type',
 	ParentzGenAlbum.ZSYNCEVENTORDERKEY AS 'ParentzGenAlbum-Sync Event Order Key',
 CASE
@@ -1064,63 +1063,65 @@ CASE
 		WHEN 1505 THEN
 		'Shared Album-1505' 
 		WHEN 1506 THEN
-		'1506' 
+		'1506-StillTesting'
+		WHEN 1510 THEN
+		'Duplicate_Album - Pending_Merge-1510'		
 		WHEN 1552 THEN
-		'1552' 
+		'1552-StillTesting' 
 		WHEN 1600 THEN
-		'1600' 
+		'1600-StillTesting' 
 		WHEN 1602 THEN
-		'1602' 
+		'1602-StillTesting' 
 		WHEN 1605 THEN
-		'1605' 
+		'1605-StillTesting' 
 		WHEN 1606 THEN
-		'1606' 
+		'1606-StillTesting' 
 		WHEN 1607 THEN
-		'1607' 
+		'1607-StillTesting' 
 		WHEN 1608 THEN
-		'1608' 
+		'1608-StillTesting' 
 		WHEN 1609 THEN
-		'1609' 
+		'1609-StillTesting' 
 		WHEN 1610 THEN
-		'1610' 
+		'1610-StillTesting' 
 		WHEN 1611 THEN
-		'1611' 
+		'1611-StillTesting' 
 		WHEN 1612 THEN
-		'1612' 
+		'1612-StillTesting' 
 		WHEN 1613 THEN
-		'1613' 
+		'1613-StillTesting' 
 		WHEN 1614 THEN
-		'1614' 
+		'1614-StillTesting' 
 		WHEN 1615 THEN
-		'1615' 
+		'1615-StillTesting' 
 		WHEN 1616 THEN
-		'1616' 
+		'1616-StillTesting' 
 		WHEN 1617 THEN
-		'1617' 
+		'1617-StillTesting' 
 		WHEN 1618 THEN
-		'1618' 
+		'1618-StillTesting' 
 		WHEN 1619 THEN
-		'1619' 
+		'1619-StillTesting' 
 		WHEN 1620 THEN
-		'1620' 
+		'1620-StillTesting' 
 		WHEN 1621 THEN
-		'1621' 
+		'1621-StillTesting' 
 		WHEN 1622 THEN
-		'1622' 
+		'1622-StillTesting' 
 		WHEN 1623 THEN
-		'1623' 
+		'1623-StillTesting' 
 		WHEN 1624 THEN
-		'1624' 
+		'1624-StillTesting' 
 		WHEN 1625 THEN
-		'1625' 
+		'1625-StillTesting' 
 		WHEN 1626 THEN
-		'1626' 
+		'1626-StillTesting' 
 		WHEN 1627 THEN
-		'1627' 
+		'1627-StillTesting' 
 		WHEN 1628 THEN
-		'1628' 
+		'1628-StillTesting' 
 		WHEN 1630 THEN
-		'1630' 
+		'1630-StillTesting' 
 		WHEN 3571 THEN
 		'3571-Progress-Sync-3571' 
 		WHEN 3572 THEN
@@ -1130,15 +1131,15 @@ CASE
 		WHEN 3998 THEN
 		'3998-Project Root Folder-3998' 
 		WHEN 3999 THEN
-		'Parent is Root containing Generic_Album on Local Device-3999' 
+		'Parent Folder for Generic Album-3999' 
 		WHEN 4000 THEN
-		'Parent is Sub-Folder containing Generic_Album on Local Device-4000' 
+		'Parent is Folder on Local Device-4000' 
 		WHEN 4001 THEN
-		'4001' 
+		'4001-StillTesting' 
 		WHEN 4002 THEN
-		'4002' 
+		'4002-StillTesting' 
 		WHEN 4003 THEN
-		'4003' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZKIND||'' 
+		'4003-StillTesting' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZKIND||'' 
 	END AS 'zGenAlbum-Album Kind',
 	zGenAlbum.ZTITLE AS 'zGenAlbum-Title',
 	zGenAlbum.ZPARENTFOLDER AS 'zGenAlbum-Parent Folder Key = zGenAlbum-zPK',
@@ -1155,7 +1156,7 @@ CASE
 		WHEN 1 THEN
 		'No-1' 
 		WHEN 24 THEN
-		'24-Unknown' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZPENDINGITEMSTYPE||'' 
+		'24-StillTesting' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZPENDINGITEMSTYPE||'' 
 	END AS 'zGenAlbum-Pending Items Type',
 	zGenAlbum.ZCACHEDPHOTOSCOUNT AS 'zGenAlbum-Cached Photos Count',
 	zGenAlbum.ZCACHEDVIDEOSCOUNT AS 'zGenAlbum-Cached Videos Count',
@@ -1193,7 +1194,7 @@ CASE
 		WHEN 0 THEN
 		'zGenAlbum-Shared Album Accessible Local Device-0' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZCLOUDRELATIONSHIPSTATELOCAL||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZCLOUDRELATIONSHIPSTATELOCAL||'' 
 	END AS 'zGenAlbum-Cloud Relationship State Local',
 	zGenAlbum.ZCLOUDOWNEREMAILKEY AS 'zGenAlbum-Cloud Owner Mail Key',
 	zGenAlbum.ZCLOUDOWNERFIRSTNAME AS 'zGenAlbum-Cloud Owner Frist Name',
@@ -1261,12 +1262,12 @@ CASE
 CASE
 		zGenAlbum.ZPROJECTDOCUMENTTYPE 
 		WHEN 0 THEN
-		'0-Unknown' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZPROJECTDOCUMENTTYPE||'' 
+		'0-StillTesting' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZPROJECTDOCUMENTTYPE||'' 
 	END AS 'zGenAlbum-Project Document Type',
 CASE
 		zGenAlbum.ZCUSTOMQUERYTYPE 
 		WHEN 0 THEN
-		'0-Unknown' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZCUSTOMQUERYTYPE||'' 
+		'0-StillTesting' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZCUSTOMQUERYTYPE||'' 
 	END AS 'zGenAlbum-Custom Query Type',
 CASE
 		zGenAlbum.ZTRASHEDSTATE 
@@ -1335,9 +1336,9 @@ CASE
 CASE
 		zCldShareAlbumInvRec.ZINVITATIONSTATELOCAL 
 		WHEN 0 THEN
-		'0-Unknown-0' 
+		'0-StillTesting-0' 
 		WHEN 1 THEN
-		'1-Unknown-1' ELSE 'Unknown-New-Value!: '||zCldShareAlbumInvRec.ZINVITATIONSTATELOCAL||'' 
+		'1-StillTesting-1' ELSE 'Unknown-New-Value!: '||zCldShareAlbumInvRec.ZINVITATIONSTATELOCAL||'' 
 	END AS 'zCldShareAlbumInvRec-Invitation State Local',
 CASE
 		zCldShareAlbumInvRec.ZINVITATIONSTATE 
@@ -1348,9 +1349,9 @@ CASE
 		WHEN 3 THEN
 		'Shared Album Invitation Declined-3' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' ELSE 'Unknown-New-Value!: '||zCldShareAlbumInvRec.ZINVITATIONSTATE||'' 
+		'5-StillTesting' ELSE 'Unknown-New-Value!: '||zCldShareAlbumInvRec.ZINVITATIONSTATE||'' 
 	END AS 'zCldShareAlbumInvRec-Invitation State',
 	DateTime( zCldShareAlbumInvRec.ZINVITEESUBSCRIPTIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldShareAlbumInvRec-Subscription Date',
 	zCldShareAlbumInvRec.ZINVITEEFIRSTNAME AS 'zCldShareAlbumInvRec-Invitee First Name',
@@ -1396,25 +1397,25 @@ CASE
 CASE
 		zShare.ZSCOPETYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Published' ELSE 'Unknown-New-Value!: '||zShare.ZSCOPETYPE||'' 
 	END AS 'zShare-Scope Type',
 CASE
 		zShare.ZLOCALPUBLISHSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Published' ELSE 'Unknown-New-Value!: '||zShare.ZLOCALPUBLISHSTATE||'' 
 	END AS 'zShare-Local Cloud Publish State',
 CASE
 		zShare.ZPUBLICPERMISSION 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'1-Public Permission Denied-1' 
 		WHEN 2 THEN
@@ -1427,16 +1428,16 @@ CASE
 CASE
 		zShare.ZSHOULDIGNOREBUDGETS 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zShare.ZSHOULDIGNOREBUDGETS||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zShare.ZSHOULDIGNOREBUDGETS||'' 
 	END AS 'zShare-Should Ignore Budgets',
 CASE
 		zShare.ZSHOULDNOTIFYONUPLOADCOMPLETION 
 		WHEN 0 THEN
 		'0-No' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zShare.ZSHOULDNOTIFYONUPLOADCOMPLETION||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zShare.ZSHOULDNOTIFYONUPLOADCOMPLETION||'' 
 	END AS 'zShare-Should Notify On Upload Completion',
 CASE
 		zShare.ZTRASHEDSTATE 
@@ -1527,11 +1528,11 @@ CASE
 		WHEN 2 THEN
 		'2-Verified-Has-Person-URI' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' ELSE 'Unknown-New-Value!: '||ZDetFace.ZNAMESOURCE||'' 
+		'5-StillTesting' ELSE 'Unknown-New-Value!: '||ZDetFace.ZNAMESOURCE||'' 
 	END AS 'zDetFace-Name Source',
 CASE
 		zDetFace.ZCLOUDNAMESOURCE 
@@ -1548,11 +1549,11 @@ CASE
 CASE
 		zPerson.ZCLOUDVERIFIEDTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' ELSE 'Unknown-New-Value!: '||zPerson.ZCLOUDVERIFIEDTYPE||'' 
+		'2-StillTesting' ELSE 'Unknown-New-Value!: '||zPerson.ZCLOUDVERIFIEDTYPE||'' 
 	END AS 'zPerson-Cloud Verified Type',
 CASE
 		zFaceCrop.ZSTATE 
@@ -1562,7 +1563,7 @@ CASE
 CASE
 		zFaceCrop.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'1-Active' ELSE 'Unknown-New-Value!: '||zFaceCrop.ZTYPE||'' 
 	END AS 'zFaceCrop-Type',
@@ -1572,14 +1573,14 @@ CASE
 CASE
 		zPerson.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zPerson.ZTYPE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zPerson.ZTYPE||'' 
 	END AS 'zPerson-Type',
 CASE
 		zPerson.ZGENDERTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zPerson Male-1' 
 		WHEN 2 THEN
@@ -1588,7 +1589,7 @@ CASE
 CASE
 		zDetFace.ZGENDERTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zDetFace Male-1' 
 		WHEN 2 THEN
@@ -1599,7 +1600,7 @@ CASE
 CASE
 		zPerson.ZAGETYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zPerson Infant-Toddler-1' 
 		WHEN 2 THEN
@@ -1614,7 +1615,7 @@ CASE
 CASE
 		zDetFace.ZAGETYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zDetFace Infant-Toddler-1' 
 		WHEN 2 THEN
@@ -1629,7 +1630,7 @@ CASE
 CASE
 		zDetFace.ZBALDTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 2 THEN
 		'zDetFace Bald-2' 
 		WHEN 3 THEN
@@ -1638,7 +1639,7 @@ CASE
 CASE
 		zDetFace.ZHAIRCOLORTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zDetFace-Black-Brown-1' 
 		WHEN 2 THEN
@@ -1648,7 +1649,7 @@ CASE
 		WHEN 4 THEN
 		'zDetFace-Red-White-4' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'zDetFace-White-Bald-6' ELSE 'Unknown-New-Value!: '||zDetFace.ZHAIRCOLORTYPE||'' 
 	END AS 'zDetFace-Hair Color Type',
@@ -1662,7 +1663,7 @@ CASE
 CASE
 		zDetFace.ZSMILETYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zDetFace Smile No Teeth-1' 
 		WHEN 2 THEN
@@ -1680,7 +1681,7 @@ CASE
 CASE
 		zDetFace.ZFACIALHAIRTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zDetFace Clean Shaven-1' 
 		WHEN 2 THEN
@@ -1695,7 +1696,7 @@ CASE
 CASE
 		zDetFace.ZEYESSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zDetFace Eyes Closed-1' 
 		WHEN 2 THEN
@@ -1722,7 +1723,7 @@ CASE
 CASE
 		zDetFace.ZGLASSESTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'zDetFace Eye Glasses-1' 
 		WHEN 2 THEN
@@ -1766,9 +1767,9 @@ CASE
 CASE
 		zDetFace.ZTRAININGTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' ELSE 'Unknown-New-Value!: '||ZTRAININGTYPE||'' 
+		'5-StillTesting' ELSE 'Unknown-New-Value!: '||ZTRAININGTYPE||'' 
 	END AS 'zDetFace-Training Type',
 	zDetFace.ZPOSEYAW AS 'zDetFace.Pose Yaw',
 	zDetFace.ZROLL AS 'zDetFace-Roll',
@@ -1816,7 +1817,7 @@ CASE
 		WHEN 5 THEN
 		'Has Face Key-5' 
 		WHEN 12 THEN
-		'12-Unknown' ELSE 'Unknown-New-Value!: '||zFaceCrop.ZCLOUDTYPE||'' 
+		'12-StillTesting' ELSE 'Unknown-New-Value!: '||zFaceCrop.ZCLOUDTYPE||'' 
 	END AS 'zFaceCrop-Cloud Type',
 CASE
 		zPerson.ZCLOUDDELETESTATE 
@@ -1884,56 +1885,56 @@ CASE
 CASE
 		zMemory.ZCATEGORY 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 8 THEN
-		'8-Unknown' 
+		'8-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 17 THEN
-		'17-Unknown' 
+		'17-StillTesting' 
 		WHEN 19 THEN
-		'19-Unknown' 
+		'19-StillTesting' 
 		WHEN 21 THEN
-		'21-Unknown' 
+		'21-StillTesting' 
 		WHEN 201 THEN
-		'201-Unknown' 
+		'201-StillTesting' 
 		WHEN 203 THEN
-		'203-Unknown' 
+		'203-StillTesting' 
 		WHEN 204 THEN
-		'204-Unknown' 
+		'204-StillTesting' 
 		WHEN 211 THEN
-		'211-Unknown' 
+		'211-StillTesting' 
 		WHEN 217 THEN
-		'217-Unknown' 
+		'217-StillTesting' 
 		WHEN 220 THEN
-		'220-Unknown' 
+		'220-StillTesting' 
 		WHEN 301 THEN
-		'301-Unknown' 
+		'301-StillTesting' 
 		WHEN 302 THEN
-		'302-Unknown' ELSE 'Unknown-New-Value!: '||zMemory.ZCATEGORY||'' 
+		'302-StillTesting' ELSE 'Unknown-New-Value!: '||zMemory.ZCATEGORY||'' 
 	END AS 'zMemory-Category',
 CASE
 		zMemory.ZSUBCATEGORY 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 201 THEN
-		'201-Unknown' 
+		'201-StillTesting' 
 		WHEN 204 THEN
-		'204-Unknown' 
+		'204-StillTesting' 
 		WHEN 206 THEN
-		'206-Unknown' 
+		'206-StillTesting' 
 		WHEN 207 THEN
-		'207-Unknown' 
+		'207-StillTesting' 
 		WHEN 212 THEN
-		'212-Unknown' 
+		'212-StillTesting' 
 		WHEN 213 THEN
-		'213-Unknown' 
+		'213-StillTesting' 
 		WHEN 214 THEN
-		'214-Unknown' 
+		'214-StillTesting' 
 		WHEN 402 THEN
-		'402-Unknown' ELSE 'Unknown-New-Value!: '||zMemory.ZSUBCATEGORY||''
+		'402-StillTesting' ELSE 'Unknown-New-Value!: '||zMemory.ZSUBCATEGORY||''
 	END AS 'zMemory-SubCategory',
 	DateTime( zMemory.ZCREATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zMemory-Creation Date',
 CASE
@@ -1967,7 +1968,7 @@ CASE
 		WHEN 1 THEN
 		'Yes-1' 
 		WHEN 2 THEN
-		'2-Unknown' ELSE 'Unknown-New-Value!: '||zMemory.ZPENDING||'' 
+		'2-StillTesting' ELSE 'Unknown-New-Value!: '||zMemory.ZPENDING||'' 
 	END AS 'zMemory-Pending',
 	zMemory.ZPENDINGPLAYCOUNT AS 'zMemory-Pending Play Count Memory',
 	zMemory.ZPENDINGSHARECOUNT AS 'zMemory-Pending Share Count Memory',
@@ -1975,20 +1976,20 @@ CASE
 CASE
 		zMemory.ZFEATUREDSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||zMemory.ZFEATUREDSTATE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||zMemory.ZFEATUREDSTATE||'' 
 	END AS 'zMemory-Featured State',
 	zMemory.ZPHOTOSGRAPHVERSION AS 'zMemory-Photos Graph Version',
 	zMemory.ZASSETLISTPREDICATE AS 'zMemory-AssetListPredicte',
 CASE
 		zMemory.ZNOTIFICATIONSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' ELSE 'Unknown-New-Value!: '||zMemory.ZNOTIFICATIONSTATE||'' 
+		'2-StillTesting' ELSE 'Unknown-New-Value!: '||zMemory.ZNOTIFICATIONSTATE||'' 
 	END AS 'zMemory-Notification State',
 CASE
 		zMemory.ZCLOUDLOCALSTATE 
@@ -2111,7 +2112,7 @@ CASE
 CASE
 		YearParzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2126,35 +2127,35 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||YearParzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||YearParzPhotosHigh.ZCATEGORY||'' 
 	END AS 'YearParzPhotosHigh-Category',
 CASE
 		YearParzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
 		'4-Visible via For You' ELSE 'Unknown-New-Value!: '||YearParzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'YearParzPhotosHigh-Visibility State',
 CASE
 		YearParzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||YearParzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||YearParzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'YearParzPhotosHigh-Enrichment State',
 	YearParzPhotosHigh.ZENRICHMENTVERSION AS 'YearParzPhotosHigh-Enrichment Version',
 	YearParzPhotosHigh.ZHIGHLIGHTVERSION AS 'YearParzPhotosHigh-Highlight Version',
@@ -2181,7 +2182,7 @@ CASE
 CASE
 		YMParzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2196,35 +2197,35 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||YMParzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||YMParzPhotosHigh.ZCATEGORY||'' 
 	END AS 'YMParzPhotosHigh-Category',
 CASE
 		YMParzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||YMParzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||YMParzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'YMParzPhotosHigh-Visibility State',
 CASE
 		YMParzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||YMParzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||YMParzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'YMParzPhotosHigh-Enrichment State',
 	YMParzPhotosHigh.ZENRICHMENTVERSION AS 'YMParzPhotosHigh-Enrichment Version',
 	YMParzPhotosHigh.ZHIGHLIGHTVERSION AS 'YMParzPhotosHigh-Highlight Version',
@@ -2251,7 +2252,7 @@ CASE
 CASE
 		DGParzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2266,35 +2267,35 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||DGParzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||DGParzPhotosHigh.ZCATEGORY||'' 
 	END AS 'DGParzPhotosHigh-Category',
 CASE
 		DGParzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGParzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGParzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'DGParzPhotosHigh-Visibility State',
 CASE
 		DGParzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGParzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGParzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'DGParzPhotosHigh-Enrichment State',
 	DGParzPhotosHigh.ZENRICHMENTVERSION AS 'DGParzPhotosHigh-Enrichment Version',
 	DGParzPhotosHigh.ZHIGHLIGHTVERSION AS 'DGParzPhotosHigh-Highlight Version',
@@ -2329,24 +2330,24 @@ CASE
 CASE
 		HBAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZTYPE||'' 
 	END AS 'HBAzPhotosHigh-Type',
 CASE
 		HBAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2361,58 +2362,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'HBAzPhotosHigh-Category',
 CASE
 		HBAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZVISIBILITYSTATE||''
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZVISIBILITYSTATE||''
 	END AS 'HBAzPhotosHigh-Visibility State',
 CASE
 		HBAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZMOOD||'' 
 	END AS 'HBAzPhotosHigh-Mood',
 CASE
 		HBAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||HBAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'HBAzPhotosHigh-Enrichment State',
 	HBAzPhotosHigh.ZENRICHMENTVERSION AS 'HBAzPhotosHigh-Enrichment Version',
 	HBAzPhotosHigh.ZHIGHLIGHTVERSION AS 'HBAzPhotosHigh-Highlight Version',
@@ -2452,24 +2453,24 @@ CASE
 CASE
 		HBEAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZTYPE||'' 
 	END AS 'HBEAzPhotosHigh-Type',
 CASE
 		HBEAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2484,58 +2485,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'HBEAzPhotosHigh-Category',
 CASE
 		HBEAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'HBEAzPhotosHigh-Visibility State',
 CASE
 		HBEAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZMOOD||'' 
 	END AS 'HBEAzPhotosHigh-Mood',
 CASE
 		HBEAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||HBEAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'HBEAzPhotosHigh-Enrichment State',
 	HBEAzPhotosHigh.ZENRICHMENTVERSION AS 'HBEAzPhotosHigh-Enrichment Version',
 	HBEAzPhotosHigh.ZHIGHLIGHTVERSION AS 'HBEAzPhotosHigh-Highlight Version',
@@ -2575,24 +2576,24 @@ CASE
 CASE
 		HBSAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZTYPE||'' 
 	END AS 'HBSAzPhotosHigh-Type',
 CASE
 		HBSAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2607,58 +2608,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZCATEGORY||''
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZCATEGORY||''
 	END AS 'HBSAzPhotosHigh-Category',
 CASE
 		HBSAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'HBSAzPhotosHigh-Visibility State',
 CASE
 		HBSAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZMOOD||'' 
 	END AS 'HBSAzPhotosHigh-Mood',
 CASE
 		HBSAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||HBSAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'HBSAzPhotosHigh-Enrichment State',
 	HBSAzPhotosHigh.ZENRICHMENTVERSION AS 'HBSAzPhotosHigh-Enrichment Version',
 	HBSAzPhotosHigh.ZHIGHLIGHTVERSION AS 'HBSAzPhotosHigh-Highlight Version',
@@ -2698,24 +2699,24 @@ CASE
 CASE
 		HBKAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZTYPE||'' 
 	END AS 'HBKAzPhotosHigh-Type',
 CASE
 		HBKAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2730,58 +2731,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZCATEGORY||''
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZCATEGORY||''
 	END AS 'HBKAzPhotosHigh-Category',
 CASE
 		HBKAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'HBKAzPhotosHigh-Visibility State',
 CASE
 		HBKAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZMOOD||''
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZMOOD||''
 	END AS 'HBKAzPhotosHigh-Mood',
 CASE
 		HBKAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||HBKAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'HBKAzPhotosHigh-Enrichment State',
 	HBKAzPhotosHigh.ZENRICHMENTVERSION AS 'HBKAzPhotosHigh-Enrichment Version',
 	HBKAzPhotosHigh.ZHIGHLIGHTVERSION AS 'HBKAzPhotosHigh-Highlight Version',
@@ -2821,24 +2822,24 @@ CASE
 CASE
 		DGHBAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZTYPE||''
 	END AS 'DGHBAzPhotosHigh-Type',
 CASE
 		DGHBAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2853,58 +2854,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'DGHBAzPhotosHigh-Category',
 CASE
 		DGHBAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZVISIBILITYSTATE 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZVISIBILITYSTATE 
 	END AS 'DGHBAzPhotosHigh-Visibility State',
 CASE
 		DGHBAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZMOOD||'' 
 	END AS 'DGHBAzPhotosHigh-Mood',
 CASE
 		DGHBAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'DGHBAzPhotosHigh-Enrichment State',
 	DGHBAzPhotosHigh.ZENRICHMENTVERSION AS 'DGHBAzPhotosHigh-Enrichment Version',
 	DGHBAzPhotosHigh.ZHIGHLIGHTVERSION AS 'DGHBAzPhotosHigh-Highlight Version',
@@ -2944,24 +2945,24 @@ CASE
 CASE
 		DGHBEAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZTYPE||'' 
 	END AS 'DGHBEAzPhotosHigh-Type',
 CASE
 		DGHBEAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -2976,58 +2977,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'DGHBEAzPhotosHigh-Category',
 CASE
 		DGHBEAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'DGHBEAzPhotosHigh-Visibility State',
 CASE
 		DGHBEAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZMOOD||'' 
 	END AS 'DGHBEAzPhotosHigh-Mood',
 CASE
 		DGHBEAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBEAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'DGHBEAzPhotosHigh-Enrichment State',
 	DGHBEAzPhotosHigh.ZENRICHMENTVERSION AS 'DGHBEAzPhotosHigh-Enrichment Version',
 	DGHBEAzPhotosHigh.ZHIGHLIGHTVERSION AS 'DGHBEAzPhotosHigh-Highlight Version',
@@ -3067,24 +3068,24 @@ CASE
 CASE
 		DGHBKAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZTYPE||'' 
 	END AS 'DGHBKAzPhotosHigh-Type',
 CASE
 		DGHBKAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -3099,58 +3100,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'DGHBKAzPhotosHigh-Category',
 CASE
 		DGHBKAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'DGHBKAzPhotosHigh-Visibility State',
 CASE
 		DGHBKAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZMOOD||'' 
 	END AS 'DGHBKAzPhotosHigh-Mood',
 CASE
 		DGHBKAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBKAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'DGHBKAzPhotosHigh-Enrichment State',
 	DGHBKAzPhotosHigh.ZENRICHMENTVERSION AS 'DGHBKAzPhotosHigh-Enrichment Version',
 	DGHBKAzPhotosHigh.ZHIGHLIGHTVERSION AS 'DGHBKAzPhotosHigh-Highlight Version',
@@ -3190,24 +3191,24 @@ CASE
 CASE
 		DGHBSAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZTYPE||'' 
 	END AS 'DGHBSAzPhotosHigh-Type',
 CASE
 		DGHBSAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -3222,58 +3223,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'DGHBSAzPhotosHigh-Category',
 CASE
 		DGHBSAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'DGHBSAzPhotosHigh-Visibility State',
 CASE
 		DGHBSAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZMOOD||'' 
 	END AS 'DGHBSAzPhotosHigh-Mood',
 CASE
 		DGHBSAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||DGHBSAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'DGHBSAzPhotosHigh-Enrichment State',
 	DGHBSAzPhotosHigh.ZENRICHMENTVERSION AS 'DGHBSAzPhotosHigh-Enrichment Version',
 	DGHBSAzPhotosHigh.ZHIGHLIGHTVERSION AS 'DGHBSAzPhotosHigh-Highlight Version',
@@ -3313,24 +3314,24 @@ CASE
 CASE
 		MHBFAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZTYPE||''
 	END AS 'MHBFAzPhotosHigh-Type',
 CASE
 		MHBFAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -3345,58 +3346,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'MHBFAzPhotosHigh-Category',
 CASE
 		MHBFAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'MHBFAzPhotosHigh-Visibility State',
 CASE
 		MHBFAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZMOOD||'' 
 	END AS 'MHBFAzPhotosHigh-Mood',
 CASE
 		MHBFAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||MHBFAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'MHBFAzPhotosHigh-Enrichment State',
 	MHBFAzPhotosHigh.ZENRICHMENTVERSION AS 'MHBFAzPhotosHigh-Enrichment Version',
 	MHBFAzPhotosHigh.ZHIGHLIGHTVERSION AS 'MHBFAzPhotosHigh-Highlight Version',
@@ -3436,24 +3437,24 @@ CASE
 CASE
 		MHBKAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZTYPE||'' 
 	END AS 'MHBKAzPhotosHigh-Type',
 CASE
 		MHBKAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -3468,58 +3469,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'MHBKAzPhotosHigh-Category',
 CASE
 		MHBKAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'MHBKAzPhotosHigh-Visibility State',
 CASE
 		MHBKAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZMOOD||'' 
 	END AS 'MHBKAzPhotosHigh-Mood',
 CASE
 		MHBKAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||MHBKAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'MHBKAzPhotosHigh-Enrichment State',
 	MHBKAzPhotosHigh.ZENRICHMENTVERSION AS 'MHBKAzPhotosHigh-Enrichment Version',
 	MHBKAzPhotosHigh.ZHIGHLIGHTVERSION AS 'MHBKAzPhotosHigh-Highlight Version',
@@ -3559,24 +3560,24 @@ CASE
 CASE
 		YHBKAzPhotosHigh.ZTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
 		'3-Photos Highlights Day Group' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 5 THEN
-		'5-Unknown' 
+		'5-StillTesting' 
 		WHEN 6 THEN
 		'6-Parent Day Group Photos Highlight' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZTYPE||'' 
 	END AS 'YHBKAzPhotosHigh-Type',
 CASE
 		YHBKAzPhotosHigh.ZKIND 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
 		'Year&Month Photo Highlights-1' 
 		WHEN 2 THEN
@@ -3591,58 +3592,58 @@ CASE
 		WHEN 1 THEN
 		'1-Todays Highlights' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZCATEGORY||'' 
+		'3-StillTesting' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZCATEGORY||'' 
 	END AS 'YHBKAzPhotosHigh-Category',
 CASE
 		YHBKAzPhotosHigh.ZVISIBILITYSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-Year&Month No Asset Count' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZVISIBILITYSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZVISIBILITYSTATE||'' 
 	END AS 'YHBKAzPhotosHigh-Visibility State',
 CASE
 		YHBKAzPhotosHigh.ZMOOD 
 		WHEN 0 THEN
 		'0-None' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' 
+		'4-StillTesting' 
 		WHEN 16 THEN
-		'16-Unknown' 
+		'16-StillTesting' 
 		WHEN 32 THEN
-		'32-Unknown' 
+		'32-StillTesting' 
 		WHEN 64 THEN
-		'64-Unknown' 
+		'64-StillTesting' 
 		WHEN 128 THEN
-		'128-Unknown' 
+		'128-StillTesting' 
 		WHEN 512 THEN
-		'512-Unknown' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZMOOD||'' 
+		'512-StillTesting' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZMOOD||'' 
 	END AS 'YHBKAzPhotosHigh-Mood',
 CASE
 		YHBKAzPhotosHigh.ZENRICHMENTSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
-		'2-Unknown' 
+		'2-StillTesting' 
 		WHEN 3 THEN
-		'3-Unknown' 
+		'3-StillTesting' 
 		WHEN 4 THEN
-		'4-Unknown' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZENRICHMENTSTATE||'' 
+		'4-StillTesting' ELSE 'Unknown-New-Value!: '||YHBKAzPhotosHigh.ZENRICHMENTSTATE||'' 
 	END AS 'YHBKAzPhotosHigh-Enrichment State',
 	YHBKAzPhotosHigh.ZENRICHMENTVERSION AS 'YHBKAzPhotosHigh-Enrichment Version',
 	YHBKAzPhotosHigh.ZHIGHLIGHTVERSION AS 'YHBKAzPhotosHigh-Highlight Version',
@@ -3656,23 +3657,23 @@ CASE
 CASE
 		SBKAzSugg.ZSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZSTATE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZSTATE||'' 
 	END AS 'SBKAzSugg-State',
 CASE
 		SBKAzSugg.ZFEATUREDSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZFEATUREDSTATE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZFEATUREDSTATE||'' 
 	END AS 'SBKAzSugg-Featured State',
 CASE
 		SBKAzSugg.ZNOTIFICATIONSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZNOTIFICATIONSTATE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZNOTIFICATIONSTATE||'' 
 	END AS 'SBKAzSugg-Notification State',
 	DateTime( SBKAzSugg.ZCREATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'SBKAzSugg-Creation Date',
 	DateTime( SBKAzSugg.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'SBKAzSugg-End Date',
@@ -3687,14 +3688,14 @@ CASE
 CASE
 		SBKAzSugg.ZTYPE 
 		WHEN 5 THEN
-		'5-Unknown' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZTYPE||'' 
+		'5-StillTesting' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZTYPE||'' 
 	END AS 'SBKAzSugg-Type',
 CASE
 		SBKAzSugg.ZSUBTYPE 
 		WHEN 501 THEN
-		'501-Unknown' 
+		'501-StillTesting' 
 		WHEN 502 THEN
-		'502-Unknown' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZSUBTYPE||'' 
+		'502-StillTesting' ELSE 'Unknown-New-Value!: '||SBKAzSugg.ZSUBTYPE||'' 
 	END AS 'SBKAzSugg-Sub Type',
 	SBKAzSugg.ZACTIONDATA AS 'SBKAzSugg-Action Data',
 	SBKAzSugg.ZFEATURESDATA AS 'SBKAzSugg-Features Data',
@@ -3723,23 +3724,23 @@ CASE
 CASE
 		SBRAzSugg.ZSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZSTATE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZSTATE||'' 
 	END AS 'SBRAzSugg-State',
 CASE
 		SBRAzSugg.ZFEATUREDSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZFEATUREDSTATE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZFEATUREDSTATE||'' 
 	END AS 'SBRAzSugg-Featured State',
 CASE
 		SBRAzSugg.ZNOTIFICATIONSTATE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZNOTIFICATIONSTATE||'' 
+		'1-StillTesting' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZNOTIFICATIONSTATE||'' 
 	END AS 'SBRAzSugg-Notification State',
 	DateTime( SBRAzSugg.ZCREATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'SBRAzSugg-Creation Date',
 	DateTime( SBRAzSugg.ZENDDATE + 978307200, 'UNIXEPOCH' ) AS 'SBRAzSugg-End Date',
@@ -3754,14 +3755,14 @@ CASE
 CASE
 		SBRAzSugg.ZTYPE 
 		WHEN 5 THEN
-		'5-Unknown' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZTYPE||'' 
+		'5-StillTesting' ELSE 'StillTesting-New-Value!: '||SBRAzSugg.ZTYPE||'' 
 	END AS 'SBRAzSugg-Type',
 CASE
 		SBRAzSugg.ZSUBTYPE 
 		WHEN 501 THEN
-		'501-Unknown' 
+		'501-StillTesting' 
 		WHEN 502 THEN
-		'502-Unknown' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZSUBTYPE||'' 
+		'502-StillTesting' ELSE 'Unknown-New-Value!: '||SBRAzSugg.ZSUBTYPE||'' 
 	END AS 'SBRAzSugg-Sub Type',
 	SBRAzSugg.ZACTIONDATA AS 'SBRAzSugg-Action Data',
 	SBRAzSugg.ZFEATURESDATA AS 'SBRAzSugg-Features Data',
@@ -3818,15 +3819,15 @@ CASE
 --aCHANGE.ZTOMBSTONE2 AS 'aChange-Tombstone 2',
 --aCHANGE.ZTOMBSTONE3 AS 'aChange-Tombstone 3',
 --CASE aTRANS.ZAUTHORTS
---WHEN 0 THEN '0-Unknown'
+--WHEN 0 THEN '0-StillTesting'
 --WHEN 1 THEN '1-System'
---WHEN 2 THEN '2-Unknown'
---WHEN 3 THEN '3-Unknown'
---WHEN 4 THEN '4-Unknown'
---WHEN 5 THEN '5-Unknown'
+--WHEN 2 THEN '2-StillTesting'
+--WHEN 3 THEN '3-StillTesting'
+--WHEN 4 THEN '4-StillTesting'
+--WHEN 5 THEN '5-StillTesting'
 --WHEN 6 THEN '6-QualitySort 2147418113'
---WHEN 39 THEN '39-Unknown'
---WHEN 50 THEN '50-Unknown'
+--WHEN 39 THEN '39-StillTesting'
+--WHEN 50 THEN '50-StillTesting'
 --ELSE 'Unknown-New-Value!: '||aTRANS.ZAUTHORTS||''
 --END AS 'aTrans-Authorts',
 --aTRANS.ZAUTHOR AS 'aTrans-Author',
@@ -3838,18 +3839,6 @@ CASE
 --aTRANS.ZPROCESSIDTS AS 'aTrans-Process IDTS',
 --aTRANS.ZPROCESSID AS 'aTrans-Process ID',
 --aTRANS.ZQUERYGEN AS 'aTrans-Query Gen',
-	zAsset.ZEXTENDEDATTRIBUTES AS 'zAsset-Extended Attributes = zExtAttr-zPK',
-	zExtAttr.Z_PK AS 'zExtAttr-zPK = zAsset-zExtendedAttributes',
---zExtAttr.Z_ENT AS 'zExtAttr-zENT',
---zExtAttr.Z_OPT AS 'zExtAttr-zOPT',
-	AAAzCldMastMedData.Z_PK AS 'AAAzCldMastMedData-zPK = zAddAssetAttr&zCldMast-Media MetaData',
---AAAzCldMastMedData.Z_ENT AS 'AAAzCldMastMedData-zENT',
---AAAzCldMastMedData.Z_OPT AS 'AAAzCldMastMedData-zOPT',
-	AAAzCldMastMedData.ZADDITIONALASSETATTRIBUTES AS 'AAAzCldMastMedData-AddAssetAttr = AddAssetAttr-zPK',
-	zAddAssetAttr.ZMEDIAMETADATA AS 'zAddAssetAttr-MediaMetadata = AAAzCldMastMedData-zPK',
-	zAsset.ZMEDIAANALYSISATTRIBUTES AS 'zAsset-Media Analysis Attributes',
-	zMedAnlyAstAttr.Z_PK AS 'zMedAnlyAstAttr-zPK = zAddAssetAttr-Media Metadata',
-	zMedAnlyAstAttr.zAsset AS 'zMedAnlyAstAttr-Asset = zAsset-zPK',
 	zAddAssetAttr.ZVARIATIONSUGGESTIONSTATES AS 'zAddAssetAttr-Variation Suggestions States',
 	zAsset.ZHIGHFRAMERATESTATE AS 'zAsset-High Frame Rate State',
 	zAsset.ZVIDEOKEYFRAMETIMESCALE AS 'zAsset-Video Key Frame Time Scale',
@@ -4157,15 +4146,14 @@ FROM
 --WHERE zAsset.ZLASTSHAREDDATE > 0 --AssetHasLastShareDate
 --WHERE zAsset.ZLATITUDE > 0 or zExtAttr.ZLATITUDE > 0 --AssetHasLocation
 --WHERE zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE IN (1, 2) --AssetHasACopy
---WHERE zGenAlbum.ZCLOUDLOCALSTATE = 0 --iCldPhotos ON=Asset Share Album/iCldPhotos OFF=Asset in GenAlbum
---WHERE zGenAlbum.ZCLOUDLOCALSTATE = 1 --iCldPhotos ON=Asset In Generic Album
+--WHERE zGenAlbum.ZCLOUDLOCALSTATE = 0 --iCldPhotos ON=Asset In Other Album /iCldPhotos OFF=Asset in GenAlbum
+--WHERE zGenAlbum.ZCLOUDLOCALSTATE = 1 --iCldPhotos ON=Asset In Generic Album-1
 --WHERE zGenAlbum.ZTRASHEDSTATE = 1 --GenericAlbumInTrashRecentlyDeleted
 --WHERE zAddAssetAttr.ZIMPORTEDBY = 0 --AssetImportedbyCloudorOther
 --WHERE zAddAssetAttr.ZIMPORTEDBY = 1 --AssetImportedbyNativeBackCamera
 --WHERE zAddAssetAttr.ZIMPORTEDBY = 2 --AssetImportedbyNativeFrontCamera
 --WHERE zAddAssetAttr.ZIMPORTEDBY IN (3, 6) --AssetImportedbyThirdPartyApp
 --WHERE zAddAssetAttr.ZIMPORTEDBY IN (8, 9) --AssetImportedbyNativeApp
---WHERE zAddAssetAttr.ZIMPORTEDBYBUNDLEIDENTIFIER = 'BundleIdentifier' --AssetImportedBundle
 --WHERE zAddAssetAttr.ZPENDINGVIEWCOUNT > 0 or zAddAssetAttr.ZVIEWCOUNT > 0 --AssetHasView
 --WHERE zAddAssetAttr.ZPENDINGPLAYCOUNT > 0 or zAddAssetAttr.ZPLAYCOUNT > 0 --AssetHasPlay
 --WHERE zAddAssetAttr.ZPENDINGSHARECOUNT > 0 or zAddAssetAttr.ZSHARECOUNT > 0 --AssetHasShare
