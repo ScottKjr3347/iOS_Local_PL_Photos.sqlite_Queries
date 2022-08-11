@@ -7,9 +7,9 @@ SELECT
 CASE
 		zMigrationHistory.ZMIGRATIONTYPE 
 		WHEN 0 THEN
-		'0-Unknown' 
+		'0-StillTesting' 
 		WHEN 1 THEN
-		'1-Unknown' 
+		'1-StillTesting' 
 		WHEN 2 THEN
 		'2-iOS Update-2' 
 		WHEN 3 THEN
