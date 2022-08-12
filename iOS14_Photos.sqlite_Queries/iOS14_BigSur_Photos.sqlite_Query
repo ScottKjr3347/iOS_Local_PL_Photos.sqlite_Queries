@@ -795,8 +795,6 @@ CASE
 	zAddAssetAttr.ZTITLE AS 'zAddAssetAttr-Title',
 	zAddAssetAttr.ZACCESSIBILITYDESCRIPTION AS 'zAddAssetAttr-Accessibility Description',
 	zAsset.ZMEDIAGROUPUUID AS 'zAsset-Media Group UUID',
-	zAsset.ZFACEADJUSTMENTVERSION AS 'zAsset-Face Adjustment Version',
-	zAddAssetAttr.ZFACEREGIONS AS 'zAddAssetAttr-Face Regions HEX',
 	DateTime( zCldFeedEnt.ZENTRYDATE + 978307200, 'UNIXEPOCH' ) AS 'zCldFeedEnt-Entry Date',
 	zCldFeedEnt.ZENTRYALBUMGUID AS 'zCldFeedEnt-Album-GUID = zGenAlbum.zCloudGUID',
 	zCldFeedEnt.ZENTRYINVITATIONRECORDGUID AS 'zCldFeedEnt-Entry Invitation Record GUID',
@@ -1359,6 +1357,20 @@ CASE
 	zCldShareAlbumInvRec.ZINVITEEFULLNAME AS 'zCldShareAlbumInvRec-Invitee Full Name',
 	zCldShareAlbumInvRec.ZINVITEEHASHEDPERSONID AS 'zCldShareAlbumInvRec-Invitee Hashed Person ID',
 	zCldShareAlbumInvRec.ZINVITEEEMAILKEY AS 'zCldShareAlbumInvRec-Invitee Email Key',
+	zSharePartic.Z_PK AS 'zSharePartic-zPK',
+	zSharePartic.Z_ENT AS 'zSharePartic-zENT',
+	zSharePartic.Z_OPT AS 'zSharePartic-zOPT',
+	zSharePartic.ZROLE AS 'zSharePartic-Role',
+	zSharePartic.ZSHARE AS 'zSharePartic-Share Key = zShare-zPK',
+	zSharePartic.ZUSERIDENTIFIER AS 'zSharePartic-User ID',
+	zSharePartic.ZACCEPTANCESTATUS AS 'zSharePartic-Acceptance Status',
+	zSharePartic.ZEMAILADDRESS AS 'zSharePartic-Email Address',
+	zSharePartic.ZPHONENUMBER AS 'zSharePartic-Phone Number',
+	zSharePartic.ZUUID AS 'zSharePartic-UUID',
+	zSharePartic.ZNAMECOMPONENTS AS 'zSharePartic-Name Components',
+	zSharePartic.Z51_SHARE AS 'zSharePartic-51Share',
+	zSharePartic.ZPERMISSION AS 'zSharePartic-Permission',
+	zSharePartic.ZISCURRENTUSER AS 'zSharePartic-Is Current User',	
 CASE
 		zAddAssetAttr.ZSHARETYPE 
 		WHEN 0 THEN
@@ -1453,25 +1465,13 @@ CASE
 		WHEN 1 THEN
 		'zShare Cld Asset In Recently Deleted-1' ELSE 'Unknown-New-Value!: '||zShare.ZCLOUDDELETESTATE||'' 
 	END AS 'zShare-Cloud Delete State',
---zSharePartic.Z_PK AS 'zSharePartic-zPK',
---zSharePartic.Z_ENT AS 'zSharePartic-zENT',
---zSharePartic.Z_OPT AS 'zSharePartic-zOPT',
---zSharePartic.ZROLE AS 'zSharePartic-Role',
---zSharePartic.ZSHARE AS 'zSharePartic-Share Key = zShare-zPK',
---zSharePartic.ZUSERIDENTIFIER AS 'zSharePartic-User ID',
---zSharePartic.ZACCEPTANCESTATUS AS 'zSharePartic-Acceptance Status',
---zSharePartic.ZEMAILADDRESS AS 'zSharePartic-Email Address',
---zSharePartic.ZPHONENUMBER AS 'zSharePartic-Phone Number',
---zSharePartic.ZUUID AS 'zSharePartic-UUID',
---zSharePartic.ZNAMECOMPONENTS AS 'zSharePartic-Name Components',
---zSharePartic.Z51_SHARE AS 'zSharePartic-51Share',
---zSharePartic.ZPERMISSION AS 'zSharePartic-Permission',
---zSharePartic.ZISCURRENTUSER AS 'zSharePartic-Is Current User',
 CASE
 		
 		WHEN zAsset.ZFACEAREAPOINTS > 0 THEN
 		'Face Area Points Detected in zAsset' ELSE 'Face Area Points Not Detected in zAsset' 
 	END AS 'zFaceCrop-Face Area Points',
+	zAsset.ZFACEADJUSTMENTVERSION AS 'zAsset-Face Adjustment Version',
+	zAddAssetAttr.ZFACEREGIONS AS 'zAddAssetAttr-Face Regions HEX',
 	zDetFace.zAsset AS 'zDetFace-Asset = zAsset-zPK',
 CASE
 		zDetFace.ZASSETVISIBLE 
