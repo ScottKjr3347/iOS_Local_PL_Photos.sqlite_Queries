@@ -858,8 +858,6 @@ CASE
 	zAsset.ZCONVERSATION AS 'zAsset-Conversation',
 	zAddAssetAttr.ZPHOTOSTREAMTAGID AS 'zAddAssetAttr-Photo Stream Tag ID',
 	zAsset.ZMEDIAGROUPUUID AS 'zAsset-Media Group UUID',
-	zAsset.ZFACEADJUSTMENTVERSION AS 'zAsset-Face Adjustment Version',
-	zAddAssetAttr.ZFACEREGIONS AS 'zAddAssetAttr-Face Regions HEX',
 	zAsset.ZPHOTOANALYSISATTRIBUTES AS 'zAsset-Photo Analysis Attributes Key',
 	zPhotoAnalysisAssetAttr.Z_PK AS 'zPhotoAnalysisAssetAttr-zPK',
 	zPhotoAnalysisAssetAttr.Z_ENT AS 'zPhotoAnalysisAssetAttr-zEnt',
@@ -1618,6 +1616,8 @@ CASE
 		WHEN zAsset.ZFACEAREAPOINTS > 0 THEN
 		'Face Area Points Detected in zAsset' ELSE 'Face Area Points Not Detected in zAsset' 
 	END AS 'zFaceCrop-Face Area Points',
+	zAsset.ZFACEADJUSTMENTVERSION AS 'zAsset-Face Adjustment Version',
+	zAddAssetAttr.ZFACEREGIONS AS 'zAddAssetAttr-Face Regions HEX',
 	zAddAssetAttr.ZFACEANALYSISVERSION AS 'zAddAssetAttr-Face Analysis Version',
 	zDetFace.zAsset AS 'zDetFace-Asset=zAsset-zPK/Asset Containing Face',
 CASE
