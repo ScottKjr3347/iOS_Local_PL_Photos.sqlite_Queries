@@ -18,7 +18,7 @@ CASE
 		zAsset.ZBUNDLESCOPE 
 		WHEN 0 THEN
 		'iCldPhotos ON=Not In Shared Album / iCldPhotos OFF=Visible on Local Device-0'
-		WHEN 1 THEN
+		WHEN 2 THEN
 		'iCldPhotos ON=Asset In Cloud Shared Album-2' ELSE 'Unknown-New-Value!: '||zAsset.ZBUNDLESCOPE||''
 	END AS 'zAsset-Bundle Scope',
 CASE
