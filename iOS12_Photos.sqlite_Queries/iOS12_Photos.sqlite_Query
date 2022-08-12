@@ -740,8 +740,6 @@ CASE
 	zAddAssetAttr.ZASSETDESCRIPTION AS 'zAddAssetAttr-Asset Description',
 	zAddAssetAttr.ZTITLE AS 'zAddAssetAttr-Title',
 	zAsset.ZMEDIAGROUPUUID AS 'zAsset-Media Group UUID',
-	zAsset.ZFACEADJUSTMENTVERSION AS 'zAsset-Face Adjustment Version',
-	zAddAssetAttr.ZFACEREGIONS AS 'zAddAssetAttr-Face Regions HEX',
 	zAddAssetAttr.ZVARIATIONSUGGESTIONSTATES AS 'zAddAssetAttr-Variation Suggestions States',
 	zMedAnlyAstAttr.ZMEDIAANALYSISVERSION AS 'zMedAnlyAstAttr-Media Analysis Version',
 	zMedAnlyAstAttr.ZBESTKEYFRAMETIMESCALE AS 'zMedAnlyAstAttr-Best Key Frame Time Scale',
@@ -1506,6 +1504,8 @@ CASE
 		WHEN zAsset.ZFACEAREAPOINTS > 0 THEN
 		'Face Area Points Detected in zAsset' ELSE 'Face Area Points Not Detected in zAsset' 
 	END AS 'zFaceCrop-Face Area Points',
+	zAsset.ZFACEADJUSTMENTVERSION AS 'zAsset-Face Adjustment Version',
+	zAddAssetAttr.ZFACEREGIONS AS 'zAddAssetAttr-Face Regions HEX',
 	zDetFace.zAsset AS 'zDetFace-Asset=zAsset-zPK',
 CASE
 		zDetFace.ZASSETVISIBLE 
