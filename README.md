@@ -36,7 +36,13 @@ Some community members reached out and suggested a great change/update to my ELS
 
 Unknown-New-Value!: 440
 
-2022/8/11 Queries updated to allow for better analysis of asset file names (Filename, Original Filename, Cloud Master Filename) and asset dates (Date Created, Cloud Master Created Date, EXIF Timestamp (device time), Cloud Master Import Date, Add Date, and others)  
+2022/8/11 Queries updated to allow for better analysis of asset file names (Filename, Original Filename, Cloud Master Filename) and asset dates (Date Created, Cloud Master Created Date, EXIF Timestamp (device time), Cloud Master Import Date, Add Date, and others)
+
+
+Even though there are some artifact specific queries, I strongly recommend using the full query (iOS<*>_Photossqlite_query) for the iOS version you are analyzing. The smaller artifact specific queries will only get you the general information for a particular asset.
+
+Please contact me via [email](forensicscooter@gmail.com) or [twitter](https://twitter.com/Scott_Kjr) if you have any questions. 
+
 
 References:
 
