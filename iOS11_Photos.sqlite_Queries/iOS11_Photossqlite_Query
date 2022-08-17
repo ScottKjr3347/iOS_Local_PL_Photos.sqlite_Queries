@@ -1082,16 +1082,6 @@ CASE
 	zCldShareAlbumInvRec.ZINVITEEFULLNAME AS 'zCldShareAlbumInvRec-Invitee Full Name',
 	zCldShareAlbumInvRec.ZINVITEEHASHEDPERSONID AS 'zCldShareAlbumInvRec-Invitee Hashed Person ID',
 	zCldShareAlbumInvRec.ZINVITEEEMAILKEY AS 'zCldShareAlbumInvRec-Invitee Email Key',
---zSharePartic.Z_PK AS 'zSharePartic-zPK',
---zSharePartic.Z_ENT AS 'zSharePartic-zENT',
---zSharePartic.Z_OPT AS 'zSharePartic-zOPT',
---zSharePartic.ZSTATUS AS 'zSharePartic-Status',
---zSharePartic.ZTYPE AS 'zSharePartic-Type',
---zSharePartic.ZMOMENTSHARE AS 'zSharePartic-Moment Share Key=zShare-zPK',
---zSharePartic.ZUSERIDENTIFIER AS 'zSharePartic-User ID',
---zSharePartic.ZEMAILADDRESS AS 'zSharePartic-Email Address',
---zSharePartic.ZPHONENUMBER AS 'zSharePartic-Phone Number',
---zSharePartic.ZUUID AS 'zSharePartic-UUID',
 CASE
 		
 		WHEN zAsset.ZFACEAREAPOINTS > 0 THEN
