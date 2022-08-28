@@ -1,5 +1,7 @@
-# iOS_Photos.sqlite_Queries
-iOS Photos.sqlite queries that may help with decoding data stored in `Photos.sqlite`. These queries are based on testing, research and some community published research. These queries were written to work for the Photos.sqlite database stored at: 
+# iOS Local Photo Library Photos.sqlite Queries for iOS 11 - 16
+These queries can be used for the Photos.sqlite database which contains data for the Local Photo Library assets. These queries are based on my testing, research and some community published research.
+
+These queries were written to work for the Photos.sqlite database stored at: 
 
 iOS: /private/var/mobile/media/PhotoData/Photos.Sqlite
 
