@@ -1,5 +1,5 @@
-# iOS Local Photo Library (PL) Photos.sqlite Queries for iOS 11 - 16
-These queries can be used for the Photos.sqlite database which contains data for the Local Photo Library assets. These queries are based on my testing, research and some community published research.
+# iOS Local Photo Library (PL) Photos.sqlite Queries
+These queries can be used for the Photos.sqlite database for iOS 11 - 16 which contains data for the Local Photo Library assets. These queries are based on my testing, research and some community published research.
 
 These queries were written to work for the Photos.sqlite database stored at: 
 
