@@ -1,4 +1,5 @@
 SELECT
+	--test
 	zAsset.Z_PK AS 'zAsset-zPK',
 	zAddAssetAttr.Z_PK AS 'zAddAssetAttr-zPK',
 	zAsset.ZUUID AS 'zAsset-UUID = store.cloudphotodb',
