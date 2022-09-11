@@ -40,6 +40,11 @@ Unknown-New-Value!: 440
 
 2022/8/11 Queries updated to allow for better analysis of asset file names (Filename, Original Filename, Cloud Master Filename) and asset dates (Date Created, Cloud Master Created Date, EXIF Timestamp (device time), Cloud Master Import Date, Add Date, and others)
 
+2022/9/11 Most significate change to all queries is the updated decoding to the following:
+ZASSET table ZSAVEDASSETTYPE column data
+ZADDITIONALASSETATTRIBUTES table ZIMPORTEDBY column data
+Queries are now default sorted by ZASSET.ZADDEDDATE
+iOS 15 and iOS 16 queries, I've added decoding for the Local Photo Library Photos.sqlite data for Shared with You (Syndication) Photo Library asset data. 
 
 Even though there are some artifact specific queries, I strongly recommend using the full query (iOS<*>_Photossqlite_query) for the iOS version you are analyzing. The smaller artifact specific queries will only get you the general information for a particular asset.
 
