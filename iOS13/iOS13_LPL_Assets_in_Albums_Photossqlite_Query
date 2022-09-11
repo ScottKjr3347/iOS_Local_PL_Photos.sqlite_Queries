@@ -1,12 +1,19 @@
 SELECT
 	zAsset.Z_PK AS 'zAsset-zPK',
 	zAddAssetAttr.Z_PK AS 'zAddAssetAttr-zPK',
+	zAsset.ZUUID AS 'zAsset-UUID = store.cloudphotodb',
+	zAsset.ZCLOUDASSETGUID AS 'zAsset-Cloud_Asset_GUID = store.cloudphotodb',
+	zCldMast.ZCLOUDMASTERGUID AS 'zCldMast-Cloud_Master_GUID = store.cloudphotodb',
+	zGenAlbum.ZCLOUDGUID AS 'zGenAlbum-Cloud_GUID = store.cloudphotodb',
+	zShare.ZSCOPEIDENTIFIER AS 'zShare-Scope ID = store.cloudphotodb',
+	zAddAssetAttr.ZORIGINALASSETSUUID AS 'zAddAssetAttr-Original Assets UUID',
+	zAddAssetAttr.ZPUBLICGLOBALUUID AS 'zAddAssetAttr-Public Global UUID',
 CASE
 		zGenAlbum.ZCLOUDLOCALSTATE 
 		WHEN 0 THEN
-		'iCldPhotos ON=Asset In Other Album/iCldPhotos OFF=Asset in GenAlbum-0' 
+		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Not Synced-0'
 		WHEN 1 THEN
-		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZCLOUDLOCALSTATE||'' 
+		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: '||zGenAlbum.ZCLOUDLOCALSTATE||''
 	END AS 'zGenAlbum-Cloud Local State',
 CASE
 		zGenAlbum.ZKIND 
@@ -118,46 +125,62 @@ CASE
 	zShare.ZUPLOADEDPHOTOSCOUNT AS 'zShare-Uploaded Photos Count',
 	zShare.ZVIDEOSCOUNT AS 'zShare-Videos Count',
 	zShare.ZUPLOADEDVIDEOSCOUNT AS 'zShare-Uploaded Videos Count',	
+CASE	AAAzCldMastMedData.Z_OPT
+		WHEN 1 THEN
+		'StillTesting-Cloud-1'
+		WHEN 2 THEN
+		'StillTesting-This Device-2'
+		WHEN 3 THEN
+		'StillTesting-Muted-3' ELSE 'Unknown-New-Value!: '||AAAzCldMastMedData.Z_OPT||''
+	END AS 'AAAzCldMastMedData-zOPT',
 	AAAzCldMastMedData.ZDATA AS 'AAAzCldMastMedData-Data/HEX',
+CASE	CMzCldMastMedData.Z_OPT
+		WHEN 1 THEN
+		'StillTesting-Cloud-1'
+		WHEN 2 THEN
+		'StillTesting-This Device-2'
+		WHEN 3 THEN
+		'StillTesting-Muted-3' ELSE 'Unknown-New-Value!: '||CMzCldMastMedData.Z_OPT||''
+	END AS 'CldMasterzCldMastMedData-zOPT',	
 	CMzCldMastMedData.ZDATA AS 'CMzCldMastMedData-Data/HEX',
 	zExtAttr.ZCAMERAMAKE AS 'zExtAttr-Camera Make',
 	zExtAttr.ZCAMERAMODEL AS 'zExtAttr-Camera Model',
 	zExtAttr.ZLENSMODEL AS 'zExtAttr-Lens Model',
 CASE
-		zAsset.ZCLOUDLOCALSTATE 
+		zAsset.ZCLOUDLOCALSTATE
 		WHEN 0 THEN
-		'iCldPhotos ON=Asset in Shared Album / iCldPhotos OFF=Not Synced-0' 
+		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Not Synced-0' 
 		WHEN 1 THEN
-		'iCldPhotos ON=Asset Synced with iCloud-1' ELSE 'Unknown-New-Value!: '||zAsset.ZCLOUDLOCALSTATE||''
+		'iCldPhotos ON=Asset Synced with iCloud-1' ELSE 'Unknown-New-Value!: '||zAsset.ZCLOUDLOCALSTATE||'' 
 	END AS 'zAsset-Cloud Local State',
 CASE
 		zAddAssetAttr.ZIMPORTEDBY 
 		WHEN 0 THEN
-		'Cloud-Other-0' 
+		'0-Cloud-Other-0' 
 		WHEN 1 THEN
-		'Native-Back-Camera-1' 
+		'1-Native-Back-Camera-1' 
 		WHEN 2 THEN
-		'Native-Front-Camera-2' 
+		'2-Native-Front-Camera-2' 
 		WHEN 3 THEN
-		'Third-Party-App-3' 
+		'3-Third-Party-App-3' 
 		WHEN 4 THEN
-		'4-StillTesting' 
+		'4-StillTesting-4' 
 		WHEN 5 THEN
-		'5-StillTesting' 
+		'5-PhotoBooth_PL-Asset-5' 
 		WHEN 6 THEN
-		'Third-Party-App-6' 
+		'6-Third-Party-App-6' 
 		WHEN 7 THEN
-		'7-StillTesting' 
+		'7-StillTesting-7' 
 		WHEN 8 THEN
-		'Native-App-8' 
+		'8-System-Package-App-8' 
 		WHEN 9 THEN
-		'Native-App-9' 
+		'9-Native-App-9' 
 		WHEN 10 THEN
-		'10-StillTesting' 
+		'10-StillTesting-10' 
 		WHEN 11 THEN
-		'11-StillTesting' 
+		'11-StillTesting-11' 
 		WHEN 12 THEN
-		'12-StillTesting' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZIMPORTEDBY||'' 
+		'12-SWY_Syndication_PL-12' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZIMPORTEDBY||''  
 	END AS 'zAddAssetAttr-Imported by',
 	zAddAssetAttr.ZCREATORBUNDLEID AS 'zAddAssetAttr-Creator Bundle ID',
 CASE
@@ -171,24 +194,26 @@ CASE
 CASE
 		zAsset.ZSAVEDASSETTYPE 
 		WHEN 0 THEN
-		'Saved-via-other-source-0' 
+		'0-Saved-via-other-source-0' 
 		WHEN 1 THEN
-		'1-StillTesting' 
+		'1-StillTesting-1' 
 		WHEN 2 THEN
-		'2-StillTesting' 
+		'2-StillTesting-2' 
 		WHEN 3 THEN
-		'DCIM-APPLE-3' 
+		'3-Local-Photo-Library-Asset-3' 
 		WHEN 4 THEN
-		'PhotoCloudSharingData-4' 
+		'4-Photo-Cloud-Sharing-Data-Asset-4' 
 		WHEN 5 THEN
-		'5-StillTesting' 
+		'5-PhotoBooth_Photo-Library-Asset-5' 
 		WHEN 6 THEN
-		'CPLAssets-6' 
+		'6-Cloud-Photo-Library-Asset-6' 
 		WHEN 7 THEN
-		'7-StillTesting' 
+		'7-StillTesting-7' 
 		WHEN 8 THEN
-		'CMMAssets-8' ELSE 'Unknown-New-Value!: '||zAsset.ZSAVEDASSETTYPE||'' 
-	END AS 'zAsset-Saved Asset Type',	
+		'8-Cloud-Master-Moment-Shared-Asset-8'
+		WHEN 12 THEN
+		'12-SWY-Syndication-Photo-Library-Asset / Auto-Displayed_in_LPL-12' ELSE 'Unknown-New-Value!: '||zAsset.ZSAVEDASSETTYPE||'' 
+	END AS 'zAsset-Saved Asset Type',
 	zAsset.ZFILENAME AS 'zAsset-Filename',
 	zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
 	zCldMast.ZORIGINALFILENAME AS 'zCldMast-Org Filename',
@@ -202,12 +227,15 @@ CASE
 	DateTime ( zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Add Date',
 	DateTime ( zAsset.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Modification Date',
 	DateTime ( zMedAnlyAstAttr.ZMEDIAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zMedAnlyAstAttr-Media Analysis Timestamp',
+	DateTime ( zAsset.ZANALYSISSTATEMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Analysis State Modificaion Date',
 	zAddAssetAttr.ZPENDINGVIEWCOUNT AS 'zAddAssetAttr-Pending View Count',
 	zAddAssetAttr.ZVIEWCOUNT AS 'zAddAssetAttr-View Count',
 	zAddAssetAttr.ZPENDINGPLAYCOUNT AS 'zAddAssetAttr-Pending Play Count',
 	zAddAssetAttr.ZPLAYCOUNT AS 'zAddAssetAttr-Play Count',
 	zAddAssetAttr.ZPENDINGSHARECOUNT AS 'zAddAssetAttr-Pending Share Count',
 	zAddAssetAttr.ZSHARECOUNT AS 'zAddAssetAttr-Share Count',
+	DateTime ( zAsset.ZLASTSHAREDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Last Shared Date',
+	zAddAssetAttr.ZSHAREORIGINATOR AS 'zAddAssetAttr-Share Originator',
 CASE
 		zAddAssetAttr.ZALLOWEDFORANALYSIS 
 		WHEN 0 THEN
@@ -216,10 +244,7 @@ CASE
 		'Asset Allowed for Analysis-1' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZALLOWEDFORANALYSIS||'' 
 	END AS 'zAddAssetAttr-Allowed for Analysis',
 	zAddAssetAttr.ZSCENEANALYSISVERSION AS 'zAddAssetAttr-Scene Analysis Version',
-	DateTime ( zAddAssetAttr.ZSCENEANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zAddAssetAttr-Scene Analysis Timestamp',
-	DateTime ( zAsset.ZANALYSISSTATEMODIFICATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Analysis State Modificaion Date',
-	DateTime ( zAsset.ZLASTSHAREDDATE + 978307200, 'UNIXEPOCH' ) AS 'zAsset-Last Shared Date',
-	zAddAssetAttr.ZSHAREORIGINATOR AS 'zAddAssetAttr-Share Originator',
+	DateTime ( zAddAssetAttr.ZSCENEANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH' ) AS 'zAddAssetAttr-Scene Analysis Timestamp',	
 CASE
 		zAsset.ZCLOUDISMYASSET 
 		WHEN 0 THEN
@@ -477,11 +502,10 @@ CASE
 CASE
 		ParentzGenAlbum.ZCLOUDLOCALSTATE 
 		WHEN 0 THEN
-		'iCldPhotos ON=Asset In Other Album /iCldPhotos OFF=Asset in GenAlbum-0' 
+		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Not Synced-0'
 		WHEN 1 THEN
-		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: '||ParentzGenAlbum.ZCLOUDLOCALSTATE||'' 
+		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: '||ParentzGenAlbum.ZCLOUDLOCALSTATE||''
 	END AS 'ParentzGenAlbum-Cloud Local State',
-	ParentzGenAlbum.ZPENDINGITEMSCOUNT AS 'ParentzGenAlbum-Pending Items Count',
 CASE
 		ParentzGenAlbum.ZPENDINGITEMSTYPE 
 		WHEN 1 THEN
@@ -743,21 +767,23 @@ CASE
 	zSharePartic.ZUUID AS 'zSharePartic-UUID',
 	zSharePartic.ZNAMECOMPONENTS AS 'zSharePartic-Name Components',
 CASE
-		zAddAssetAttr.ZSHARETYPE 
+		zAddAssetAttr.ZSHARETYPE
 		WHEN 0 THEN
-		'Not Cloud Master Moment Asset-0' 
+		'Not Cloud Master Moment Share Asset-0' 
 		WHEN 1 THEN
-		'Cloud Master Moment Asset-1' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZSHARETYPE||'' 
-	END AS 'zAddAssetAttr-Share Type',
+		'Cloud Master Moment Share Asset-1' ELSE 'Unknown-New-Value!: '||zAddAssetAttr.ZSHARETYPE||''  
+	END AS 'zAddAssetAttr-Share Type/CMMS',
 	zCldMast.ZMOMENTSHARE AS 'zCldMast-Moment Share Key=zShare-zPK',
 	zAsset.ZMOMENTSHARE AS 'zAsset-Moment Share Key=zShare-zPK',
 	zShare.Z_PK AS 'zShare-zPK',
 	zShare.Z_ENT AS 'zShare-zENT',
-	zShare.Z_OPT as 'zShare-zOPT',
+	zShare.Z_OPT AS 'zShare-zOPT',
 CASE
-		zShare.ZSTATUS 
+		zShare.ZSTATUS
 		WHEN 1 THEN
-		'Asset Shared via Copy iCloud Link-1' ELSE 'Unknown-New-Value!: '||zShare.ZSTATUS||'' 
+		'Asset Shared via Copy iCloud Link-1'
+		WHEN 3 THEN
+		'CMM_SWY_Syndication_Asset-3' ELSE 'Unknown-New-Value!: '||zShare.ZSTATUS||'' 
 	END AS 'zShare-Status',
 	DateTime( zShare.ZCREATIONDATE + 978307200, 'UNIXEPOCH' ) AS 'zShare-Creation Date',
 	DateTime( zShare.ZSTARTDATE + 978307200, 'UNIXEPOCH' ) AS 'zShare-Start Date',
@@ -819,6 +845,7 @@ FROM
 	ZGENERICASSET zAsset
 	LEFT JOIN ZADDITIONALASSETATTRIBUTES zAddAssetAttr ON zAddAssetAttr.Z_PK = zAsset.ZADDITIONALATTRIBUTES
 	LEFT JOIN ZEXTENDEDATTRIBUTES zExtAttr ON zExtAttr.Z_PK = zAsset.ZEXTENDEDATTRIBUTES
+	LEFT JOIN ZINTERNALRESOURCE zIntResou ON zIntResou.zAsset = zAsset.Z_PK
 	LEFT JOIN Z_26ASSETS z26Assets ON z26Assets.Z_34ASSETS = zAsset.Z_PK
 	LEFT JOIN ZGENERICALBUM zGenAlbum ON zGenAlbum.Z_PK = z26Assets.Z_26ALBUMS
 	LEFT JOIN Z_25ALBUMLISTS z25AlbumLists ON z25AlbumLists.Z_25ALBUMS = zGenAlbum.Z_PK
@@ -837,4 +864,4 @@ FROM
 	LEFT JOIN ZMOMENTSHAREPARTICIPANT zSharePartic ON zSharePartic.ZMOMENTSHARE = zShare.Z_PK	
   WHERE zGenAlbum.ZCLOUDLOCALSTATE IS NOT NULL
 ORDER BY
-	zAsset.ZDATECREATED
+	zAsset.ZADDEDDATE
