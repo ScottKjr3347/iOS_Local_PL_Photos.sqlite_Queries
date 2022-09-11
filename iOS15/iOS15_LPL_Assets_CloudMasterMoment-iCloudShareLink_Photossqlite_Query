@@ -1,6 +1,13 @@
 SELECT
 	zAsset.Z_PK AS 'zAsset-zPK',
 	zAddAssetAttr.Z_PK AS 'zAddAssetAttr-zPK',
+	zAsset.ZUUID AS 'zAsset-UUID = store.cloudphotodb',
+	zAsset.ZCLOUDASSETGUID AS 'zAsset-Cloud_Asset_GUID = store.cloudphotodb',
+	zAsset.ZCLOUDCOLLECTIONGUID AS 'zAsset.Cloud Collection GUID',
+	zCldMast.ZCLOUDMASTERGUID AS 'zCldMast-Cloud_Master_GUID = store.cloudphotodb',
+	zGenAlbum.ZCLOUDGUID AS 'zGenAlbum-Cloud_GUID = store.cloudphotodb',
+	zAddAssetAttr.ZORIGINALASSETSUUID AS 'zAddAssetAttr-Original Assets UUID',
+	zAddAssetAttr.ZPUBLICGLOBALUUID AS 'zAddAssetAttr-Public Global UUID',
 	zShare.ZSCOPEIDENTIFIER AS 'zShare-Scope ID = store.cloudphotodb',
 CASE
 		zAddAssetAttr.ZSHARETYPE 
@@ -368,6 +375,7 @@ FROM
 	ZASSET zAsset
 	LEFT JOIN ZADDITIONALASSETATTRIBUTES zAddAssetAttr ON zAddAssetAttr.Z_PK = zAsset.ZADDITIONALATTRIBUTES
 	LEFT JOIN ZEXTENDEDATTRIBUTES zExtAttr ON zExtAttr.Z_PK = zAsset.ZEXTENDEDATTRIBUTES
+	LEFT JOIN ZINTERNALRESOURCE zIntResou ON zIntResou.zAsset = zAsset.Z_PK
 	LEFT JOIN Z_27ASSETS z27Assets ON z27Assets.Z_3ASSETS = zAsset.Z_PK
 	LEFT JOIN ZGENERICALBUM zGenAlbum ON zGenAlbum.Z_PK = z27Assets.Z_27ALBUMS
 	LEFT JOIN Z_26ALBUMLISTS z26AlbumLists ON z26AlbumLists.Z_26ALBUMS = zGenAlbum.Z_PK
