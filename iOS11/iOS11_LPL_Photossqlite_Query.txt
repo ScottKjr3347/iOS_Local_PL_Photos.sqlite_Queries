@@ -137,7 +137,7 @@ CASE
 CASE
 		zGenAlbum.ZCLOUDLOCALSTATE 
 		WHEN 0 THEN
-		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Not Synced-0' 
+		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Generic Album-0' 
 		WHEN 1 THEN
 		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: ' || zGenAlbum.ZCLOUDLOCALSTATE || '' 
 	END AS 'zGenAlbum-Cloud Local State',
@@ -759,7 +759,7 @@ CASE
 CASE
 		ParentzGenAlbum.ZCLOUDLOCALSTATE 
 		WHEN 0 THEN
-		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Not Synced-0' 
+		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Generic Album-0' 
 		WHEN 1 THEN
 		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: ' || ParentzGenAlbum.ZCLOUDLOCALSTATE || '' 
 	END AS 'ParentzGenAlbum-Cloud Local State',
@@ -1667,22 +1667,26 @@ FROM
 	LEFT JOIN ZMOMENTLIST YearzMomentList ON YearzMomentList.Z_PK = zMoment.ZYEARMOMENTLIST
 	LEFT JOIN ZMOMENTLIST MegaYMzMomentList ON MegaYMzMomentList.Z_PK = zMoment.ZMEGAMOMENTLIST 
 --WHERE zAsset.ZDATECREATED BETWEEN '#####' AND '#####' --AssetFilterBasedonCreatedDate
---WHERE zAsset.ZSAVEDASSETTYPE = 3 --AssetTypeisDCIM
+--WHERE zAsset.ZSAVEDASSETTYPE = 3 --AssetTypeisapartoftheLPL
 --WHERE zAsset.ZSAVEDASSETTYPE = 4 --AssetTypeisPhotoCloudSharingData
 --WHERE zAsset.ZSAVEDASSETTYPE = 6 --AssetTypeisCPLAsset
 --WHERE zAsset.ZSAVEDASSETTYPE = 8 --AssetTypeisCMMCopyiCloudLink
+--WHERE zShare.ZSTATUS = 1 --AssetSharedviaCopyiCLoudLinkisCMMAsset	 
 --WHERE zAsset.ZLASTSHAREDDATE > 0 --AssetHasLastShareDate
---WHERE zAsset.ZLATITUDE > 0 --AssetHasLocation
+--WHERE zAsset.ZLATITUDE > 0 or zExtAttr.ZLATITUDE > 0 --AssetHasLocation
+--WHERE zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE IN (1, 2) --AssetHasACopy
 --WHERE zGenAlbum.ZKIND = 1505 --zGenAlbum-Kind-Cloud_Shared_Album-1505
 --WHERE zGenAlbum.ZKIND = 2 --zGenAlbum-Kind-Local_Device-iCloud_Photos_Album-2
---WHERE zGenAlbum.ZCLOUDLOCALSTATE = 0 --iCldPhotos ON=Asset Share Album/iCldPhotos OFF=Asset in GenAlbum
+--WHERE zGenAlbum.ZCLOUDLOCALSTATE = 0 --iCldPhotos ON=Asset In Other Album/iCldPhotos OFF=Asset in GenAlbum
 --WHERE zGenAlbum.ZCLOUDLOCALSTATE = 1 --iCldPhotos ON=Asset In Generic Album
 --WHERE zGenAlbum.ZTRASHEDSTATE = 1 --GenericAlbumInTrashRecentlyDeleted
 --WHERE zAddAssetAttr.ZIMPORTEDBY = 0 --AssetImportedbyCloudorOther
 --WHERE zAddAssetAttr.ZIMPORTEDBY = 1 --AssetImportedbyNativeBackCamera
 --WHERE zAddAssetAttr.ZIMPORTEDBY = 2 --AssetImportedbyNativeFrontCamera
 --WHERE zAddAssetAttr.ZIMPORTEDBY IN (3, 6) --AssetImportedbyThirdPartyApp
---WHERE zAddAssetAttr.ZIMPORTEDBY IN (8, 9) --AssetImportedbyNativeApp
+--WHERE zAddAssetAttr.ZIMPORTEDBY IN (8) --AssetImportedbySystemPackageApp
+--WHERE zAddAssetAttr.ZIMPORTEDBY IN (9) --AssetImportedbyNativeApp
+--WHERE zAddAssetAttr.ZSYNDICATIONIDENTIFIER IS NOT NULL
 --WHERE zAddAssetAttr.ZIMPORTEDBYBUNDLEIDENTIFIER = 'BundleIdentifier' --AssetImportedBundle
 --WHERE zAddAssetAttr.ZPENDINGVIEWCOUNT > 0 or zAddAssetAttr.ZVIEWCOUNT > 0 --AssetHasView
 --WHERE zAddAssetAttr.ZPENDINGPLAYCOUNT > 0 or zAddAssetAttr.ZPLAYCOUNT > 0 --AssetHasPlay
@@ -1695,6 +1699,8 @@ FROM
 --WHERE zCldSharedCommentLiked.ZISLIKE = 1 --AssetisLiked
 --WHERE zCldShareAlbumInvRec.ZISMINE = 1 --CloudSharedAlbumInviteRecordisMyInvitetoAlbum
 --WHERE zAsset.ZCLOUDISMYASSET = 1 --AssetInCloudSharedIsMyAsset
+--WHERE zIntResou.ZCLOUDPREFETCHCOUNT > 0 --AssetSyncedBetweeniCloudandDevice
+--WHERE zIntResou.ZCLOUDLOCALSTATE = 0 --InternalResourceNotAvailinCloud-0 
 --WHERE zAsset.ZFACEAREAPOINTS > 0 --AssetHasDetectedFace
 --WHERE zFaceCrop.ZRESOURCEDATA > 0 --AssetHasFaceCrop
 	
