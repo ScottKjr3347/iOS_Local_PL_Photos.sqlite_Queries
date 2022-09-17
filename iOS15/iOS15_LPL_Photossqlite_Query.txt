@@ -4059,7 +4059,7 @@ FROM
 	LEFT JOIN Z_3SUGGESTIONSBEINGREPRESENTATIVEASSETS z3SuggBRA ON z3SuggBRA.Z_3REPRESENTATIVEASSETS1 = zAsset.Z_PK
 	LEFT JOIN ZSUGGESTION SBRAzSugg ON SBRAzSugg.Z_PK = z3SuggBRA.Z_55SUGGESTIONSBEINGREPRESENTATIVEASSETS
 --WHERE zAsset.ZDATECREATED BETWEEN '#####' AND '#####' --AssetFilterBasedonCreatedDate
---WHERE zAsset.ZSAVEDASSETTYPE = 3 --AssetTypeisDCIM
+--WHERE zAsset.ZSAVEDASSETTYPE = 3 --AssetTypeisapartoftheLPL
 --WHERE zAsset.ZSAVEDASSETTYPE = 4 --AssetTypeisPhotoCloudSharingData
 --WHERE zAsset.ZSAVEDASSETTYPE = 6 --AssetTypeisCPLAsset
 --WHERE zAsset.ZSAVEDASSETTYPE = 8 --AssetTypeisCMMCopyiCloudLink
@@ -4076,7 +4076,8 @@ FROM
 --WHERE zAddAssetAttr.ZIMPORTEDBY = 1 --AssetImportedbyNativeBackCamera
 --WHERE zAddAssetAttr.ZIMPORTEDBY = 2 --AssetImportedbyNativeFrontCamera
 --WHERE zAddAssetAttr.ZIMPORTEDBY IN (3, 6) --AssetImportedbyThirdPartyApp
---WHERE zAddAssetAttr.ZIMPORTEDBY IN (8, 9) --AssetImportedbyNativeApp
+--WHERE zAddAssetAttr.ZIMPORTEDBY IN (8) --AssetImportedbySystemPackageApp
+--WHERE zAddAssetAttr.ZIMPORTEDBY IN (9) --AssetImportedbyNativeApp
 --WHERE zAddAssetAttr.ZSYNDICATIONIDENTIFIER IS NOT NULL
 --WHERE zAddAssetAttr.ZIMPORTEDBYBUNDLEIDENTIFIER = 'BundleIdentifier' --AssetImportedBundle
 --WHERE zAddAssetAttr.ZPENDINGVIEWCOUNT > 0 or zAddAssetAttr.ZVIEWCOUNT > 0 --AssetHasView
@@ -4094,7 +4095,6 @@ FROM
 --WHERE zIntResou.ZCLOUDLOCALSTATE = 0 --InternalResourceNotAvailinCloud-0 
 --WHERE zAsset.ZFACEAREAPOINTS > 0 --AssetHasDetectedFace
 --WHERE zFaceCrop.ZRESOURCEDATA > 0 --AssetHasFaceCrop
---WHERE zAddAssetAttr.ZSYNDICATIONIDENTIFIER IS NOT NULL
 	
 ORDER BY
 	zAsset.ZADDEDDATE
