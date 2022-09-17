@@ -133,7 +133,7 @@ CASE
 CASE
 		zGenAlbum.ZCLOUDLOCALSTATE 
 		WHEN 0 THEN
-		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Not Synced-0' 
+		'iCldPhotos ON=Asset In Shared/Other Album/iCldPhotos OFF=Generic Album-0' 
 		WHEN 1 THEN
 		'iCldPhotos ON=Asset In Generic Album-1' ELSE 'Unknown-New-Value!: ' || zGenAlbum.ZCLOUDLOCALSTATE || '' 
 	END AS 'zGenAlbum-Cloud Local State',
