@@ -48,6 +48,9 @@ iOS 15 and iOS 16 queries, I've added decoding for the Local Photo Library Photo
 
 Even though there are some artifact specific queries, I strongly recommend using the full query (iOS<*>_Photossqlite_query) for the iOS version you are analyzing. The smaller artifact specific queries will only get you the general information for a particular asset.
 
+
+2022/9/20 Omitted query statements have been removed from the published queries. Please contact me directly if you believe there is data missing that you would like to have included in a query.  Additionally, I have moved the WHERE statements to a separate document for your reference.   
+
 Please contact me via [email](forensicscooter@gmail.com) or [twitter](https://twitter.com/Scott_Kjr) if you have any questions. 
 
 
