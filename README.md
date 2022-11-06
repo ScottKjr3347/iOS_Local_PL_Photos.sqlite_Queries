@@ -49,10 +49,11 @@ iOS 15 and iOS 16 queries, I've added decoding for the Local Photo Library Photo
 Even though there are some artifact specific queries, I strongly recommend using the full query (iOS<*>_Photossqlite_query) for the iOS version you are analyzing. The smaller artifact specific queries will only get you the general information for a particular asset.
 
 
-2022/9/20 Omitted query statements have been removed from the published queries. Please contact me directly if you believe there is data missing that you would like to have included in a query.  Additionally, I have moved the WHERE statements to a separate document for your reference.   
+2022/9/20 Omitted query statements have been removed from the published queries. Please contact me directly if you believe there is data missing that you would like to have included in a query.  Additionally, I have moved the WHERE statements to a separate document for your reference.  
+
+2022/11/6 Please DISREGARD all older queries for iOS versions 13, 14, 15, and 16, that I have published and shared. I have completed some significant research and I have updated all queries. These updated queries are based on the “Basic” query for each iOS version. You will notice a “Large” query for each iOS version also. This large query will include table data that is not included in the “Basic” and other targeted queries. If you cannot find what you are looking for in the Basic or smaller targeted queries, I would recommend using the “Large” query. You can use WHERE statements with the Large query to narrow your results. All queries, with the exception of the "Very-Basic" query, now include data from the Internal Resource Table. This table contains important information in determining if your device acquisition only contains smaller/optimized media assets or the original/full-sized asset. This data should be reviewed to determine if iCloud Photos data is necessary for your analysis.
 
 Please contact me via [email](forensicscooter@gmail.com) or [twitter](https://twitter.com/Scott_Kjr) if you have any questions. 
-
 
 References:
 
