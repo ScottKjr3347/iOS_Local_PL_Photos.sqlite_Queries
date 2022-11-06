@@ -1,0 +1,50 @@
+--WHERE zAsset.ZDATECREATED BETWEEN '#####' AND '#####' --AssetFilterBasedonCreatedDate
+--WHERE zAsset.ZSAVEDASSETTYPE = 3 --AssetTypeisapartoftheLPL
+--WHERE zAsset.ZSAVEDASSETTYPE = 4 --AssetTypeisPhotoCloudSharingData
+--WHERE zAsset.ZSAVEDASSETTYPE = 6 --AssetTypeisCPLAsset
+--WHERE zAsset.ZSAVEDASSETTYPE = 8 --AssetTypeisCMMCopyiCloudLink
+--WHERE zShare.ZSTATUS = 1 --AssetSharedviaCopyiCLoudLinkisCMMAsset	 
+--WHERE zAsset.ZLASTSHAREDDATE > 0 --AssetHasLastShareDate
+--WHERE zAsset.ZLATITUDE > 0 or zExtAttr.ZLATITUDE > 0 --AssetHasLocation
+--WHERE zAddAssetAttr.ZDESTINATIONASSETCOPYSTATE IN (1, 2) --AssetHasACopy
+--WHERE zGenAlbum.ZKIND = 1505 --zGenAlbum-Kind-Cloud_Shared_Album-1505
+--WHERE zGenAlbum.ZKIND = 2 --zGenAlbum-Kind-Local_Device-iCloud_Photos_Album-2
+--WHERE zGenAlbum.ZCLOUDLOCALSTATE = 0 --iCldPhotos ON=Asset In Other Album/iCldPhotos OFF=Asset in GenAlbum
+--WHERE zGenAlbum.ZCLOUDLOCALSTATE = 1 --iCldPhotos ON=Asset In Generic Album
+--WHERE zGenAlbum.ZTRASHEDSTATE = 1 --GenericAlbumInTrashRecentlyDeleted
+--WHERE zAddAssetAttr.ZIMPORTEDBY = 0 --AssetImportedbyCloudorOther
+--WHERE zAddAssetAttr.ZIMPORTEDBY = 1 --AssetImportedbyNativeBackCamera
+--WHERE zAddAssetAttr.ZIMPORTEDBY = 2 --AssetImportedbyNativeFrontCamera
+--WHERE zAddAssetAttr.ZIMPORTEDBY IN (3, 6) --AssetImportedbyThirdPartyApp
+--WHERE zAddAssetAttr.ZIMPORTEDBY IN (8) --AssetImportedbySystemPackageApp
+--WHERE zAddAssetAttr.ZIMPORTEDBY IN (9) --AssetImportedbyNativeApp
+--WHERE zAddAssetAttr.ZSYNDICATIONIDENTIFIER IS NOT NULL
+--WHERE zAddAssetAttr.ZIMPORTEDBYBUNDLEIDENTIFIER = 'BundleIdentifier' --AssetImportedBundle
+--WHERE zAddAssetAttr.ZPENDINGVIEWCOUNT > 0 or zAddAssetAttr.ZVIEWCOUNT > 0 --AssetHasView
+--WHERE zAddAssetAttr.ZPENDINGPLAYCOUNT > 0 or zAddAssetAttr.ZPLAYCOUNT > 0 --AssetHasPlay
+--WHERE zAddAssetAttr.ZPENDINGSHARECOUNT > 0 or zAddAssetAttr.ZSHARECOUNT > 0 --AssetHasShare
+--WHERE zAsset.ZHASADJUSTMENTS = 1 --AssetHasAdjustments
+--WHERE zAsset.ZFAVORITE = 1 --AssetisFavorite
+--WHERE zAsset.ZHIDDEN = 1 --AssetisHidden
+--WHERE zAsset.ZTRASHEDSTATE = 1 --AssetInTrashRecentlyDeleted
+--WHERE zAssetDes.ZLONGDESCRIPTION > 0 or zAddAssetAttr.ZTITLE > 0 or zCldSharedComment.ZCOMMENTTEXT > 0 --AssethasComments
+--WHERE zCldSharedCommentLiked.ZISLIKE = 1 --AssetisLiked
+--WHERE zCldShareAlbumInvRec.ZISMINE = 1 --CloudSharedAlbumInviteRecordisMyInvitetoAlbum
+--WHERE zAsset.ZCLOUDISMYASSET = 1 --AssetInCloudSharedIsMyAsset
+--WHERE zIntResou.ZCLOUDPREFETCHCOUNT > 0 --AssetSyncedBetweeniCloudandDevice
+--WHERE zIntResou.ZCLOUDLOCALSTATE = 0 --InternalResourceNotAvailinCloud-0 
+--WHERE zAsset.ZFACEAREAPOINTS > 0 --AssetHasDetectedFace
+--WHERE zFaceCrop.ZRESOURCEDATA > 0 --AssetHasFaceCrop
+--WHERE zIntResou.ZRECIPEID = 0 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 65739 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 65743 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 65749 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 65938 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 131072 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 131081 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 131272 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 131275 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 131277 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 131475 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 327683 AND zIntResou.ZLOCALAVAILABILITY = 1
+--WHERE zIntResou.ZRECIPEID = 327687 AND zIntResou.ZLOCALAVAILABILITY = 1 
