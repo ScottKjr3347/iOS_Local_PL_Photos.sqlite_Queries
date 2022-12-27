@@ -60,8 +60,8 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDISDELETABLE || ''
   END AS 'zAsset-Cloud is deletable/Asset',
   CASE zAsset.ZCLOUDLOCALSTATE
-    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-Other_Album/iCldPhotos_OFF=Not_Synced-0'
-    WHEN 1 THEN 'iCldPhotos ON=Asset_Synced_with_iCloud-1'
+    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-or-OtherAlbum/iCldPhotos_OFF=Not_Synced-0'
+    WHEN 1 THEN 'iCldPhotos ON=Asset_Can-Be-or-Has-Been_Synced_with_iCloud-1'
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDLOCALSTATE || ''
   END AS 'zAsset-Cloud_Local_State',
   CASE zAsset.ZVISIBILITYSTATE
@@ -319,17 +319,17 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     WHEN 1 THEN '1-StillTesting-1'
     WHEN 2 THEN '2-StillTesting-2'
     WHEN 3 THEN '3-JPG-Asset_Only_PhDa/Thumb/V2-3'
-    WHEN 4 THEN '4-LPL-JPG-Asset_CPL-Asset-HEIC-JPG-JPEG-MOV-PNG-4'
-    WHEN 5 THEN '5-Asset_synced_via_iCloud_Photos_2_Device-5'
+    WHEN 4 THEN '4-LPL-JPG-Asset_CPLAsset-OtherType-4'
+    WHEN 5 THEN '5-Asset_synced_CPL_2_Device-5'
     WHEN 6 THEN '6-StillTesting-6'
-    WHEN 7 THEN '7-LPL-poster-JPG-Asset_CPL-Asset-MP4-7'
-    WHEN 8 THEN '8-LPL-JPG_Asset_CPL-Asset-LivePhoto-MOV-8'
+    WHEN 7 THEN '7-LPL-poster-JPG-Asset_CPLAsset-MP4-7'
+    WHEN 8 THEN '8-LPL-JPG_Asset_CPLAsset-LivePhoto-MOV-8'
     WHEN 9 THEN '9-CPL_MP4_Asset_Saved_2_LPL-9'
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDPLACEHOLDERKIND || ''
   END AS 'zAsset-Cloud Placeholder Kind',
   CASE zIntResou.ZLOCALAVAILABILITY
-    WHEN -1 THEN '(-1)_IR_Asset_Not_Available_Local-Device(-1)'
-    WHEN 1 THEN '1-IR_Asset_Available_Local-Device-1'
+    WHEN -1 THEN '(-1)-IR_Asset_Not_Avail_Locally(-1)'
+    WHEN 1 THEN '1-IR_Asset_Avail_Locally-1'
     WHEN -32768 THEN '(-32768)_IR_Asset-SWY-Linked_Asset(-32768)'
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZLOCALAVAILABILITY || ''
   END AS 'zIntResou-Local Availability',
@@ -345,8 +345,8 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZCLOUDLOCALSTATE || ''
   END AS 'zIntResou-Cloud Local State',
   CASE zIntResou.ZREMOTEAVAILABILITY
-    WHEN 0 THEN '0-IR_Asset-Not-Available-Remotely-0'
-    WHEN 1 THEN '1-IR_Asset_Available-Remotely-1'
+    WHEN 0 THEN '0-IR_Asset-Not-Avail-Remotely-0'
+    WHEN 1 THEN '1-IR_Asset_Avail-Remotely-1'
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZREMOTEAVAILABILITY || ''
   END AS 'zIntResou-Remote Availability',
   CASE zIntResou.ZREMOTEAVAILABILITYTARGET
@@ -356,15 +356,15 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   END AS 'zIntResou-Remote Availability Target',
   zIntResou.ZTRANSIENTCLOUDMASTER AS 'zIntResou-Transient Cloud Master',
   zIntResou.ZSIDECARINDEX AS 'zIntResou-Side Car Index',
-  zIntResou.ZFILEID AS 'zIntResou-File ID',
+  zIntResou.ZFILEID AS 'zIntResou- File ID',
   CASE zIntResou.ZVERSION
     WHEN 0 THEN '0-IR_Asset_Standard-0'
     WHEN 1 THEN '1-StillTesting-1'
     WHEN 2 THEN '2-IR_Asset_Adjustments-Mutation-2'
-    WHEN 3 THEN '3-IR_Asset_No_ IR-CldMastDateCreated-3'
+    WHEN 3 THEN '3-IR_Asset_No_IR-CldMastDateCreated-3'
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZVERSION || ''
   END AS 'zIntResou-Version',
-  zAddAssetAttr.ZORIGINALFILESIZE AS 'zAddAssetAttr-Original File Size',
+  zAddAssetAttr.ZORIGINALFILESIZE AS 'zAddAssetAttr- Original-File-Size',
   CASE zIntResou.ZRESOURCETYPE
     WHEN 0 THEN '0-Photo-0'
     WHEN 1 THEN '1-Video-1'
@@ -399,7 +399,7 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     WHEN 18 THEN '18-Live-Photo-Video_Optimized_CPLAsset-18'
     WHEN 19 THEN '19-Live-Photo-with-Adjustments-19'
     WHEN 20 THEN '20-StillTesting'
-    WHEN 21 THEN '21-StillTesting'
+    WHEN 21 THEN '21-MOV-Optimized_HEVC-4K_video-21'
     WHEN 22 THEN '22-Adjust-Mutation_AAE_Asset-22'
     WHEN 23 THEN '23-StillTesting'
     WHEN 24 THEN '24-StillTesting'
@@ -431,7 +431,7 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     WHEN 18 THEN '18-Live-Photo-Video_Optimized_CPLAsset-18'
     WHEN 19 THEN '19-Live-Photo-with-Adjustments-19'
     WHEN 20 THEN '20-StillTesting'
-    WHEN 21 THEN '21-StillTesting'
+    WHEN 21 THEN '21-MOV-Optimized_HEVC-4K_video-21'
     WHEN 22 THEN '22-Adjust-Mutation_AAE_Asset-22'
     WHEN 23 THEN '23-StillTesting'
     WHEN 24 THEN '24-StillTesting'
@@ -444,12 +444,14 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zIntResou.ZDATALENGTH AS 'zIntResou-Data Length',
   CASE zIntResou.ZRECIPEID
     WHEN 0 THEN '0-OrigFileSize_match_DataLength_or_Optimized-0'
+    WHEN 65737 THEN '65737-full-JPG_Orig-ProRAW_DNG-65737'
     WHEN 65739 THEN '65739-JPG_Large_Thumb-65739'
     WHEN 65741 THEN '65741-Various_Asset_Types-or-Thumbs-65741'
     WHEN 65743 THEN '65743-ResouType-Photo_5003-or-5005-JPG_Thumb-65743'
     WHEN 65749 THEN '65749-LocalVideoKeyFrame-JPG_Thumb-65749'
     WHEN 65938 THEN '65938-FullSizeRender-Photo-or-plist-65938'
     WHEN 131072 THEN '131072-FullSizeRender-Video-or-plist-131072'
+    WHEN 131077 THEN '131077-medium-MOV_HEVC-4K-131077'
     WHEN 131079 THEN '131079-medium-MP4_Adj-Mutation_Asset-131079'
     WHEN 131081 THEN '131081-ResouType-Video_5003-or-5005-JPG_Thumb-131081'
     WHEN 131272 THEN '131272-FullSizeRender-Video_LivePhoto_Adj-Mutation-131272'
@@ -465,21 +467,22 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     ELSE DateTime(zIntResou.ZCLOUDLASTPREFETCHDATE + 978307200, 'UNIXEPOCH')
   END AS 'zIntResou-Cloud Last Prefetch Date',
   zIntResou.ZCLOUDPREFETCHCOUNT AS 'zIntResou-Cloud Prefetch Count',
-  DateTime(zIntResou.ZCLOUDLASTONDEMANDDOWNLOADDATE + 978307200, 'UNIXEPOCH') AS 'zIntResou-Last OnDemand Download Date',
+  DateTime(zIntResou.ZCLOUDLASTONDEMANDDOWNLOADDATE + 978307200, 'UNIXEPOCH') AS 'zIntResou- Cloud-Last-OnDemand Download-Date',
   CASE zIntResou.ZUTICONFORMANCEHINT
     WHEN 0 THEN '0-NA/Doesnt_Conform-0'
     WHEN 1 THEN '1-UTTypeImage-1'
-    WHEN 2 THEN '2-StillTesting'
+    WHEN 2 THEN '2-UTTypeProRawPhoto-2'
     WHEN 3 THEN '3-UTTypeMovie-3'
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZUTICONFORMANCEHINT || ''
   END AS 'zIntResou-UniformTypeID_UTI_Conformance_Hint',
   CASE zIntResou.ZCOMPACTUTI
-    WHEN 1 THEN '1-jpeg/thm-1'
-    WHEN 3 THEN '3-heic-3'
-    WHEN 6 THEN '6-png-6'
+    WHEN 1 THEN '1-JPEG/THM-1'
+    WHEN 3 THEN '3-HEIC-3'
+    WHEN 6 THEN '6-PNG-6'
     WHEN 7 THEN '7-StillTesting'
-    WHEN 23 THEN '23-jpeg/heic/quicktime-mov-23'
-    WHEN 24 THEN '24-mpeg4-24'
+    WHEN 9 THEN '9-DNG-9'
+    WHEN 23 THEN '23-JPEG/HEIC/quicktime-mov-23'
+    WHEN 24 THEN '24-MPEG4-24'
     WHEN 36 THEN '36-Wallpaper-36'
     WHEN 37 THEN '37-Adj/Mutation_Data-37'
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZCOMPACTUTI || ''
@@ -488,8 +491,8 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zAsset.ZORIGINALCOLORSPACE AS 'zAsset-Original Color Space',
   zCldMast.ZUNIFORMTYPEIDENTIFIER AS 'zCldMast-Uniform_Type_ID',
   CASE zCldMast.ZFULLSIZEJPEGSOURCE
-    WHEN 0 THEN '0-CldMast-JPEG-Source-Video-0'
-    WHEN 1 THEN '1-CldMast-JPEG-Source-Other-1'
+    WHEN 0 THEN '0-CldMast-JPEG-Source-Video Still-Testing-0'
+    WHEN 1 THEN '1-CldMast-JPEG-Source-Other- Still-Testing-1'
     ELSE 'Unknown-New-Value!: ' || zCldMast.ZFULLSIZEJPEGSOURCE || ''
   END AS 'zCldMast-Full Size JPEG Source',
   zAsset.ZHDRGAIN AS 'zAsset-HDR Gain',

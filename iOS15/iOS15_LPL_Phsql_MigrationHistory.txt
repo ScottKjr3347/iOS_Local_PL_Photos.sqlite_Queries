@@ -132,7 +132,11 @@ SELECT zMigrationHistory.Z_PK AS 'zMigrationHistory-zPK',
     WHEN '20A380' THEN '20A380-16.0.2'
     WHEN '20A392' THEN '20A392-16.0.3'
     WHEN '20B82' THEN '20B82-16.1'
+    WHEN '20B101' THEN '20B101-16.1.1'
+    WHEN '20B110' THEN '20B110-16.1.2'
     WHEN '20C5032e' THEN '20C5032e-16.2 Beta 1'
+    WHEN '20C65' THEN '20C65-16.2'
+    WHEN '20D5024e' THEN '20D5024e-16.3 Beta'
     ELSE 'Unknown-New-Value!: ' || zMigrationHistory.ZOSVERSION || ''
   END AS 'zMigrationHistory-Build-and-Version',
   zMigrationHistory.ZORIGIN AS 'zMigrationHistory-Origin',

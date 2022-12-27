@@ -19,8 +19,8 @@ SELECT zAsset.Z_PK AS 'zAsset-zPK',
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDISDELETABLE || ''
   END AS 'zAsset-Cloud is deletable/Asset',
   CASE zAsset.ZCLOUDLOCALSTATE
-    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-Other_Album/iCldPhotos_OFF=Not_Synced-0'
-    WHEN 1 THEN 'iCldPhotos ON=Asset_Synced_with_iCloud-1'
+    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-or-OtherAlbum/iCldPhotos_OFF=Not_Synced-0'
+    WHEN 1 THEN 'iCldPhotos ON=Asset_Can-Be-or-Has-Been_Synced_with_iCloud-1'
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDLOCALSTATE || ''
   END AS 'zAsset-Cloud_Local_State',
   CASE zAsset.ZVISIBILITYSTATE
@@ -96,7 +96,7 @@ SELECT zAsset.Z_PK AS 'zAsset-zPK',
   zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
   zCldMast.ZORIGINALFILENAME AS 'zCldMast-Orig Filename',
   zAddAssetAttr.ZSYNDICATIONIDENTIFIER AS 'zAddAssetAttr-Syndication Identifier',
-  zAddAssetAttr.ZORIGINALFILESIZE AS 'zAddAssetAttr-Original File Size',
+  zAddAssetAttr.ZORIGINALFILESIZE AS 'zAddAssetAttr- Original-File-Size',
   DateTime(zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Add Date',
   CASE zAddAssetAttr.ZDATECREATEDSOURCE
     WHEN 0 THEN '0-Cloud-Asset-0'
@@ -177,11 +177,11 @@ SELECT zAsset.Z_PK AS 'zAsset-zPK',
     WHEN 1 THEN '1-StillTesting-1'
     WHEN 2 THEN '2-StillTesting-2'
     WHEN 3 THEN '3-JPG-Asset_Only_PhDa/Thumb/V2-3'
-    WHEN 4 THEN '4-LPL-JPG-Asset_CPL-Asset-HEIC-JPG-JPEG-MOV-PNG-4'
-    WHEN 5 THEN '5-Asset_synced_via_iCloud_Photos_2_Device-5'
+    WHEN 4 THEN '4-LPL-JPG-Asset_CPLAsset-OtherType-4'
+    WHEN 5 THEN '5-Asset_synced_CPL_2_Device-5'
     WHEN 6 THEN '6-StillTesting-6'
-    WHEN 7 THEN '7-LPL-poster-JPG-Asset_CPL-Asset-MP4-7'
-    WHEN 8 THEN '8-LPL-JPG_Asset_CPL-Asset-LivePhoto-MOV-8'
+    WHEN 7 THEN '7-LPL-poster-JPG-Asset_CPLAsset-MP4-7'
+    WHEN 8 THEN '8-LPL-JPG_Asset_CPLAsset-LivePhoto-MOV-8'
     WHEN 9 THEN '9-CPL_MP4_Asset_Saved_2_LPL-9'
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDPLACEHOLDERKIND || ''
   END AS 'zAsset-Cloud Placeholder Kind',
