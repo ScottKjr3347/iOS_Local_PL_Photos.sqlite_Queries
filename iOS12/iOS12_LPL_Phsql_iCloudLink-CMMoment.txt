@@ -89,8 +89,8 @@ SELECT zAsset.Z_PK AS 'zAsset-zPK',
   END AS 'zCldMastMedData-zOPT',
   zCldMastMedData.ZDATA AS 'zCldMastMedData-Data/HEX',
   CASE zAsset.ZCLOUDLOCALSTATE
-    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-Other_Album/iCldPhotos_OFF=Not_Synced-0'
-    WHEN 1 THEN 'iCldPhotos ON=Asset_Synced_with_iCloud-1'
+    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-or-OtherAlbum/iCldPhotos_OFF=Not_Synced-0'
+    WHEN 1 THEN 'iCldPhotos ON=Asset_Can-Be-or-Has-Been_Synced_with_iCloud-1'
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDLOCALSTATE || ''
   END AS 'zAsset-Cloud_Local_State',
   CASE zAddAssetAttr.ZIMPORTEDBY

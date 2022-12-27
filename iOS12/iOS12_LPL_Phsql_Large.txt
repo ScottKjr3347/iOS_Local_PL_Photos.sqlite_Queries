@@ -20,8 +20,8 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   END AS 'zCldMastMedData-zOPT',
   zCldMastMedData.ZDATA AS 'zCldMastMedData-Data/HEX',
   CASE zAsset.ZCLOUDLOCALSTATE
-    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-Other_Album/iCldPhotos_OFF=Not_Synced-0'
-    WHEN 1 THEN 'iCldPhotos ON=Asset_Synced_with_iCloud-1'
+    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-or-OtherAlbum/iCldPhotos_OFF=Not_Synced-0'
+    WHEN 1 THEN 'iCldPhotos ON=Asset_Can-Be-or-Has-Been_Synced_with_iCloud-1'
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDLOCALSTATE || ''
   END AS 'zAsset-Cloud_Local_State',
   CASE zAddAssetAttr.ZIMPORTEDBY
@@ -279,7 +279,7 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     WHEN 13 THEN 'MOV-13'
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZRESOURCETYPE || ''
   END AS 'zIntResou-Resource Type',
-  zAddAssetAttr.ZORIGINALFILESIZE AS 'zAddAssetAttr-Original File Size',
+  zAddAssetAttr.ZORIGINALFILESIZE AS 'zAddAssetAttr- Original-File-Size',
   zIntResou.ZDATALENGTH AS 'zIntResou-Data Length',
   CASE zIntResou.ZDATASTORESUBTYPE
     WHEN 0 THEN 'No Cloud Inter Resource-0'
@@ -381,16 +381,16 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zCldMastMedData.Z_PK AS 'zCldMastMedData-zPK=zAddAssetAttr&zCldMast-MediaMetaData Key',
   zCldMastMedData.Z_ENT AS 'zCldMastMedData-zENT',
   CASE zAsset.ZCLOUDPLACEHOLDERKIND
-    WHEN 0 THEN 'Local&CloudMaster Asset-0'
-    WHEN 1 THEN '1-StillTesting'
-    WHEN 2 THEN '2-StillTesting'
-    WHEN 3 THEN 'Cloud 5005JPG Thumbnail Asset Only-3'
-    WHEN 4 THEN 'Local Asset JPEG-Cloud Asset HEIC-JPG-JPEG-MOV-PNG-4'
-    WHEN 5 THEN 'Asset_synced_via_iCloud_Photos_2_Device-5'
-    WHEN 6 THEN '6-StillTesting'
-    WHEN 7 THEN 'Cloud MP4 7'
-    WHEN 8 THEN 'Local Asset JPG-Cloud Asset Live Photo MOV-8'
-    WHEN 9 THEN 'Cloud MP4-Saved Local Device-9'
+    WHEN 0 THEN '0-Local&CloudMaster Asset-0'
+    WHEN 1 THEN '1-StillTesting-1'
+    WHEN 2 THEN '2-StillTesting-2'
+    WHEN 3 THEN '3-JPG-Asset_Only_PhDa/Thumb/V2-3'
+    WHEN 4 THEN '4-LPL-JPG-Asset_CPLAsset-OtherType-4'
+    WHEN 5 THEN '5-Asset_synced_CPL_2_Device-5'
+    WHEN 6 THEN '6-StillTesting-6'
+    WHEN 7 THEN '7-LPL-poster-JPG-Asset_CPLAsset-MP4-7'
+    WHEN 8 THEN '8-LPL-JPG_Asset_CPLAsset-LivePhoto-MOV-8'
+    WHEN 9 THEN '9-CPL_MP4_Asset_Saved_2_LPL-9'
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDPLACEHOLDERKIND || ''
   END AS 'zAsset-Cloud Placeholder Kind',
   CASE zAddAssetAttr.ZCLOUDKINDSUBTYPE
