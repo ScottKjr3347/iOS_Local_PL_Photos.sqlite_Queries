@@ -126,11 +126,6 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zAsset.ZFILENAME AS 'zAsset-Filename',
   zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
   zCldMast.ZORIGINALFILENAME AS 'zCldMast-Orig Filename',
-  CASE zAddAssetAttr.ZSHARETYPE
-    WHEN 0 THEN 'Not_iCloudLink-CMMomentAsset-0'
-    WHEN 1 THEN 'iCloudLink-CMMomentAsset-1'
-    ELSE 'Unknown-New-Value!: ' || zAddAssetAttr.ZSHARETYPE || ''
-  END AS 'zAddAssetAttr-Share Type',
   DateTime(zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Add Date',
   DateTime(zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH') AS 'zAsset-Date Created',
   DateTime(zCldMast.ZCREATIONDATE + 978307200, 'UNIXEPOCH') AS 'zCldMast-Creation Date',
@@ -964,6 +959,11 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zCldShareAlbumInvRec.ZINVITEEFULLNAME AS 'zCldShareAlbumInvRec-Invitee Full Name',
   zCldShareAlbumInvRec.ZINVITEEHASHEDPERSONID AS 'zCldShareAlbumInvRec-Invitee Hashed Person ID',
   zCldShareAlbumInvRec.ZINVITEEEMAILKEY AS 'zCldShareAlbumInvRec-Invitee Email Key/UnknownData',
+  CASE zAddAssetAttr.ZSHARETYPE
+    WHEN 0 THEN 'Not_iCloudLink-CMMomentAsset-0'
+    WHEN 1 THEN 'iCloudLink-CMMomentAsset-1'
+    ELSE 'Unknown-New-Value!: ' || zAddAssetAttr.ZSHARETYPE || ''
+  END AS 'zAddAssetAttr-Share Type',
   zCldMast.ZMOMENTSHARE AS 'zCldMast-Moment Share Key=zShare-zPK',
   zAsset.ZMOMENTSHARE AS 'zAsset-Moment Share Key=zShare-zPK',
   zShare.Z_PK AS 'zShare-zPK',
@@ -1036,6 +1036,5 @@ FROM ZGENERICASSET zAsset
   LEFT JOIN ZCLOUDSHAREDALBUMINVITATIONRECORD zCldShareAlbumInvRec ON zGenAlbum.Z_PK = zCldShareAlbumInvRec.ZALBUM
   LEFT JOIN ZMOMENTSHARE zShare ON zShare.Z_PK = zAsset.ZMOMENTSHARE
   LEFT JOIN ZMOMENTSHAREPARTICIPANT zSharePartic ON zSharePartic.ZMOMENTSHARE = zShare.Z_PK
-WHERE (zAddAssetAttr.ZSHARETYPE = 1) OR
-  (zShare.ZSTATUS = 1)
+WHERE zGenAlbum.ZCLOUDLOCALSTATE IS NOT NULL
 ORDER BY zAsset.ZADDEDDATE
