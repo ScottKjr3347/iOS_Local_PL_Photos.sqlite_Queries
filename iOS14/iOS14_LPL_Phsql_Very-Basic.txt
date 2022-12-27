@@ -12,8 +12,8 @@ SELECT zAsset.Z_PK AS 'zAsset-zPK',
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDISDELETABLE || ''
   END AS 'zAsset-Cloud is deletable/Asset',
   CASE zAsset.ZCLOUDLOCALSTATE
-    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-Other_Album/iCldPhotos_OFF=Not_Synced-0'
-    WHEN 1 THEN 'iCldPhotos ON=Asset_Synced_with_iCloud-1'
+    WHEN 0 THEN 'iCldPhotos ON=Asset_In_Shared-or-OtherAlbum/iCldPhotos_OFF=Not_Synced-0'
+    WHEN 1 THEN 'iCldPhotos ON=Asset_Can-Be-or-Has-Been_Synced_with_iCloud-1'
     ELSE 'Unknown-New-Value!: ' || zAsset.ZCLOUDLOCALSTATE || ''
   END AS 'zAsset-Cloud_Local_State',
   CASE zAsset.ZVISIBILITYSTATE
@@ -88,7 +88,7 @@ SELECT zAsset.Z_PK AS 'zAsset-zPK',
   zAsset.ZFILENAME AS 'zAsset-Filename',
   zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
   zCldMast.ZORIGINALFILENAME AS 'zCldMast-Orig Filename',
-  zAddAssetAttr.ZORIGINALFILESIZE AS 'zAddAssetAttr-Original File Size',
+  zAddAssetAttr.ZORIGINALFILESIZE AS 'zAddAssetAttr- Original-File-Size',
   DateTime(zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Add Date',
   DateTime(zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH') AS 'zAsset-Date Created',
   DateTime(zCldMast.ZCREATIONDATE + 978307200, 'UNIXEPOCH') AS 'zCldMast-Creation Date',
