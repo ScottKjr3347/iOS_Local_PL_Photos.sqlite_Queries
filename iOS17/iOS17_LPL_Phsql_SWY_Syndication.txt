@@ -145,6 +145,25 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
   zCldMast.ZORIGINALFILENAME AS 'zCldMast-Orig Filename',
   zAddAssetAttr.ZSYNDICATIONIDENTIFIER AS 'zAddAssetAttr-Syndication Identifier',
+  CASE zAsset.ZSYNDICATIONSTATE
+    WHEN 0 THEN '0-Local-PL_Asset_Syndication_State_NA-0'
+    ELSE 'Unknown-New-Value!: ' || zAsset.ZSYNDICATIONSTATE || ''
+  END AS 'zAsset-Syndication State-LPL',
+  zAddAssetAttr.ZSYNDICATIONHISTORY AS 'zAddAssetAttr-Syndication History',
+  zMedAnlyAstAttr.ZSYNDICATIONPROCESSINGVERSION AS 'zMedAnlyAstAttr-Syndication Processing Version',
+  CASE zMedAnlyAstAttr.ZSYNDICATIONPROCESSINGVALUE
+    WHEN 0 THEN '0-NA-0'
+    WHEN 1 THEN '1-STILLTESTING_Wide-Camera_JPG-1'
+    WHEN 2 THEN '2-STILLTESTING_Telephoto_Camear_Lens-2'
+    WHEN 4 THEN '4-STILLTESTING_SWY_Asset_OrigAssetImport_SystemPackageApp-4'
+    WHEN 16 THEN '16-STILLTESTING-16'
+    WHEN 1024 THEN '1024-STILLTESTING_SWY_Asset_OrigAssetImport_NativeCamera-1024'
+    WHEN 2048 THEN '2048-STILLTESTING-2048'
+    WHEN 4096 THEN '4096-STILLTESTING_SWY_Asset_Manually_Saved-4096'
+    ELSE 'Unknown-New-Value!: ' || zMedAnlyAstAttr.ZSYNDICATIONPROCESSINGVALUE || ''
+  END AS 'zMedAnlyAstAttr-Syndication Processing Value',
+  DateTime(zMedAnlyAstAttr.ZVAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH') AS 'zMedAnlyAstAttr-ios17 VA Analysis Timestamp',
+  zMedAnlyAstAttr.ZVAANALYSISVERSION AS 'zMedAnlyAstAttr-newiOS17 Va Analysis Version',
   DateTime(zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Add Date',
   CASE zAddAssetAttr.ZDATECREATEDSOURCE
     WHEN 0 THEN '0-Cloud-Asset-0'
@@ -630,25 +649,6 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zAddAssetAttr.ZSHARECOUNT AS 'zAddAssetAttr-Share Count',
   DateTime(zAsset.ZLASTSHAREDDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Last Shared Date',
   zAddAssetAttr.ZSHAREORIGINATOR AS 'zAddAssetAttr-Share Originator',
-  CASE zAsset.ZSYNDICATIONSTATE
-    WHEN 0 THEN '0-Local-PL_Asset_Syndication_State_NA-0'
-    ELSE 'Unknown-New-Value!: ' || zAsset.ZSYNDICATIONSTATE || ''
-  END AS 'zAsset-Syndication State-LPL',
-  zAddAssetAttr.ZSYNDICATIONHISTORY AS 'zAddAssetAttr-Syndication History',
-  zMedAnlyAstAttr.ZSYNDICATIONPROCESSINGVERSION AS 'zMedAnlyAstAttr-Syndication Processing Version',
-  CASE zMedAnlyAstAttr.ZSYNDICATIONPROCESSINGVALUE
-    WHEN 0 THEN '0-NA-0'
-    WHEN 1 THEN '1-STILLTESTING_Wide-Camera_JPG-1'
-    WHEN 2 THEN '2-STILLTESTING_Telephoto_Camear_Lens-2'
-    WHEN 4 THEN '4-STILLTESTING_SWY_Asset_OrigAssetImport_SystemPackageApp-4'
-    WHEN 16 THEN '16-STILLTESTING-16'
-    WHEN 1024 THEN '1024-STILLTESTING_SWY_Asset_OrigAssetImport_NativeCamera-1024'
-    WHEN 2048 THEN '2048-STILLTESTING-2048'
-    WHEN 4096 THEN '4096-STILLTESTING_SWY_Asset_Manually_Saved-4096'
-    ELSE 'Unknown-New-Value!: ' || zMedAnlyAstAttr.ZSYNDICATIONPROCESSINGVALUE || ''
-  END AS 'zMedAnlyAstAttr-Syndication Processing Value',
-  DateTime(zMedAnlyAstAttr.ZVAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH') AS 'zMedAnlyAstAttr-ios17 VA Analysis Timestamp',
-  zMedAnlyAstAttr.ZVAANALYSISVERSION AS 'zMedAnlyAstAttr-newiOS17 Va Analysis Version',
   CASE zAddAssetAttr.ZALLOWEDFORANALYSIS
     WHEN 0 THEN '0-Asset Not Allowed For Analysis-0'
     WHEN 1 THEN '1-Asset Allowed for Analysis-1'

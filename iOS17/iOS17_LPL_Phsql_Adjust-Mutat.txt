@@ -145,6 +145,11 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
   zCldMast.ZORIGINALFILENAME AS 'zCldMast-Orig Filename',
   zAddAssetAttr.ZSYNDICATIONIDENTIFIER AS 'zAddAssetAttr-Syndication Identifier',
+  CASE zAsset.ZHASADJUSTMENTS
+    WHEN 0 THEN '0-No-Adjustments-0'
+    WHEN 1 THEN '1-Yes-Adjustments-1'
+    ELSE 'Unknown-New-Value!: ' || zAsset.ZHASADJUSTMENTS || ''
+  END AS 'zAsset-Has Adjustments/Camera-Effects-Filters',
   DateTime(zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Add Date',
   CASE zAddAssetAttr.ZDATECREATEDSOURCE
     WHEN 0 THEN '0-Cloud-Asset-0'
@@ -530,11 +535,6 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zAsset.ZVIDEODEFERREDPROCESSINGNEEDED AS 'zAsset-Video Deferred Processing Needed',
   zAddAssetAttr.ZDEFERREDPHOTOIDENTIFIER AS 'zAddAssetAttr-Deferred Photo Identifier',
   zAddAssetAttr.ZDEFERREDPROCESSINGCANDIDATEOPTIONS AS 'zAddAssetAttr-Deferred Processing Candidate Options',
-  CASE zAsset.ZHASADJUSTMENTS
-    WHEN 0 THEN '0-No-Adjustments-0'
-    WHEN 1 THEN '1-Yes-Adjustments-1'
-    ELSE 'Unknown-New-Value!: ' || zAsset.ZHASADJUSTMENTS || ''
-  END AS 'zAsset-Has Adjustments/Camera-Effects-Filters',
   zUnmAdj.ZASSETATTRIBUTES AS 'zUnmAdj-Asset Attributes=zAddAssetAttr.zPK',
   zAddAssetAttr.ZUNMANAGEDADJUSTMENT AS 'zAddAssetAttr-UnmanAdjust Key=zUnmAdj.zPK',
   zUnmAdj.Z_PK AS 'zUnmAdj-zPK=zAddAssetAttr.ZUnmanAdj Key',
@@ -695,4 +695,5 @@ FROM ZASSET zAsset
   LEFT JOIN ZCLOUDMASTERMEDIAMETADATA CMzCldMastMedData ON CMzCldMastMedData.Z_PK = zCldMast.ZMEDIAMETADATA
   LEFT JOIN ZMEDIAANALYSISASSETATTRIBUTES zMedAnlyAstAttr ON zAsset.ZMEDIAANALYSISATTRIBUTES = zMedAnlyAstAttr.Z_PK
   LEFT JOIN ZSHARE zShare ON zShare.Z_PK = zAsset.ZMOMENTSHARE
+WHERE zAsset.ZHASADJUSTMENTS = 1
 ORDER BY zAsset.ZADDEDDATE

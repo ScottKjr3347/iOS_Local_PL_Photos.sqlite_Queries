@@ -145,153 +145,6 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zAddAssetAttr.ZORIGINALFILENAME AS 'zAddAssetAttr-Original Filename',
   zCldMast.ZORIGINALFILENAME AS 'zCldMast-Orig Filename',
   zAddAssetAttr.ZSYNDICATIONIDENTIFIER AS 'zAddAssetAttr-Syndication Identifier',
-  DateTime(zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Add Date',
-  CASE zAddAssetAttr.ZDATECREATEDSOURCE
-    WHEN 0 THEN '0-Cloud-Asset-0'
-    WHEN 1 THEN '1-Local_Asset_EXIF-1'
-    WHEN 3 THEN '3-Local_Asset_No_EXIF-3'
-    ELSE 'Unknown-New-Value!: ' || zAddAssetAttr.ZDATECREATEDSOURCE || ''
-  END AS 'zAddAssetAttr-Date Created Source',
-  DateTime(zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH') AS 'zAsset-Date Created',
-  DateTime(zCldMast.ZCREATIONDATE + 978307200, 'UNIXEPOCH') AS 'zCldMast-Creation Date',
-  DateTime(zIntResou.ZCLOUDMASTERDATECREATED + 978307200, 'UNIXEPOCH') AS 'zIntResou-CldMst Date Created',
-  zAddAssetAttr.ZTIMEZONENAME AS 'zAddAssetAttr-Time Zone Name',
-  zAddAssetAttr.ZTIMEZONEOFFSET AS 'zAddAssetAttr-Time Zone Offset',
-  zAddAssetAttr.ZINFERREDTIMEZONEOFFSET AS 'zAddAssetAttr-Inferred Time Zone Offset',
-  zAddAssetAttr.ZEXIFTIMESTAMPSTRING AS 'zAddAssetAttr-EXIF-String',
-  DateTime(zAsset.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Modification Date',
-  CASE zCldMast.ZCLOUDLOCALSTATE
-    WHEN 0 THEN '0-Not Synced with Cloud-0'
-    WHEN 1 THEN '1-Pending Upload-1'
-    WHEN 2 THEN '2-StillTesting'
-    WHEN 3 THEN '3-Synced with Cloud-3'
-    ELSE 'Unknown-New-Value!: ' || zCldMast.ZCLOUDLOCALSTATE || ''
-  END AS 'zCldMast-Cloud Local State',
-  DateTime(zCldMast.ZIMPORTDATE + 978307200, 'UNIXEPOCH') AS 'zCldMast-Import Date',
-  zAsset.ZIMPORTSESSION AS 'zAsset-Import Session',
-  zAddAssetAttr.ZIMPORTSESSIONID AS 'zAddAssetAttr-Import Session ID',
-  DateTime(zAddAssetAttr.ZALTERNATEIMPORTIMAGEDATE + 978307200, 'UNIXEPOCH') AS 'zAddAssetAttr-Alt Import Image Date',
-  zCldMast.ZIMPORTSESSIONID AS 'zCldMast-Import Session ID',
-  DateTime(zAsset.ZCLOUDBATCHPUBLISHDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Cloud Batch Publish Date',
-  DateTime(zAsset.ZCLOUDSERVERPUBLISHDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Cloud Server Publish Date',
-  zAsset.ZCLOUDDOWNLOADREQUESTS AS 'zAsset-Cloud Download Requests',
-  zAsset.ZCLOUDBATCHID AS 'zAsset-Cloud Batch ID',
-  DateTime(zAddAssetAttr.ZLASTUPLOADATTEMPTDATE + 978307200, 'UNIXEPOCH') AS 'zAddAssetAttr-Last Upload Attempt Date-SWY',
-  zAddAssetAttr.ZUPLOADATTEMPTS AS 'zAddAssetAttr-Upload Attempts',
-  CASE zAsset.ZLATITUDE
-    WHEN -180.0 THEN '-180.0'
-    ELSE zAsset.ZLATITUDE
-  END AS 'zAsset-Latitude',
-  zExtAttr.ZLATITUDE AS 'zExtAttr-Latitude',
-  CASE zAsset.ZLONGITUDE
-    WHEN -180.0 THEN '-180.0'
-    ELSE zAsset.ZLONGITUDE
-  END AS 'zAsset-Longitude',
-  zExtAttr.ZLONGITUDE AS 'zExtAttr-Longitude',
-  CASE zAddAssetAttr.ZGPSHORIZONTALACCURACY
-    WHEN -1.0 THEN '-1.0'
-    ELSE zAddAssetAttr.ZGPSHORIZONTALACCURACY
-  END AS 'zAddAssetAttr-GPS Horizontal Accuracy',
-  zAsset.ZLOCATIONDATA AS 'zAsset-Location Data/HEX',
-  zAddAssetAttr.ZREVERSELOCATIONDATA AS 'zAddAssetAttr-Reverse Location Data/Orig-Asset/HEX NSKeyed Plist',
-  CASE zAddAssetAttr.ZSHIFTEDLOCATIONISVALID
-    WHEN 0 THEN '0-Shifted Location Not Valid-0'
-    WHEN 1 THEN '1-Shifted Location Valid-1'
-  END AS 'zAddAssetAttr-Shifted Location Valid',
-  zAddAssetAttr.ZSHIFTEDLOCATIONDATA AS 'zAddAssetAttr-Shifted Location Data',
-  zAddAssetAttr.ZLOCATIONHASH AS 'zAddAssetAttr-Location Hash',
-  CASE AAAzCldMastMedData.Z_OPT
-    WHEN 1 THEN '1-StillTesting-Cloud-1'
-    WHEN 2 THEN '2-StillTesting-This Device-2'
-    WHEN 3 THEN '3-StillTesting-Muted-3'
-    WHEN 4 THEN '4-StillTesting-Unknown-4'
-    WHEN 5 THEN '5-StillTesting-Unknown-5'
-    ELSE 'Unknown-New-Value!: ' || AAAzCldMastMedData.Z_OPT || ''
-  END AS 'AAAzCldMastMedData-zOPT',
-  zAddAssetAttr.ZMEDIAMETADATATYPE AS 'zAddAssetAttr-Media Metadata Type',
-  AAAzCldMastMedData.ZDATA AS 'AAAzCldMastMedData-Data/HEX',
-  CASE CMzCldMastMedData.Z_OPT
-    WHEN 1 THEN '1-StillTesting-Has_CldMastAsset-1'
-    WHEN 2 THEN '2-StillTesting-Local_Asset-2'
-    WHEN 3 THEN '3-StillTesting-Muted-3'
-    WHEN 4 THEN '4-StillTesting-Unknown-4'
-    WHEN 5 THEN '5-StillTesting-Unknown-5'
-    ELSE 'Unknown-New-Value!: ' || CMzCldMastMedData.Z_OPT || ''
-  END AS 'CldMasterzCldMastMedData-zOPT',
-  zCldMast.ZMEDIAMETADATATYPE AS 'zCldMast-Media Metadata Type',
-  CMzCldMastMedData.ZDATA AS 'CMzCldMastMedData-Data/HEX',
-  CASE zAsset.ZSEARCHINDEXREBUILDSTATE
-    WHEN 0 THEN '0-StillTesting-0'
-    ELSE 'Unknown-New-Value!: ' || zAsset.ZSEARCHINDEXREBUILDSTATE || ''
-  END AS 'zAsset-Search Index Rebuild State',
-  CASE zAsset.ZORIENTATION
-    WHEN 1 THEN '1-Video-Default/Adjustment/Horizontal-Camera-(left)-1'
-    WHEN 2 THEN '2-Horizontal-Camera-(right)-2'
-    WHEN 3 THEN '3-Horizontal-Camera-(right)-3'
-    WHEN 4 THEN '4-Horizontal-Camera-(left)-4'
-    WHEN 5 THEN '5-Vertical-Camera-(top)-5'
-    WHEN 6 THEN '6-Vertical-Camera-(top)-6'
-    WHEN 7 THEN '7-Vertical-Camera-(bottom)-7'
-    WHEN 8 THEN '8-Vertical-Camera-(bottom)-8'
-    ELSE 'Unknown-New-Value!: ' || zAsset.ZORIENTATION || ''
-  END AS 'zAsset-Orientation',
-  CASE zAddAssetAttr.ZORIGINALORIENTATION
-    WHEN 1 THEN '1-Video-Default/Adjustment/Horizontal-Camera-(left)-1'
-    WHEN 2 THEN '2-Horizontal-Camera-(right)-2'
-    WHEN 3 THEN '3-Horizontal-Camera-(right)-3'
-    WHEN 4 THEN '4-Horizontal-Camera-(left)-4'
-    WHEN 5 THEN '5-Vertical-Camera-(top)-5'
-    WHEN 6 THEN '6-Vertical-Camera-(top)-6'
-    WHEN 7 THEN '7-Vertical-Camera-(bottom)-7'
-    WHEN 8 THEN '8-Vertical-Camera-(bottom)-8'
-    ELSE 'Unknown-New-Value!: ' || zAsset.ZORIENTATION || ''
-  END AS 'zAddAssetAttr-Original Orientation',
-  CASE zAsset.ZKIND
-    WHEN 0 THEN '0-Photo-0'
-    WHEN 1 THEN '1-Video-1'
-  END AS 'zAsset-Kind',
-  CASE zAsset.ZKINDSUBTYPE
-    WHEN 0 THEN '0-Still-Photo-0'
-    WHEN 2 THEN '2-Live-Photo-2'
-    WHEN 10 THEN '10-SpringBoard-Screenshot-10'
-    WHEN 100 THEN '100-Video-100'
-    WHEN 101 THEN '101-Slow-Mo-Video-101'
-    WHEN 102 THEN '102-Time-lapse-Video-102'
-    WHEN 103 THEN '103-Replay_Screen_Recording-103'
-    ELSE 'Unknown-New-Value!: ' || zAsset.ZKINDSUBTYPE || ''
-  END AS 'zAsset-Kind-Sub-Type',
-  CASE zAddAssetAttr.ZCLOUDKINDSUBTYPE
-    WHEN 0 THEN '0-Still-Photo-0'
-    WHEN 1 THEN '1-StillTesting'
-    WHEN 2 THEN '2-Live-Photo-2'
-    WHEN 3 THEN '3-Screenshot-3'
-    WHEN 10 THEN '10-SpringBoard-Screenshot-10'
-    WHEN 100 THEN '100-Video-100'
-    WHEN 101 THEN '101-Slow-Mo-Video-101'
-    WHEN 102 THEN '102-Time-lapse-Video-102'
-    WHEN 103 THEN '103-Replay_Screen_Recording-103'
-    ELSE 'Unknown-New-Value!: ' || zAddAssetAttr.ZCLOUDKINDSUBTYPE || ''
-  END AS 'zAddAssetAttr-Cloud Kind Sub Type',
-  CASE zAsset.ZPLAYBACKSTYLE
-    WHEN 1 THEN '1-Image-1'
-    WHEN 2 THEN '2-Image-Animated-2'
-    WHEN 3 THEN '3-Live-Photo-3'
-    WHEN 4 THEN '4-Video-4'
-    WHEN 5 THEN '5-Video-Looping-5'
-    ELSE 'Unknown-New-Value!: ' || zAsset.ZPLAYBACKSTYLE || ''
-  END AS 'zAsset-Playback Style',
-  zAsset.ZPLAYBACKVARIATION AS 'zAsset-Playback Variation',
-  zAsset.ZDURATION AS 'zAsset-Video Duration',
-  zExtAttr.ZDURATION AS 'zExtAttr-Duration',
-  zAsset.ZVIDEOCPDURATIONVALUE AS 'zAsset-Video CP Duration',
-  zAddAssetAttr.ZVIDEOCPDURATIONTIMESCALE AS 'zAddAssetAttr-Video CP Duration Time Scale',
-  zAsset.ZVIDEOCPVISIBILITYSTATE AS 'zAsset-Video CP Visibility State',
-  zAddAssetAttr.ZVIDEOCPDISPLAYVALUE AS 'zAddAssetAttr-Video CP Display Value',
-  zAddAssetAttr.ZVIDEOCPDISPLAYTIMESCALE AS 'zAddAssetAttr-Video CP Display Time Scale',
-  zIntResou.ZASSET AS 'zIntResou-Asset=zAsset.zPK',
-  zIntResou.Z_PK AS 'zIntResou-zPK',
-  zIntResou.Z_ENT AS 'zIntResou-zENT',
-  zIntResou.Z_OPT AS 'zIntResou-zOPT',
   CASE zIntResou.ZDATASTORECLASSID
     WHEN 0 THEN '0-LPL-Asset_CPL-Asset-0'
     WHEN 1 THEN '1-StillTesting-1'
@@ -393,7 +246,7 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     WHEN 27 THEN '27-StillTesting'
     WHEN 28 THEN '28-MOV-Med-hdr-Data-28'
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZDATASTORESUBTYPE || ''
-  END AS 'zIntResou-Datastore Sub-Type',
+  END AS 'zIntResou- Datastore Sub-Type',
   CASE zIntResou.ZCLOUDSOURCETYPE
     WHEN 0 THEN '0-NA-0'
     WHEN 1 THEN '1-Main-Asset-Orig-Size-1'
@@ -480,6 +333,153 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     WHEN 1 THEN '1-CldMast-JPEG-Source-Other- Still-Testing-1'
     ELSE 'Unknown-New-Value!: ' || zCldMast.ZFULLSIZEJPEGSOURCE || ''
   END AS 'zCldMast-Full Size JPEG Source',
+  DateTime(zAsset.ZADDEDDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Add Date',
+  CASE zAddAssetAttr.ZDATECREATEDSOURCE
+    WHEN 0 THEN '0-Cloud-Asset-0'
+    WHEN 1 THEN '1-Local_Asset_EXIF-1'
+    WHEN 3 THEN '3-Local_Asset_No_EXIF-3'
+    ELSE 'Unknown-New-Value!: ' || zAddAssetAttr.ZDATECREATEDSOURCE || ''
+  END AS 'zAddAssetAttr-Date Created Source',
+  DateTime(zAsset.ZDATECREATED + 978307200, 'UNIXEPOCH') AS 'zAsset-Date Created',
+  DateTime(zCldMast.ZCREATIONDATE + 978307200, 'UNIXEPOCH') AS 'zCldMast-Creation Date',
+  DateTime(zIntResou.ZCLOUDMASTERDATECREATED + 978307200, 'UNIXEPOCH') AS 'zIntResou-CldMst Date Created',
+  zAddAssetAttr.ZTIMEZONENAME AS 'zAddAssetAttr-Time Zone Name',
+  zAddAssetAttr.ZTIMEZONEOFFSET AS 'zAddAssetAttr-Time Zone Offset',
+  zAddAssetAttr.ZINFERREDTIMEZONEOFFSET AS 'zAddAssetAttr-Inferred Time Zone Offset',
+  zAddAssetAttr.ZEXIFTIMESTAMPSTRING AS 'zAddAssetAttr-EXIF-String',
+  DateTime(zAsset.ZMODIFICATIONDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Modification Date',
+  CASE zCldMast.ZCLOUDLOCALSTATE
+    WHEN 0 THEN '0-Not Synced with Cloud-0'
+    WHEN 1 THEN '1-Pending Upload-1'
+    WHEN 2 THEN '2-StillTesting'
+    WHEN 3 THEN '3-Synced with Cloud-3'
+    ELSE 'Unknown-New-Value!: ' || zCldMast.ZCLOUDLOCALSTATE || ''
+  END AS 'zCldMast-Cloud Local State',
+  DateTime(zCldMast.ZIMPORTDATE + 978307200, 'UNIXEPOCH') AS 'zCldMast-Import Date',
+  zAsset.ZIMPORTSESSION AS 'zAsset-Import Session',
+  zAddAssetAttr.ZIMPORTSESSIONID AS 'zAddAssetAttr-Import Session ID',
+  DateTime(zAddAssetAttr.ZALTERNATEIMPORTIMAGEDATE + 978307200, 'UNIXEPOCH') AS 'zAddAssetAttr-Alt Import Image Date',
+  zCldMast.ZIMPORTSESSIONID AS 'zCldMast-Import Session ID',
+  DateTime(zAsset.ZCLOUDBATCHPUBLISHDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Cloud Batch Publish Date',
+  DateTime(zAsset.ZCLOUDSERVERPUBLISHDATE + 978307200, 'UNIXEPOCH') AS 'zAsset-Cloud Server Publish Date',
+  zAsset.ZCLOUDDOWNLOADREQUESTS AS 'zAsset-Cloud Download Requests',
+  zAsset.ZCLOUDBATCHID AS 'zAsset-Cloud Batch ID',
+  DateTime(zAddAssetAttr.ZLASTUPLOADATTEMPTDATE + 978307200, 'UNIXEPOCH') AS 'zAddAssetAttr-Last Upload Attempt Date-SWY',
+  zAddAssetAttr.ZUPLOADATTEMPTS AS 'zAddAssetAttr-Upload Attempts',
+  CASE zAsset.ZLATITUDE
+    WHEN -180.0 THEN '-180.0'
+    ELSE zAsset.ZLATITUDE
+  END AS 'zAsset-Latitude',
+  zExtAttr.ZLATITUDE AS 'zExtAttr-Latitude',
+  CASE zAsset.ZLONGITUDE
+    WHEN -180.0 THEN '-180.0'
+    ELSE zAsset.ZLONGITUDE
+  END AS 'zAsset-Longitude',
+  zExtAttr.ZLONGITUDE AS 'zExtAttr-Longitude',
+  CASE zAddAssetAttr.ZGPSHORIZONTALACCURACY
+    WHEN -1.0 THEN '-1.0'
+    ELSE zAddAssetAttr.ZGPSHORIZONTALACCURACY
+  END AS 'zAddAssetAttr-GPS Horizontal Accuracy',
+  zAsset.ZLOCATIONDATA AS 'zAsset-Location Data/HEX',
+  zAddAssetAttr.ZREVERSELOCATIONDATA AS 'zAddAssetAttr-Reverse Location Data/Orig-Asset/HEX NSKeyed Plist',
+  CASE zAddAssetAttr.ZSHIFTEDLOCATIONISVALID
+    WHEN 0 THEN '0-Shifted Location Not Valid-0'
+    WHEN 1 THEN '1-Shifted Location Valid-1'
+  END AS 'zAddAssetAttr-Shifted Location Valid',
+  zAddAssetAttr.ZSHIFTEDLOCATIONDATA AS 'zAddAssetAttr-Shifted Location Data',
+  zAddAssetAttr.ZLOCATIONHASH AS 'zAddAssetAttr-Location Hash',
+  CASE AAAzCldMastMedData.Z_OPT
+    WHEN 1 THEN '1-StillTesting-Cloud-1'
+    WHEN 2 THEN '2-StillTesting-This_Device-2'
+    WHEN 3 THEN '3-StillTesting-Muted-3'
+    WHEN 4 THEN '4-StillTesting-Unknown-4'
+    WHEN 5 THEN '5-StillTesting-Unknown-5'
+    ELSE 'Unknown-New-Value!: ' || AAAzCldMastMedData.Z_OPT || ''
+  END AS 'AAAzCldMastMedData-zOPT',
+  zAddAssetAttr.ZMEDIAMETADATATYPE AS 'zAddAssetAttr-Media Metadata Type',
+  AAAzCldMastMedData.ZDATA AS 'AAAzCldMastMedData-Data/HEX',
+  CASE CMzCldMastMedData.Z_OPT
+    WHEN 1 THEN '1-StillTesting-Has_CldMastAsset-1'
+    WHEN 2 THEN '2-StillTesting-Local_Asset-2'
+    WHEN 3 THEN '3-StillTesting-Muted-3'
+    WHEN 4 THEN '4-StillTesting-Unknown-4'
+    WHEN 5 THEN '5-StillTesting-Unknown-5'
+    ELSE 'Unknown-New-Value!: ' || CMzCldMastMedData.Z_OPT || ''
+  END AS 'CldMasterzCldMastMedData-zOPT',
+  zCldMast.ZMEDIAMETADATATYPE AS 'zCldMast-Media Metadata Type',
+  CMzCldMastMedData.ZDATA AS 'CMzCldMastMedData-Data/HEX',
+  CASE zAsset.ZSEARCHINDEXREBUILDSTATE
+    WHEN 0 THEN '0-StillTesting-0'
+    ELSE 'Unknown-New-Value!: ' || zAsset.ZSEARCHINDEXREBUILDSTATE || ''
+  END AS 'zAsset-Search Index Rebuild State',
+  CASE zAsset.ZORIENTATION
+    WHEN 1 THEN '1-Video-Default/Adjustment/Horizontal-Camera-(left)-1'
+    WHEN 2 THEN '2-Horizontal-Camera-(right)-2'
+    WHEN 3 THEN '3-Horizontal-Camera-(right)-3'
+    WHEN 4 THEN '4-Horizontal-Camera-(left)-4'
+    WHEN 5 THEN '5-Vertical-Camera-(top)-5'
+    WHEN 6 THEN '6-Vertical-Camera-(top)-6'
+    WHEN 7 THEN '7-Vertical-Camera-(bottom)-7'
+    WHEN 8 THEN '8-Vertical-Camera-(bottom)-8'
+    ELSE 'Unknown-New-Value!: ' || zAsset.ZORIENTATION || ''
+  END AS 'zAsset-Orientation',
+  CASE zAddAssetAttr.ZORIGINALORIENTATION
+    WHEN 1 THEN '1-Video-Default/Adjustment/Horizontal-Camera-(left)-1'
+    WHEN 2 THEN '2-Horizontal-Camera-(right)-2'
+    WHEN 3 THEN '3-Horizontal-Camera-(right)-3'
+    WHEN 4 THEN '4-Horizontal-Camera-(left)-4'
+    WHEN 5 THEN '5-Vertical-Camera-(top)-5'
+    WHEN 6 THEN '6-Vertical-Camera-(top)-6'
+    WHEN 7 THEN '7-Vertical-Camera-(bottom)-7'
+    WHEN 8 THEN '8-Vertical-Camera-(bottom)-8'
+    ELSE 'Unknown-New-Value!: ' || zAsset.ZORIENTATION || ''
+  END AS 'zAddAssetAttr-Original Orientation',
+  CASE zAsset.ZKIND
+    WHEN 0 THEN '0-Photo-0'
+    WHEN 1 THEN '1-Video-1'
+  END AS 'zAsset-Kind',
+  CASE zAsset.ZKINDSUBTYPE
+    WHEN 0 THEN '0-Still-Photo-0'
+    WHEN 2 THEN '2-Live-Photo-2'
+    WHEN 10 THEN '10-SpringBoard-Screenshot-10'
+    WHEN 100 THEN '100-Video-100'
+    WHEN 101 THEN '101-Slow-Mo-Video-101'
+    WHEN 102 THEN '102-Time-lapse-Video-102'
+    WHEN 103 THEN '103-Replay_Screen_Recording-103'
+    ELSE 'Unknown-New-Value!: ' || zAsset.ZKINDSUBTYPE || ''
+  END AS 'zAsset-Kind-Sub-Type',
+  CASE zAddAssetAttr.ZCLOUDKINDSUBTYPE
+    WHEN 0 THEN '0-Still-Photo-0'
+    WHEN 1 THEN '1-StillTesting'
+    WHEN 2 THEN '2-Live-Photo-2'
+    WHEN 3 THEN '3-Screenshot-3'
+    WHEN 10 THEN '10-SpringBoard-Screenshot-10'
+    WHEN 100 THEN '100-Video-100'
+    WHEN 101 THEN '101-Slow-Mo-Video-101'
+    WHEN 102 THEN '102-Time-lapse-Video-102'
+    WHEN 103 THEN '103-Replay_Screen_Recording-103'
+    ELSE 'Unknown-New-Value!: ' || zAddAssetAttr.ZCLOUDKINDSUBTYPE || ''
+  END AS 'zAddAssetAttr-Cloud Kind Sub Type',
+  CASE zAsset.ZPLAYBACKSTYLE
+    WHEN 1 THEN '1-Image-1'
+    WHEN 2 THEN '2-Image-Animated-2'
+    WHEN 3 THEN '3-Live-Photo-3'
+    WHEN 4 THEN '4-Video-4'
+    WHEN 5 THEN '5-Video-Looping-5'
+    ELSE 'Unknown-New-Value!: ' || zAsset.ZPLAYBACKSTYLE || ''
+  END AS 'zAsset-Playback Style',
+  zAsset.ZPLAYBACKVARIATION AS 'zAsset-Playback Variation',
+  zAsset.ZDURATION AS 'zAsset-Video Duration',
+  zExtAttr.ZDURATION AS 'zExtAttr-Duration',
+  zAsset.ZVIDEOCPDURATIONVALUE AS 'zAsset-Video CP Duration',
+  zAddAssetAttr.ZVIDEOCPDURATIONTIMESCALE AS 'zAddAssetAttr-Video CP Duration Time Scale',
+  zAsset.ZVIDEOCPVISIBILITYSTATE AS 'zAsset-Video CP Visibility State',
+  zAddAssetAttr.ZVIDEOCPDISPLAYVALUE AS 'zAddAssetAttr-Video CP Display Value',
+  zAddAssetAttr.ZVIDEOCPDISPLAYTIMESCALE AS 'zAddAssetAttr-Video CP Display Time Scale',
+  zIntResou.ZASSET AS 'zIntResou-Asset=zAsset.zPK',
+  zIntResou.Z_PK AS 'zIntResou-zPK',
+  zIntResou.Z_ENT AS 'zIntResou-zENT',
+  zIntResou.Z_OPT AS 'zIntResou-zOPT',
   zAsset.ZHDRGAIN AS 'zAsset-HDR Gain',
   CASE zAsset.ZHDRTYPE
     WHEN 0 THEN '0-No-HDR-0'
@@ -648,7 +648,7 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     ELSE 'Unknown-New-Value!: ' || zMedAnlyAstAttr.ZSYNDICATIONPROCESSINGVALUE || ''
   END AS 'zMedAnlyAstAttr-Syndication Processing Value',
   DateTime(zMedAnlyAstAttr.ZVAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH') AS 'zMedAnlyAstAttr-ios17 VA Analysis Timestamp',
-  zMedAnlyAstAttr.ZVAANALYSISVERSION AS 'zMedAnlyAstAttr-newiOS17 Va Analysis Version',
+  zMedAnlyAstAttr.ZVAANALYSISVERSION AS 'zMedAnlyAstAttr-newiOS17 Va Analysis Version',  
   CASE zAddAssetAttr.ZALLOWEDFORANALYSIS
     WHEN 0 THEN '0-Asset Not Allowed For Analysis-0'
     WHEN 1 THEN '1-Asset Allowed for Analysis-1'
@@ -678,7 +678,58 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   zAddAssetAttr.ZSOURCEASSETFORDUPLICATIONSCOPEIDENTIFIER AS 'zAddAssetAttr-Source Asset for Duplication Scope ID',
   zCldMast.ZSOURCEMASTERFORDUPLICATIONSCOPEIDENTIFIER AS 'zCldMast-Source Master For Duplication Scope ID',
   zAddAssetAttr.ZSOURCEASSETFORDUPLICATIONIDENTIFIER AS 'zAddAssetAttr-Source Asset For Duplication ID',
-  zCldMast.ZSOURCEMASTERFORDUPLICATIONIDENTIFIER AS 'zCldMast-Source Master for Duplication ID'
+  zCldMast.ZSOURCEMASTERFORDUPLICATIONIDENTIFIER AS 'zCldMast-Source Master for Duplication ID',
+  zExtAttr.Z_ENT AS 'zExtAttr-zENT',
+  zExtAttr.Z_OPT AS 'zExtAttr-zOPT',
+  zAddAssetAttr.ZVARIATIONSUGGESTIONSTATES AS 'zAddAssetAttr-Variation Suggestions States',
+  zAsset.ZHIGHFRAMERATESTATE AS 'zAsset-High Frame Rate State',
+  zAsset.ZVIDEOKEYFRAMETIMESCALE AS 'zAsset-Video Key Frame Time Scale',
+  zAsset.ZVIDEOKEYFRAMEVALUE AS 'zAsset-Video Key Frame Value',
+  zExtAttr.ZISO AS 'zExtAttr-ISO',
+  zExtAttr.ZMETERINGMODE AS 'zExtAttr-Metering Mode',
+  zExtAttr.ZSAMPLERATE AS 'zExtAttr-Sample Rate',
+  zExtAttr.ZTRACKFORMAT AS 'zExtAttr-Track Format',
+  zExtAttr.ZWHITEBALANCE AS 'zExtAttr-White Balance',
+  zExtAttr.ZASSET AS 'zExtAttr-Asset Key',
+  zExtAttr.ZAPERTURE AS 'zExtAttr-Aperture',
+  zExtAttr.ZBITRATE AS 'zExtAttr-BitRate',
+  zExtAttr.ZEXPOSUREBIAS AS 'zExtAttr-Exposure Bias',
+  zExtAttr.ZFPS AS 'zExtAttr-Frames Per Second',
+  zExtAttr.ZSHUTTERSPEED AS 'zExtAttr-Shutter Speed',
+  zExtAttr.ZSLUSHSCENEBIAS AS 'zExtAttr-Slush Scene Bias',
+  zExtAttr.ZSLUSHVERSION AS 'zExtAttr-Slush Version',
+  zExtAttr.ZSLUSHPRESET AS 'zExtAttr-Slush Preset',
+  zExtAttr.ZSLUSHWARMTHBIAS AS 'zExtAttr-Slush Warm Bias',
+  zAsset.ZHEIGHT AS 'zAsset-Height',
+  zAddAssetAttr.ZORIGINALHEIGHT AS 'zAddAssetAttr-Original Height',
+  zIntResou.ZUNORIENTEDHEIGHT AS 'zIntResou-Unoriented Height',
+  zAsset.ZWIDTH AS 'zAsset-Width',
+  zAddAssetAttr.ZORIGINALWIDTH AS 'zAddAssetAttr-Original Width',
+  zIntResou.ZUNORIENTEDWIDTH AS 'zIntResou-Unoriented Width',
+  zShare.ZTHUMBNAILIMAGEDATA AS 'zShare-Thumbnail Image Data',
+  zAsset.ZTHUMBNAILINDEX AS 'zAsset-Thumbnail Index',
+  zAddAssetAttr.ZEMBEDDEDTHUMBNAILHEIGHT AS 'zAddAssetAttr-Embedded Thumbnail Height',
+  zAddAssetAttr.ZEMBEDDEDTHUMBNAILLENGTH AS 'zAddAssetAttr-Embedded Thumbnail Length',
+  zAddAssetAttr.ZEMBEDDEDTHUMBNAILOFFSET AS 'zAddAssetAttr-Embedded Thumbnail Offset',
+  zAddAssetAttr.ZEMBEDDEDTHUMBNAILWIDTH AS 'zAddAssetAttr-Embedded Thumbnail Width',
+  zAsset.ZPACKEDACCEPTABLECROPRECT AS 'zAsset-Packed Acceptable Crop Rect',
+  zAsset.ZPACKEDBADGEATTRIBUTES AS 'zAsset-Packed Badge Attributes',
+  zAsset.ZPACKEDPREFERREDCROPRECT AS 'zAsset-Packed Preferred Crop Rect',
+  zAsset.ZCURATIONSCORE AS 'zAsset-Curation Score',
+  zAsset.ZCAMERAPROCESSINGADJUSTMENTSTATE AS 'zAsset-Camera Processing Adjustment State',
+  zAsset.ZDEPTHTYPE AS 'zAsset-Depth Type',
+  zAsset.ZISMAGICCARPET AS 'zAsset-Is Magic Carpet',
+  zAsset.ZLIBRARYSCOPE AS 'zAsset-Library Scope Key',
+  CASE zAsset.ZLIBRARYSCOPESHARESTATE
+    WHEN 0 THEN '0-StillTesting Not-Shared-0'
+    ELSE 'Unknown-New-Value!: ' || zAsset.ZLIBRARYSCOPESHARESTATE || ''
+  END AS 'zAsset-Library Scope Share State',
+  zAddAssetAttr.ZORIGINALRESOURCECHOICE AS 'zAddAssetAttr-Org Resource Choice',
+  zAddAssetAttr.ZSPATIALOVERCAPTUREGROUPIDENTIFIER AS 'zAddAssetAttr-Spatial Over Capture Group ID',
+  zAddAssetAttr.ZOBJECTSALIENCYRECTSDATA AS 'zAddAssetAttr-Object Saliency Rects Data/HEX NSKeyed Plist',
+  zAddAssetAttr.ZORIGINALHASH AS 'zAddAssetAttr-Original Hash/HEX',
+  zAddAssetAttr.ZPLACEANNOTATIONDATA AS 'zAddAssetAttr-Place Annotation Data',
+  zAddAssetAttr.ZDISTANCEIDENTITY AS 'zAddAssetAttr-Distance Identity'
 FROM ZASSET zAsset
   LEFT JOIN ZADDITIONALASSETATTRIBUTES zAddAssetAttr ON zAddAssetAttr.Z_PK = zAsset.ZADDITIONALATTRIBUTES
   LEFT JOIN ZEXTENDEDATTRIBUTES zExtAttr ON zExtAttr.Z_PK = zAsset.ZEXTENDEDATTRIBUTES
