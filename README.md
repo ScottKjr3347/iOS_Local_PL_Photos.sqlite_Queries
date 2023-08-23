@@ -44,10 +44,7 @@ Unknown-New-Value!: 440
 ZASSET table ZSAVEDASSETTYPE column data
 ZADDITIONALASSETATTRIBUTES table ZIMPORTEDBY column data
 Queries are now default sorted by ZASSET.ZADDEDDATE
-iOS 15 and iOS 16 queries, I've added decoding for the Local Photo Library Photos.sqlite data for Shared with You (Syndication) Photo Library asset data. 
-
-Even though there are some artifact specific queries, I strongly recommend using the full query (iOS<*>_Photossqlite_query) for the iOS version you are analyzing. The smaller artifact specific queries will only get you the general information for a particular asset.
-
+iOS 15 and iOS 16 queries, I've added decoding for the Local Photo Library Photos.sqlite data for Shared with You (Syndication) Photo Library asset data.
 
 2022/9/20 Omitted query statements have been removed from the published queries. Please contact me directly if you believe there is data missing that you would like to have included in a query.  Additionally, I have moved the WHERE statements to a separate document for your reference.  
 
