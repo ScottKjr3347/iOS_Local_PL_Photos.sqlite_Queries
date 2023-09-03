@@ -648,7 +648,7 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
     ELSE 'Unknown-New-Value!: ' || zMedAnlyAstAttr.ZSYNDICATIONPROCESSINGVALUE || ''
   END AS 'zMedAnlyAstAttr-Syndication Processing Value',
   DateTime(zMedAnlyAstAttr.ZVAANALYSISTIMESTAMP + 978307200, 'UNIXEPOCH') AS 'zMedAnlyAstAttr-ios17 VA Analysis Timestamp',
-  zMedAnlyAstAttr.ZVAANALYSISVERSION AS 'zMedAnlyAstAttr-newiOS17 Va Analysis Version',  
+  zMedAnlyAstAttr.ZVAANALYSISVERSION AS 'zMedAnlyAstAttr-newiOS17 Va Analysis Version',
   CASE zAddAssetAttr.ZALLOWEDFORANALYSIS
     WHEN 0 THEN '0-Asset Not Allowed For Analysis-0'
     WHEN 1 THEN '1-Asset Allowed for Analysis-1'

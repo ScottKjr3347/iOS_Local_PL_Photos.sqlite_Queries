@@ -430,14 +430,14 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   CASE zIntResou.ZRECIPEID
     WHEN 0 THEN '0-OrigFileSize_match_DataLength_or_Optimized-0'
     WHEN 65737 THEN '65737-full-JPG_Orig-ProRAW_DNG-65737'
-	WHEN 65739 THEN '65739-JPG_Large_Thumb-65739'
+    WHEN 65739 THEN '65739-JPG_Large_Thumb-65739'
     WHEN 65741 THEN '65741-Various_Asset_Types-or-Thumbs-65741'
     WHEN 65743 THEN '65743-ResouType-Photo_5003-or-5005-JPG_Thumb-65743'
     WHEN 65749 THEN '65749-LocalVideoKeyFrame-JPG_Thumb-65749'
     WHEN 65938 THEN '65938-FullSizeRender-Photo-or-plist-65938'
     WHEN 131072 THEN '131072-FullSizeRender-Video-or-plist-131072'
     WHEN 131077 THEN '131077-medium-MOV_HEVC-4K-131077'
-	WHEN 131079 THEN '131079-medium-MP4_Adj-Mutation_Asset-131079'
+    WHEN 131079 THEN '131079-medium-MP4_Adj-Mutation_Asset-131079'
     WHEN 131081 THEN '131081-ResouType-Video_5003-or-5005-JPG_Thumb-131081'
     WHEN 131272 THEN '131272-FullSizeRender-Video_LivePhoto_Adj-Mutation-131272'
     WHEN 131275 THEN '131275-medium-MOV_LivePhoto-131275'
@@ -456,16 +456,16 @@ SELECT zAsset.ZSORTTOKEN AS 'zAsset-Sort Token',
   CASE zIntResou.ZUTICONFORMANCEHINT
     WHEN 0 THEN '0-NA/Doesnt_Conform-0'
     WHEN 1 THEN '1-UTTypeImage-1'
-	WHEN 2 THEN '2-UTTypeProRawPhoto-2'
+    WHEN 2 THEN '2-UTTypeProRawPhoto-2'
     WHEN 3 THEN '3-UTTypeMovie-3'
     ELSE 'Unknown-New-Value!: ' || zIntResou.ZUTICONFORMANCEHINT || ''
-  END AS 'zIntResou-UniformTypeID_UTI_Conformance_Hint',  
+  END AS 'zIntResou-UniformTypeID_UTI_Conformance_Hint',
   CASE zIntResou.ZCOMPACTUTI
     WHEN 1 THEN '1-JPEG/THM-1'
     WHEN 3 THEN '3-HEIC-3'
     WHEN 6 THEN '6-PNG-6'
     WHEN 7 THEN '7-StillTesting'
-	WHEN 9 THEN '9-DNG-9'
+    WHEN 9 THEN '9-DNG-9'
     WHEN 23 THEN '23-JPEG/HEIC/quicktime-mov-23'
     WHEN 24 THEN '24-MPEG4-24'
     WHEN 36 THEN '36-Wallpaper-36'

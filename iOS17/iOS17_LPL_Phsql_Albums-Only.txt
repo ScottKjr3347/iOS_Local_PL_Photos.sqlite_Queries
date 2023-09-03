@@ -97,7 +97,7 @@ SELECT ParentzGenAlbum.ZUUID AS 'ParentzGenAlbum-UUID',
   zGenAlbum.Z_PK AS 'zGenAlbum-zPK=26AlbumLists=26Albums',
   zGenAlbum.Z_ENT AS 'zGenAlbum-zEnt',
   zGenAlbum.Z_OPT AS 'zGenAlbum-zOpt',
-  zGenAlbum.ZSYNDICATE AS 'zGenAlbum-zSyndicate',  
+  zGenAlbum.ZSYNDICATE AS 'zGenAlbum-zSyndicate',
   zGenAlbum.ZPARENTFOLDER AS 'zGenAlbum-Parent Folder Key=zGenAlbum-zPK',
   zGenAlbum.Z_FOK_PARENTFOLDER AS 'zGenAlbum-FOK Parent Folder',
   zGenAlbum.ZIMPORTSESSIONID AS 'zGenAlbum-Import Session ID',
@@ -152,7 +152,7 @@ SELECT ParentzGenAlbum.ZUUID AS 'ParentzGenAlbum-UUID',
     WHEN 1 THEN '1-iCldPhotos-ON=Asset_In_Generic_Album-1'
     ELSE 'Unknown-New-Value!: ' || zGenAlbum.ZCLOUDLOCALSTATE || ''
   END AS 'zGenAlbum-Cloud_Local_State',
-  zGenAlbum.ZIMPORTEDBYBUNDLEIDENTIFIER AS 'zGenAlbum-Imported by Bundle Identifier', 
+  zGenAlbum.ZIMPORTEDBYBUNDLEIDENTIFIER AS 'zGenAlbum-Imported by Bundle Identifier',
   zGenAlbum.ZTITLE AS 'zGenAlbum-Title/User&System Applied',
   DateTime(zGenAlbum.ZCREATIONDATE + 978307200, 'UNIXEPOCH') AS 'zGenAlbum-Creation Date',
   DateTime(zGenAlbum.ZCLOUDCREATIONDATE + 978307200, 'UNIXEPOCH') AS 'zGenAlbum-Cloud Creation Date',
@@ -312,7 +312,7 @@ SELECT ParentzGenAlbum.ZUUID AS 'ParentzGenAlbum-UUID',
   CASE zAlbumList.ZNEEDSREORDERINGNUMBER
     WHEN 1 THEN '1-Yes-1'
     ELSE 'Unknown-New-Value!: ' || zAlbumList.ZNEEDSREORDERINGNUMBER || ''
-  END AS 'zAlbumList-Needs Reordering Number',  
+  END AS 'zAlbumList-Needs Reordering Number',
   zCldShareAlbumInvRec.ZALBUM AS 'zCldShareAlbumInvRec-Album Key',
   zCldShareAlbumInvRec.Z_PK AS 'zCldShareAlbumInvRec-zPK',
   zCldShareAlbumInvRec.Z_ENT AS 'zCldShareAlbumInvRec-zEnt',
@@ -341,10 +341,10 @@ SELECT ParentzGenAlbum.ZUUID AS 'ParentzGenAlbum-UUID',
   zCldShareAlbumInvRec.ZINVITEELASTNAME AS 'zCldShareAlbumInvRec-Invitee Last Name',
   zCldShareAlbumInvRec.ZINVITEEFULLNAME AS 'zCldShareAlbumInvRec-Invitee Full Name',
   zCldShareAlbumInvRec.ZINVITEEHASHEDPERSONID AS 'zCldShareAlbumInvRec-Invitee Hashed Person ID',
-  zCldShareAlbumInvRec.ZINVITEEEMAILKEY AS 'zCldShareAlbumInvRec-Invitee Email Key/UnknownData'  
+  zCldShareAlbumInvRec.ZINVITEEEMAILKEY AS 'zCldShareAlbumInvRec-Invitee Email Key/UnknownData'
 FROM ZGENERICALBUM zGenAlbum
   LEFT JOIN Z_27ALBUMLISTS z27AlbumLists ON z27AlbumLists.Z_27ALBUMS = zGenAlbum.Z_PK
   LEFT JOIN ZALBUMLIST zAlbumList ON zAlbumList.Z_PK = z27AlbumLists.Z_2ALBUMLISTS
-  LEFT JOIN ZGENERICALBUM ParentzGenAlbum ON ParentzGenAlbum.Z_PK = zGenAlbum.ZPARENTFOLDER  
+  LEFT JOIN ZGENERICALBUM ParentzGenAlbum ON ParentzGenAlbum.Z_PK = zGenAlbum.ZPARENTFOLDER
   LEFT JOIN ZCLOUDSHAREDALBUMINVITATIONRECORD zCldShareAlbumInvRec ON zGenAlbum.Z_PK = zCldShareAlbumInvRec.ZALBUM
-ORDER BY zGenAlbum.Z_PK
+ORDER BY 'zGenAlbum-zPK=26AlbumLists=26Albums'
